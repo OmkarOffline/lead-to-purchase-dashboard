@@ -31,7 +31,6 @@
       --success: #059669;
       --success-bg: #ECFDF5;
       --warning: #D97706;
-      --warning-bg: #FEF3C7;
       --error: #DC2626;
       --info-bg: #EFF6FF;
       --card-radius: 18px;
@@ -44,16 +43,96 @@
     body { font-family: var(--font-body); background: var(--bg-secondary); color: var(--text-body); min-height: 100vh; -webkit-font-smoothing: antialiased; }
     .page { max-width: 1280px; margin: 0 auto; padding: var(--outer-margin); }
 
-    /* Page header */
-    .page-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: var(--section-gap); padding-bottom: 24px; border-bottom: 1px solid var(--border-primary); }
+    /* ── Page Header ── */
+    .page-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 32px;
+      margin-bottom: var(--section-gap);
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--border-primary);
+    }
+    .page-header-left {}
     .page-title { font-family: var(--font-primary); font-size: 28px; font-weight: 700; color: var(--text-h1); letter-spacing: -0.3px; line-height: 1.2; }
     .page-subtitle { font-size: 14px; color: var(--text-secondary); margin-top: 6px; }
-    .last-updated { font-size: 13px; color: var(--text-secondary); display: flex; align-items: center; gap: 7px; white-space: nowrap; }
+
+    .page-header-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .last-updated {
+      font-size: 13px;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      white-space: nowrap;
+    }
     .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--success); flex-shrink: 0; }
     .status-dot.loading { background: var(--warning); }
     .status-dot.error { background: var(--error); }
 
-    /* Section cards */
+    .header-date-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .header-date-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .header-date-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-disabled);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    input.header-date {
+      font-family: var(--font-body);
+      font-size: 13px;
+      padding: 7px 12px;
+      border: 1px solid var(--border-primary);
+      border-radius: 10px;
+      background: var(--bg-primary);
+      color: var(--text-body);
+      height: 36px;
+      width: 148px;
+      transition: border-color 0.15s;
+    }
+    input.header-date:hover { border-color: var(--border-secondary); }
+    input.header-date:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(37,99,235,0.08); }
+
+    .btn-reset-month {
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 0 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      border: 1px solid var(--border-secondary);
+      background: var(--bg-primary);
+      color: var(--text-h3);
+      height: 36px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      margin-top: 19px;
+      transition: background 0.15s;
+    }
+    .btn-reset-month:hover { background: var(--bg-hover); }
+
+    /* ── Section Cards ── */
     .section-card { background: var(--bg-primary); border: 1px solid var(--border-primary); border-radius: var(--card-radius); margin-bottom: var(--card-gap); box-shadow: var(--card-shadow); overflow: hidden; }
     .section-header { display: flex; align-items: center; justify-content: space-between; padding: 18px var(--card-padding); cursor: pointer; user-select: none; }
     .section-header:hover { background: var(--bg-hover); }
@@ -66,7 +145,7 @@
     .toggle-icon.collapsed { transform: rotate(-90deg); }
     .section-body { padding: 0 var(--card-padding) var(--card-padding) var(--card-padding); border-top: 1px solid var(--border-primary); }
 
-    /* Filters */
+    /* ── Filters ── */
     .filter-group-label { font-size: 11px; font-weight: 600; color: var(--text-disabled); text-transform: uppercase; letter-spacing: 0.07em; margin: 20px 0 10px; }
     .date-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--card-gap); margin-bottom: 4px; }
     .filter-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 16px; }
@@ -82,7 +161,7 @@
     .btn-ghost { font-family: var(--font-body); font-size: 13px; font-weight: 500; padding: 8px 16px; border-radius: 10px; cursor: pointer; border: 1px solid var(--border-primary); background: transparent; color: var(--text-secondary); height: 38px; display: flex; align-items: center; gap: 6px; }
     .btn-ghost:hover { background: var(--bg-hover); color: var(--text-h3); }
 
-    /* Sub-sections */
+    /* ── Sub-sections ── */
     .subsection { margin-top: 28px; }
     .subsection + .subsection { margin-top: var(--section-gap); }
     .subsection-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
@@ -91,13 +170,14 @@
     .subsection-pill.other { background: #F0FDFA; border-color: #99F6E4; color: #0F766E; }
     .subsection-divider { flex: 1; height: 1px; background: var(--border-primary); }
 
-    /* Sub-sub-section */
+    /* ── Sub-sub-sections ── */
     .subsubsection { margin-top: 20px; }
+    .subsubsection + .subsubsection { margin-top: 28px; padding-top: 28px; border-top: 1px dashed var(--border-primary); }
     .subsubsection-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
     .subsubsection-pill { font-family: var(--font-primary); font-size: 12px; font-weight: 600; color: #0F766E; background: #F0FDFA; border: 1px solid #CCFBF1; border-radius: 999px; padding: 3px 12px; white-space: nowrap; }
     .subsubsection-divider { flex: 1; height: 0.5px; background: var(--border-primary); }
 
-    /* Hero cards */
+    /* ── Hero Cards ── */
     .hero-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--card-gap); margin-bottom: 16px; }
     .hero-card { background: var(--bg-primary); border: 1px solid var(--border-primary); border-radius: var(--card-radius); padding: var(--card-padding); display: flex; flex-direction: column; gap: 8px; box-shadow: var(--card-shadow); transition: box-shadow 0.15s; }
     .hero-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
@@ -105,26 +185,26 @@
     .hero-card.other-card { background: #F0FDFA; border-color: #99F6E4; }
     .hero-card.loading .hero-value { color: var(--text-disabled); }
     .hero-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; margin-bottom: 4px; }
-    .hero-icon.blue   { background: var(--info-bg);  color: var(--blue); }
-    .hero-icon.teal   { background: #F0FDFA;          color: var(--teal); }
-    .hero-icon.purple { background: #FAF5FF;          color: var(--purple); }
-    .hero-icon.navy   { background: #EFF6FF;          color: var(--navy); }
-    .hero-icon.total  { background: #EEF2FF;          color: #4338CA; }
-    .hero-icon.green  { background: var(--success-bg); color: var(--success); }
+    .hero-icon.blue   { background: var(--info-bg);    color: var(--blue); }
+    .hero-icon.teal   { background: #F0FDFA;            color: var(--teal); }
+    .hero-icon.purple { background: #FAF5FF;            color: var(--purple); }
+    .hero-icon.navy   { background: #EFF6FF;            color: var(--navy); }
+    .hero-icon.total  { background: #EEF2FF;            color: #4338CA; }
+    .hero-icon.green  { background: var(--success-bg);  color: var(--success); }
     .hero-label { font-family: var(--font-primary); font-size: 12px; font-weight: 600; color: var(--text-h3); letter-spacing: 0.02em; }
     .hero-value { font-family: var(--font-primary); font-size: 28px; font-weight: 700; color: var(--blue); line-height: 1.1; letter-spacing: -0.5px; }
     .hero-card.total-card .hero-value { color: #4338CA; }
     .hero-card.other-card .hero-value { color: #0F766E; }
 
-    /* Breakdown toggle */
+    /* ── Breakdown toggle ── */
     .breakdown-toggle { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--text-secondary); cursor: pointer; user-select: none; padding: 5px 10px 5px 0; border: none; background: none; font-family: var(--font-body); letter-spacing: 0.02em; text-transform: uppercase; }
     .breakdown-toggle:hover { color: var(--text-h3); }
     .breakdown-toggle .ti { font-size: 15px; transition: transform 0.2s ease; }
     .breakdown-toggle .ti.open { transform: rotate(180deg); }
-
-    /* Breakdown cards */
     .breakdown-body { display: none; margin-top: 14px; }
     .breakdown-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; }
+
+    /* ── Scorecard (breakdown) ── */
     .scorecard { background: var(--bg-secondary); border: 1px solid var(--border-primary); border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; gap: 6px; }
     .scorecard.total-sc { background: #EEF2FF; border-color: #C7D2FE; }
     .scorecard.other-sc { background: #F0FDFA; border-color: #CCFBF1; }
@@ -135,26 +215,55 @@
     .scorecard.total-sc .scorecard-value { color: #312E81; }
     .scorecard.other-sc .scorecard-value { color: #0F766E; }
 
-    @media (max-width: 768px) { :root { --outer-margin: 20px; } .date-row { grid-template-columns: 1fr 1fr; } .page-header { flex-direction: column; gap: 12px; align-items: flex-start; } .hero-grid { grid-template-columns: 1fr 1fr; } }
-    @media (max-width: 480px) { .date-row { grid-template-columns: 1fr; } .hero-grid { grid-template-columns: 1fr; } }
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .page-header { flex-direction: column; align-items: flex-start; gap: 20px; }
+      .page-header-right { align-items: flex-start; }
+    }
+    @media (max-width: 768px) {
+      :root { --outer-margin: 20px; }
+      .date-row { grid-template-columns: 1fr 1fr; }
+      .hero-grid { grid-template-columns: 1fr 1fr; }
+      .header-date-controls { flex-wrap: wrap; }
+    }
+    @media (max-width: 480px) {
+      .date-row { grid-template-columns: 1fr; }
+      .hero-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
 <div class="page">
 
-  <!-- PAGE HEADER -->
+  <!-- ── PAGE HEADER ── -->
   <div class="page-header">
-    <div>
+    <div class="page-header-left">
       <div class="page-title">Alwarpet, Chennai</div>
       <div class="page-subtitle">Centre performance dashboard</div>
     </div>
-    <div class="last-updated">
-      <span class="status-dot loading" id="status-dot"></span>
-      <span id="last-updated-text">Loading data…</span>
+    <div class="page-header-right">
+      <div class="last-updated">
+        <span class="status-dot loading" id="status-dot"></span>
+        <span id="last-updated-text">Loading data…</span>
+      </div>
+      <div class="header-date-controls">
+        <div class="header-date-group">
+          <label class="header-date-label" for="h-from">From</label>
+          <input type="date" class="header-date" id="h-from" onchange="onHeaderDateChange()" />
+        </div>
+        <div class="header-date-group">
+          <label class="header-date-label" for="h-to">To</label>
+          <input type="date" class="header-date" id="h-to" onchange="onHeaderDateChange()" />
+        </div>
+        <button class="btn-reset-month" onclick="resetToCurrentMonth()">
+          <i class="ti ti-calendar" style="font-size:14px;" aria-hidden="true"></i>
+          This month
+        </button>
+      </div>
     </div>
   </div>
 
-  <!-- FILTERS -->
+  <!-- ── FILTERS ── -->
   <div class="section-card">
     <div class="section-header" onclick="toggleSection('filters')">
       <div class="section-header-left">
@@ -163,11 +272,11 @@
         <span class="section-badge">All optional</span>
       </div>
       <button class="toggle-btn" aria-label="Toggle filters">
-        <span id="filters-label">Collapse</span>
-        <i class="ti ti-chevron-down toggle-icon" id="filters-icon" aria-hidden="true"></i>
+        <span id="filters-label">Expand</span>
+        <i class="ti ti-chevron-down toggle-icon collapsed" id="filters-icon" aria-hidden="true"></i>
       </button>
     </div>
-    <div id="filters-body" class="section-body">
+    <div id="filters-body" class="section-body" style="display:none;">
       <div class="filter-group-label">Date range</div>
       <div class="date-row">
         <div class="filter-group">
@@ -191,12 +300,12 @@
         </div>
         <div class="filter-group">
           <label class="filter-label" for="f-from">From date</label>
-          <input type="date" id="f-from" onchange="applyFilters()" />
+          <input type="date" id="f-from" onchange="onFilterDateChange()" />
           <span class="date-hint" id="from-hint"></span>
         </div>
         <div class="filter-group">
           <label class="filter-label" for="f-to">To date</label>
-          <input type="date" id="f-to" onchange="applyFilters()" />
+          <input type="date" id="f-to" onchange="onFilterDateChange()" />
           <span class="date-hint" id="to-hint"></span>
         </div>
       </div>
@@ -277,19 +386,15 @@
         </div>
       </div>
       <div class="filter-actions">
-        <button class="btn-ghost" onclick="resetToCurrentMonth()">
-          <i class="ti ti-calendar" style="font-size:14px;" aria-hidden="true"></i>
-          Reset to this month
-        </button>
-        <button class="btn" onclick="clearFilters()">
+        <button class="btn-ghost" onclick="clearSegmentFilters()">
           <i class="ti ti-x" style="font-size:14px;" aria-hidden="true"></i>
-          Clear all
+          Clear segment filters
         </button>
       </div>
     </div>
   </div>
 
-  <!-- SCORECARDS -->
+  <!-- ── SCORECARDS ── -->
   <div class="section-card">
     <div class="section-header" onclick="toggleSection('scorecards')">
       <div class="section-header-left">
@@ -302,10 +407,9 @@
         <i class="ti ti-chevron-down toggle-icon" id="scorecards-icon" aria-hidden="true"></i>
       </button>
     </div>
-
     <div id="scorecards-body" class="section-body">
 
-      <!-- ── FRESH SALES ── -->
+      <!-- FRESH SALES -->
       <div class="subsection">
         <div class="subsection-header">
           <span class="subsection-pill">Fresh sales</span>
@@ -348,7 +452,7 @@
         </div>
       </div>
 
-      <!-- ── RENEWALS ── -->
+      <!-- RENEWALS -->
       <div class="subsection">
         <div class="subsection-header">
           <span class="subsection-pill">Renewals</span>
@@ -391,7 +495,7 @@
         </div>
       </div>
 
-      <!-- ── TOTAL COLLECTIONS ── -->
+      <!-- TOTAL COLLECTIONS -->
       <div class="subsection">
         <div class="subsection-header">
           <span class="subsection-pill total">Total collections — course fees</span>
@@ -434,14 +538,14 @@
         </div>
       </div>
 
-      <!-- ── OTHER INCOME ── -->
+      <!-- OTHER INCOME -->
       <div class="subsection">
         <div class="subsection-header">
           <span class="subsection-pill other">Other income</span>
           <div class="subsection-divider"></div>
         </div>
 
-        <!-- Instrument Sales sub-sub-section -->
+        <!-- Instrument Sales -->
         <div class="subsubsection">
           <div class="subsubsection-header">
             <span class="subsubsection-pill">Instrument sales</span>
@@ -449,7 +553,7 @@
           </div>
           <div class="hero-grid">
             <div class="hero-card other-card loading" id="is-h1">
-              <div class="hero-icon green"><i class="ti ti-guitar-pick" aria-hidden="true"></i></div>
+              <div class="hero-icon green"><i class="ti ti-music" aria-hidden="true"></i></div>
               <div class="hero-label">No. of instruments sold</div>
               <div class="hero-value" id="is-h1-val">—</div>
             </div>
@@ -477,9 +581,48 @@
             </div>
           </div>
         </div>
-        <!-- More sub-sub-sections will be added here -->
 
-      </div>
+        <!-- Certification Exam Fees -->
+        <div class="subsubsection">
+          <div class="subsubsection-header">
+            <span class="subsubsection-pill">Certification exam fees</span>
+            <div class="subsubsection-divider"></div>
+          </div>
+          <div class="hero-grid">
+            <div class="hero-card other-card loading" id="ef-h1">
+              <div class="hero-icon green"><i class="ti ti-certificate" aria-hidden="true"></i></div>
+              <div class="hero-label">No. of exam registrations</div>
+              <div class="hero-value" id="ef-h1-val">—</div>
+            </div>
+            <div class="hero-card other-card loading" id="ef-h2">
+              <div class="hero-icon green"><i class="ti ti-cash" aria-hidden="true"></i></div>
+              <div class="hero-label">Collections — exam fees</div>
+              <div class="hero-value" id="ef-h2-val">—</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Summer Camp -->
+        <div class="subsubsection">
+          <div class="subsubsection-header">
+            <span class="subsubsection-pill">Summer camp</span>
+            <div class="subsubsection-divider"></div>
+          </div>
+          <div class="hero-grid">
+            <div class="hero-card other-card loading" id="sc-h1">
+              <div class="hero-icon green"><i class="ti ti-sun" aria-hidden="true"></i></div>
+              <div class="hero-label">No. of registrations</div>
+              <div class="hero-value" id="sc-h1-val">—</div>
+            </div>
+            <div class="hero-card other-card loading" id="sc-h2">
+              <div class="hero-icon green"><i class="ti ti-cash" aria-hidden="true"></i></div>
+              <div class="hero-label">Collections — summer camp</div>
+              <div class="hero-value" id="sc-h2-val">—</div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /other income -->
 
     </div>
   </div>
@@ -490,24 +633,15 @@
   const FS_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRAVysitQgRpFNf94-ZH-I6KzBP4Zovlxj0NjgREoPLW1CY8lXNWAC-uXZs5P-o68hMqxwnzhXKljGr/pub?gid=184947403&single=true&output=csv';
   const RN_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRAVysitQgRpFNf94-ZH-I6KzBP4Zovlxj0NjgREoPLW1CY8lXNWAC-uXZs5P-o68hMqxwnzhXKljGr/pub?gid=1190272933&single=true&output=csv';
   const IS_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRAVysitQgRpFNf94-ZH-I6KzBP4Zovlxj0NjgREoPLW1CY8lXNWAC-uXZs5P-o68hMqxwnzhXKljGr/pub?gid=32760902&single=true&output=csv';
+  const EF_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRAVysitQgRpFNf94-ZH-I6KzBP4Zovlxj0NjgREoPLW1CY8lXNWAC-uXZs5P-o68hMqxwnzhXKljGr/pub?gid=579483228&single=true&output=csv';
+  const SC_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRAVysitQgRpFNf94-ZH-I6KzBP4Zovlxj0NjgREoPLW1CY8lXNWAC-uXZs5P-o68hMqxwnzhXKljGr/pub?gid=413617851&single=true&output=csv';
 
-  /* Column indices — Course sheets (0-based) */
-  const COL = { DATE:0, NAME:4, GENDER:5, AGE:6, COURSE:8, LEVEL:9, TYPE:10, REG_FEES:11, GROSS:13, DISCOUNT:15, NET:16, RENEWAL_STATUS:25, REASON:28, TEACHER:29 };
+  const COL  = { DATE:0, NAME:4, GENDER:5, AGE:6, COURSE:8, LEVEL:9, TYPE:10, REG_FEES:11, GROSS:13, DISCOUNT:15, NET:16, RENEWAL_STATUS:25, REASON:28, TEACHER:29 };
+  const ICOL = { DATE:0, NAME:3, INST_ONLY:6, ACCESSORIES:8, TOTAL_COLL:9, COST_GST:12, GST_OUT:15, GST_IN:17, NET_COST:18 };
+  const EFCOL = { DATE:0, NAME:4, COLLECTIONS:13 };  // E=col4, N=col13
+  const SCCOL = { DATE:0, NAME:4, COLLECTIONS:17 };  // E=col4, R=col17
 
-  /* Column indices — Instrument Sales sheet (0-based) */
-  const ICOL = {
-    DATE:0,       // A
-    NAME:3,       // D  — instrument name (COUNTA)
-    INST_ONLY:6,  // G  — collections instrument only
-    ACCESSORIES:8,// I  — collections accessories
-    TOTAL_COLL:9, // J  — total collections
-    COST_GST:12,  // M  — cost incl GST
-    GST_OUT:15,   // P  — GST output (for adjustment)
-    GST_IN:17,    // R  — GST input (for adjustment)
-    NET_COST:18   // S  — net cost
-  };
-
-  let fsRows=[], rnRows=[], isRows=[];
+  let fsRows=[], rnRows=[], isRows=[], efRows=[], scRows=[];
 
   /* ── Utilities ── */
   function toISO(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
@@ -542,29 +676,64 @@
     return rows;
   }
 
-  /* ── Default dates ── */
+  /* ── Date helpers ── */
+  function toISO(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+
   function setDefaultDates(){
     const today=new Date(), first=new Date(today.getFullYear(),today.getMonth(),1);
-    document.getElementById('f-from').value=toISO(first);
-    document.getElementById('f-to').value=toISO(today);
+    const iso1=toISO(first), iso2=toISO(today);
+    document.getElementById('h-from').value=iso1;
+    document.getElementById('h-to').value=iso2;
+    document.getElementById('f-from').value=iso1;
+    document.getElementById('f-to').value=iso2;
     document.getElementById('from-hint').textContent='1st of this month';
     document.getElementById('to-hint').textContent='Today';
   }
 
+  /* Header date fields sync → filter fields */
+  function onHeaderDateChange(){
+    document.getElementById('f-from').value=document.getElementById('h-from').value;
+    document.getElementById('f-to').value=document.getElementById('h-to').value;
+    document.getElementById('from-hint').textContent='';
+    document.getElementById('to-hint').textContent='';
+    applyFilters();
+  }
+
+  /* Filter date fields sync → header fields */
+  function onFilterDateChange(){
+    document.getElementById('h-from').value=document.getElementById('f-from').value;
+    document.getElementById('h-to').value=document.getElementById('f-to').value;
+    applyFilters();
+  }
+
   function onYearMonthChange(){
     const year=document.getElementById('f-year').value, month=document.getElementById('f-month').value;
+    let iso1='', iso2='';
     if(year&&month){
-      document.getElementById('f-from').value=toISO(new Date(+year,+month-1,1));
-      document.getElementById('f-to').value=toISO(new Date(+year,+month,0));
+      iso1=toISO(new Date(+year,+month-1,1)); iso2=toISO(new Date(+year,+month,0));
       document.getElementById('from-hint').textContent=document.getElementById('to-hint').textContent='Auto-set';
     } else if(year){
-      document.getElementById('f-from').value=toISO(new Date(+year,0,1));
-      document.getElementById('f-to').value=toISO(new Date(+year,11,31));
+      iso1=toISO(new Date(+year,0,1)); iso2=toISO(new Date(+year,11,31));
       document.getElementById('from-hint').textContent=document.getElementById('to-hint').textContent='Auto-set';
+    }
+    if(iso1){
+      document.getElementById('f-from').value=iso1; document.getElementById('h-from').value=iso1;
+      document.getElementById('f-to').value=iso2;   document.getElementById('h-to').value=iso2;
     }
     applyFilters();
   }
 
+  function resetToCurrentMonth(){
+    ['f-year','f-month','f-course','f-level','f-age','f-gender','f-type','f-renewal','f-reason','f-teacher'].forEach(id=>{document.getElementById(id).value='';});
+    setDefaultDates(); applyFilters();
+  }
+
+  function clearSegmentFilters(){
+    ['f-year','f-month','f-course','f-level','f-age','f-gender','f-type','f-renewal','f-reason','f-teacher'].forEach(id=>{document.getElementById(id).value='';});
+    applyFilters();
+  }
+
+  /* ── Filter logic ── */
   function getF(){
     return {
       year:document.getElementById('f-year').value, month:document.getElementById('f-month').value,
@@ -576,26 +745,18 @@
     };
   }
 
-  /* Date-only filter for Instrument Sales (no segment filters apply) */
-  function filterByDate(rows, f, dateCol){
+  function dateInRange(r, dateCol, f){
+    const d=parseDate(r[dateCol]); if(!d) return false;
     const fd=f.fromVal?new Date(f.fromVal):null, td=f.toVal?new Date(f.toVal+'T23:59:59'):null;
-    return rows.filter(r=>{
-      const d=parseDate(r[dateCol]); if(!d) return false;
-      if(fd&&d<fd) return false; if(td&&d>td) return false;
-      if(f.year&&d.getFullYear().toString()!==f.year) return false;
-      if(f.month&&(d.getMonth()+1).toString()!==f.month) return false;
-      return true;
-    });
+    if(fd&&d<fd) return false; if(td&&d>td) return false;
+    if(f.year&&d.getFullYear().toString()!==f.year) return false;
+    if(f.month&&(d.getMonth()+1).toString()!==f.month) return false;
+    return true;
   }
 
-  /* Full filter for course sheets */
   function filterRows(rows, f){
-    const fd=f.fromVal?new Date(f.fromVal):null, td=f.toVal?new Date(f.toVal+'T23:59:59'):null;
     return rows.filter(r=>{
-      const d=parseDate(r[COL.DATE]); if(!d) return false;
-      if(fd&&d<fd) return false; if(td&&d>td) return false;
-      if(f.year&&d.getFullYear().toString()!==f.year) return false;
-      if(f.month&&(d.getMonth()+1).toString()!==f.month) return false;
+      if(!dateInRange(r,COL.DATE,f)) return false;
       if(f.course&&r[COL.COURSE]!==f.course) return false;
       if(f.level&&r[COL.LEVEL]!==f.level) return false;
       if(f.age&&r[COL.AGE]!==f.age) return false;
@@ -613,7 +774,10 @@
 
   function applyFilters(){
     const f=getF();
-    const fs=filterRows(fsRows,f), rn=filterRows(rnRows,f), is=filterByDate(isRows,f,ICOL.DATE);
+    const fs=filterRows(fsRows,f), rn=filterRows(rnRows,f);
+    const is=isRows.filter(r=>dateInRange(r,ICOL.DATE,f));
+    const ef=efRows.filter(r=>dateInRange(r,EFCOL.DATE,f));
+    const sc=scRows.filter(r=>dateInRange(r,SCCOL.DATE,f));
 
     /* Fresh Sales */
     const fs_count=fs.filter(r=>r[COL.NAME]&&r[COL.NAME].trim()!=='').length;
@@ -659,55 +823,59 @@
     const is_gst_adj=is_gst_in-is_gst_out;
     const is_net_profit=is_gross_profit-is_gst_adj;
     const is_net_cost=is.reduce((s,r)=>s+parseNum(r[ICOL.NET_COST]),0);
-    const is_pct=is_net_cost>0?(is_net_profit/is_net_cost)*100:0;
-
     set('is-h1-val',is_count.toLocaleString('en-IN')); set('is-h2-val',fINR(is_total));
     set('is-b1-val',fINR(is_inst)); set('is-b2-val',fINR(is_acc)); set('is-b3-val',fINR(is_total));
     set('is-b4-val',fINR(is_cost)); set('is-b5-val',fINR(is_gross_profit));
     set('is-b6-val',fINR(is_gst_adj)); set('is-b7-val',fINR(is_net_profit));
-    set('is-b8-val',fINR(is_net_cost)); set('is-b9-val',fPct(is_pct));
+    set('is-b8-val',fINR(is_net_cost)); set('is-b9-val',fPct(is_net_cost>0?(is_net_profit/is_net_cost)*100:0));
     unload(['is-h1','is-h2','is-b1','is-b2','is-b3','is-b4','is-b5','is-b6','is-b7','is-b8','is-b9']);
+
+    /* Certification Exam Fees */
+    const ef_count=ef.filter(r=>r[EFCOL.NAME]&&r[EFCOL.NAME].trim()!=='').length;
+    const ef_coll=ef.reduce((s,r)=>s+parseNum(r[EFCOL.COLLECTIONS]),0);
+    set('ef-h1-val',ef_count.toLocaleString('en-IN')); set('ef-h2-val',fINR(ef_coll));
+    unload(['ef-h1','ef-h2']);
+
+    /* Summer Camp */
+    const sc_count=sc.filter(r=>r[SCCOL.NAME]&&r[SCCOL.NAME].trim()!=='').length;
+    const sc_coll=sc.reduce((s,r)=>s+parseNum(r[SCCOL.COLLECTIONS]),0);
+    set('sc-h1-val',sc_count.toLocaleString('en-IN')); set('sc-h2-val',fINR(sc_coll));
+    unload(['sc-h1','sc-h2']);
 
     document.getElementById('scorecards-badge').textContent=tc_count+' transactions';
   }
 
   async function loadData(){
-    try {
-      const [r1,r2,r3]=await Promise.all([fetch(FS_URL),fetch(RN_URL),fetch(IS_URL)]);
-      if(!r1.ok) throw new Error('Fresh Sales: HTTP '+r1.status);
-      if(!r2.ok) throw new Error('Renewals: HTTP '+r2.status);
-      if(!r3.ok) throw new Error('Instrument Sales: HTTP '+r3.status);
-      const [t1,t2,t3]=await Promise.all([r1.text(),r2.text(),r3.text()]);
+    try{
+      const [r1,r2,r3,r4,r5]=await Promise.all([fetch(FS_URL),fetch(RN_URL),fetch(IS_URL),fetch(EF_URL),fetch(SC_URL)]);
+      if(!r1.ok) throw new Error('Fresh Sales HTTP '+r1.status);
+      if(!r2.ok) throw new Error('Renewals HTTP '+r2.status);
+      if(!r3.ok) throw new Error('Instrument Sales HTTP '+r3.status);
+      if(!r4.ok) throw new Error('Exam Fees HTTP '+r4.status);
+      if(!r5.ok) throw new Error('Summer Camp HTTP '+r5.status);
+      const [t1,t2,t3,t4,t5]=await Promise.all([r1.text(),r2.text(),r3.text(),r4.text(),r5.text()]);
+      // Fresh Sales & Renewals: skip 2 header rows
       fsRows=parseCSV(t1).slice(2).filter(r=>r[COL.DATE]&&r[COL.DATE].trim()!==''&&r[COL.DATE].toLowerCase()!=='date');
       rnRows=parseCSV(t2).slice(2).filter(r=>r[COL.DATE]&&r[COL.DATE].trim()!==''&&r[COL.DATE].toLowerCase()!=='date');
-      // Instrument Sales starts from row 2 (slice(1) skips header row only)
+      // Instrument Sales: skip 1 header row
       isRows=parseCSV(t3).slice(1).filter(r=>r[ICOL.DATE]&&r[ICOL.DATE].trim()!==''&&r[ICOL.DATE].toLowerCase()!=='date');
+      // Exam Fees: skip 3 header rows (data from row 4)
+      efRows=parseCSV(t4).slice(3).filter(r=>r[EFCOL.DATE]&&r[EFCOL.DATE].trim()!==''&&r[EFCOL.DATE].toLowerCase()!=='date');
+      // Summer Camp: skip 2 header rows (data from row 3)
+      scRows=parseCSV(t5).slice(2).filter(r=>r[SCCOL.DATE]&&r[SCCOL.DATE].trim()!==''&&r[SCCOL.DATE].toLowerCase()!=='date');
       const now=new Date();
       document.getElementById('last-updated-text').textContent=
         'Updated '+now.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})+
         ' · '+now.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
       document.getElementById('status-dot').className='status-dot';
       applyFilters();
-    } catch(e){
+    }catch(e){
       document.getElementById('last-updated-text').textContent='Error — '+e.message;
       document.getElementById('status-dot').className='status-dot error';
     }
   }
 
-  function resetToCurrentMonth(){
-    ['f-year','f-month','f-course','f-level','f-age','f-gender','f-type','f-renewal','f-reason','f-teacher'].forEach(id=>{document.getElementById(id).value='';});
-    setDefaultDates(); applyFilters();
-  }
-
-  function clearFilters(){
-    ['f-year','f-month','f-course','f-level','f-age','f-gender','f-type','f-renewal','f-reason','f-teacher'].forEach(id=>{document.getElementById(id).value='';});
-    document.getElementById('f-from').value=''; document.getElementById('f-to').value='';
-    document.getElementById('from-hint').textContent='Showing all dates';
-    document.getElementById('to-hint').textContent='Showing all dates';
-    applyFilters();
-  }
-
-  const sectionState={filters:true,scorecards:true};
+  const sectionState={filters:false, scorecards:true};
   function toggleSection(id){
     sectionState[id]=!sectionState[id]; const open=sectionState[id];
     document.getElementById(id+'-body').style.display=open?'':'none';
