@@ -9,6 +9,8 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f4f0; color: #1a1a18; min-height: 100vh; }
     .page { max-width: 1200px; margin: 0 auto; padding: 1.5rem; }
+
+    /* Page header */
     .page-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 0.5px solid #dddcd6; }
     .page-title { font-size: 22px; font-weight: 500; color: #1a1a18; }
     .page-subtitle { font-size: 13px; color: #888780; margin-top: 3px; }
@@ -17,6 +19,7 @@
     .status-dot.loading { background: #f0c05a; }
     .status-dot.error { background: #e2534a; }
 
+    /* Section cards */
     .section-card { background: #ffffff; border: 0.5px solid #dddcd6; border-radius: 12px; margin-bottom: 1.25rem; overflow: hidden; }
     .section-header { display: flex; align-items: center; justify-content: space-between; padding: 0.85rem 1.25rem; cursor: pointer; user-select: none; }
     .section-header:hover { background: #fafaf8; }
@@ -29,6 +32,7 @@
     .toggle-icon.collapsed { transform: rotate(-90deg); }
     .section-body { padding: 0 1.25rem 1rem 1.25rem; border-top: 0.5px solid #dddcd6; }
 
+    /* Filters */
     .divider-label { font-size: 11px; color: #888780; text-transform: uppercase; letter-spacing: 0.05em; margin: 0.85rem 0 8px; }
     .date-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 0.5rem; }
     .filter-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
@@ -43,33 +47,47 @@
     .btn-ghost { font-size: 13px; padding: 6px 14px; border-radius: 8px; cursor: pointer; border: 0.5px solid #c4c3bc; background: transparent; color: #888780; height: 34px; display: flex; align-items: center; gap: 6px; }
     .btn-ghost:hover { background: #f5f4f0; color: #1a1a18; }
 
-    /* Sub-section */
+    /* Sub-sections */
     .subsection { margin-top: 1rem; }
-    .subsection-header { display: flex; align-items: center; gap: 8px; margin-bottom: 0.75rem; }
-    .subsection-pill { font-size: 12px; font-weight: 500; color: #5f5e5a; background: #f0efeb; border: 0.5px solid #dddcd6; border-radius: 999px; padding: 3px 12px; }
+    .subsection + .subsection { margin-top: 1.75rem; }
+    .subsection-header { display: flex; align-items: center; gap: 8px; margin-bottom: 0.85rem; }
+    .subsection-pill { font-size: 12px; font-weight: 500; color: #5f5e5a; background: #f0efeb; border: 0.5px solid #dddcd6; border-radius: 999px; padding: 3px 12px; white-space: nowrap; }
     .subsection-divider { flex: 1; height: 0.5px; background: #dddcd6; }
-    .subsection + .subsection { margin-top: 1.5rem; padding-top: 0.25rem; }
 
-    /* Scorecards */
-    .scorecards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
-    .scorecard { background: #f5f4f0; border-radius: 8px; padding: 1rem; display: flex; flex-direction: column; gap: 6px; }
-    .scorecard-label { font-size: 12px; color: #888780; font-weight: 500; }
-    .scorecard-value { font-size: 22px; font-weight: 500; color: #1a1a18; }
-    .scorecard-sub { font-size: 12px; color: #888780; }
+    /* Hero scorecards */
+    .hero-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-bottom: 0.75rem; }
+    .hero-card { background: #ffffff; border: 0.5px solid #dddcd6; border-radius: 10px; padding: 1rem 1.1rem; display: flex; flex-direction: column; gap: 5px; }
+    .hero-card.total-card { background: #eef5fb; border-color: #b5d4f4; }
+    .hero-label { font-size: 12px; color: #888780; font-weight: 500; }
+    .hero-value { font-size: 26px; font-weight: 500; color: #1a1a18; line-height: 1.1; }
+    .hero-card.total-card .hero-value { color: #185fa5; }
+    .hero-card.loading .hero-value { color: #c4c3bc; }
+
+    /* Breakdown toggle */
+    .breakdown-toggle { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #888780; cursor: pointer; user-select: none; padding: 5px 0; width: fit-content; margin-bottom: 0; }
+    .breakdown-toggle:hover { color: #5f5e5a; }
+    .breakdown-toggle .ti { font-size: 14px; transition: transform 0.2s ease; }
+    .breakdown-toggle .ti.open { transform: rotate(180deg); }
+
+    /* Breakdown scorecards */
+    .breakdown-body { display: none; margin-top: 0.75rem; }
+    .breakdown-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+    .scorecard { background: #f5f4f0; border-radius: 8px; padding: 0.85rem 1rem; display: flex; flex-direction: column; gap: 5px; }
+    .scorecard.total-sc { background: #ddeaf7; }
+    .scorecard-label { font-size: 11px; color: #888780; font-weight: 500; text-transform: uppercase; letter-spacing: 0.03em; }
+    .scorecard-value { font-size: 18px; font-weight: 500; color: #1a1a18; }
+    .scorecard.total-sc .scorecard-value { color: #185fa5; }
     .scorecard.loading .scorecard-value { color: #c4c3bc; }
-    .scorecard.na .scorecard-value { font-size: 16px; color: #c4c3bc; }
+    .scorecard.na .scorecard-value { font-size: 14px; color: #c4c3bc; }
 
-    /* Total Collections highlight */
-    .scorecard.total { background: #eef5fb; }
-    .scorecard.total .scorecard-value { color: #185fa5; }
-
-    @media (max-width: 700px) { .date-row { grid-template-columns: 1fr 1fr; } .page-header { flex-direction: column; gap: 8px; } }
-    @media (max-width: 480px) { .date-row { grid-template-columns: 1fr; } }
+    @media (max-width: 700px) { .date-row { grid-template-columns: 1fr 1fr; } .page-header { flex-direction: column; gap: 8px; } .hero-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 480px) { .date-row { grid-template-columns: 1fr; } .hero-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
 <div class="page">
 
+  <!-- PAGE HEADER -->
   <div class="page-header">
     <div>
       <div class="page-title">Alwarpet, Chennai</div>
@@ -89,7 +107,7 @@
         <span class="section-title">Filters</span>
         <span class="badge">All optional</span>
       </div>
-      <button class="toggle-btn" aria-label="Toggle filters section">
+      <button class="toggle-btn" aria-label="Toggle filters">
         <span style="font-size:12px;" id="filters-label">Collapse</span>
         <i class="ti ti-chevron-down toggle-icon" id="filters-icon" aria-hidden="true"></i>
       </button>
@@ -224,144 +242,190 @@
         <span class="section-title">Scorecards</span>
         <span class="badge" id="scorecards-badge">—</span>
       </div>
-      <button class="toggle-btn" aria-label="Toggle scorecards section">
+      <button class="toggle-btn" aria-label="Toggle scorecards">
         <span style="font-size:12px;" id="scorecards-label">Collapse</span>
         <i class="ti ti-chevron-down toggle-icon" id="scorecards-icon" aria-hidden="true"></i>
       </button>
     </div>
+
     <div id="scorecards-body" class="section-body">
 
-      <!-- FRESH SALES sub-section -->
+      <!-- ── FRESH SALES ── -->
       <div class="subsection">
         <div class="subsection-header">
           <span class="subsection-pill">Fresh sales</span>
           <div class="subsection-divider"></div>
         </div>
-        <div class="scorecards-grid">
-          <div class="scorecard loading" id="fs-1">
-            <div class="scorecard-label">No. of admissions</div>
-            <div class="scorecard-value" id="fs-1-val">—</div>
-            <div class="scorecard-sub">Non-empty learner records</div>
+
+        <!-- Hero cards -->
+        <div class="hero-grid">
+          <div class="hero-card loading" id="fs-h1">
+            <div class="hero-label">No. of admissions</div>
+            <div class="hero-value" id="fs-h1-val">—</div>
           </div>
-          <div class="scorecard loading" id="fs-2">
-            <div class="scorecard-label">Gross course fees</div>
-            <div class="scorecard-value" id="fs-2-val">—</div>
-            <div class="scorecard-sub">Sum of gross coaching fees</div>
+          <div class="hero-card loading" id="fs-h2">
+            <div class="hero-label">Fresh sales collections</div>
+            <div class="hero-value" id="fs-h2-val">—</div>
           </div>
-          <div class="scorecard loading" id="fs-3">
-            <div class="scorecard-label">Discount</div>
-            <div class="scorecard-value" id="fs-3-val">—</div>
-            <div class="scorecard-sub">Total discount allowed</div>
+          <div class="hero-card loading" id="fs-h3">
+            <div class="hero-label">ATV</div>
+            <div class="hero-value" id="fs-h3-val">—</div>
           </div>
-          <div class="scorecard loading" id="fs-4">
-            <div class="scorecard-label">Net course fees</div>
-            <div class="scorecard-value" id="fs-4-val">—</div>
-            <div class="scorecard-sub">After discount</div>
+          <div class="hero-card loading" id="fs-h4">
+            <div class="hero-label">% Discount</div>
+            <div class="hero-value" id="fs-h4-val">—</div>
           </div>
-          <div class="scorecard loading" id="fs-5">
-            <div class="scorecard-label">Enrolment fees</div>
-            <div class="scorecard-value" id="fs-5-val">—</div>
-            <div class="scorecard-sub">Registration fees collected</div>
-          </div>
-          <div class="scorecard loading" id="fs-6">
-            <div class="scorecard-label">Total receipts</div>
-            <div class="scorecard-value" id="fs-6-val">—</div>
-            <div class="scorecard-sub">Net course fees + enrolment fees</div>
-          </div>
-          <div class="scorecard loading" id="fs-7">
-            <div class="scorecard-label">% Discount</div>
-            <div class="scorecard-value" id="fs-7-val">—</div>
-            <div class="scorecard-sub">Discount / gross course fees</div>
+        </div>
+
+        <!-- Breakdown toggle -->
+        <div class="breakdown-toggle" onclick="toggleBreakdown('fs')">
+          <i class="ti ti-chevron-down" id="fs-bd-icon"></i>
+          <span id="fs-bd-label">Show breakdown</span>
+        </div>
+
+        <!-- Breakdown cards -->
+        <div class="breakdown-body" id="fs-bd-body">
+          <div class="breakdown-grid">
+            <div class="scorecard loading" id="fs-b1">
+              <div class="scorecard-label">Gross course fees</div>
+              <div class="scorecard-value" id="fs-b1-val">—</div>
+            </div>
+            <div class="scorecard loading" id="fs-b2">
+              <div class="scorecard-label">Discount</div>
+              <div class="scorecard-value" id="fs-b2-val">—</div>
+            </div>
+            <div class="scorecard loading" id="fs-b3">
+              <div class="scorecard-label">Net course fees</div>
+              <div class="scorecard-value" id="fs-b3-val">—</div>
+            </div>
+            <div class="scorecard loading" id="fs-b4">
+              <div class="scorecard-label">Enrolment fees</div>
+              <div class="scorecard-value" id="fs-b4-val">—</div>
+            </div>
+            <div class="scorecard loading" id="fs-b5">
+              <div class="scorecard-label">Total receipts</div>
+              <div class="scorecard-value" id="fs-b5-val">—</div>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- RENEWALS sub-section -->
+      <!-- ── RENEWALS ── -->
       <div class="subsection">
         <div class="subsection-header">
           <span class="subsection-pill">Renewals</span>
           <div class="subsection-divider"></div>
         </div>
-        <div class="scorecards-grid">
-          <div class="scorecard loading" id="rn-1">
-            <div class="scorecard-label">No. of renewals</div>
-            <div class="scorecard-value" id="rn-1-val">—</div>
-            <div class="scorecard-sub">Non-empty learner records</div>
+
+        <!-- Hero cards -->
+        <div class="hero-grid">
+          <div class="hero-card loading" id="rn-h1">
+            <div class="hero-label">No. of renewals</div>
+            <div class="hero-value" id="rn-h1-val">—</div>
           </div>
-          <div class="scorecard loading" id="rn-2">
-            <div class="scorecard-label">Gross course fees</div>
-            <div class="scorecard-value" id="rn-2-val">—</div>
-            <div class="scorecard-sub">Sum of gross coaching fees</div>
+          <div class="hero-card loading" id="rn-h2">
+            <div class="hero-label">Renewals collections</div>
+            <div class="hero-value" id="rn-h2-val">—</div>
           </div>
-          <div class="scorecard loading" id="rn-3">
-            <div class="scorecard-label">Discount</div>
-            <div class="scorecard-value" id="rn-3-val">—</div>
-            <div class="scorecard-sub">Total discount allowed</div>
+          <div class="hero-card loading" id="rn-h3">
+            <div class="hero-label">ATV</div>
+            <div class="hero-value" id="rn-h3-val">—</div>
           </div>
-          <div class="scorecard loading" id="rn-4">
-            <div class="scorecard-label">Net course fees</div>
-            <div class="scorecard-value" id="rn-4-val">—</div>
-            <div class="scorecard-sub">After discount</div>
+          <div class="hero-card loading" id="rn-h4">
+            <div class="hero-label">% Discount</div>
+            <div class="hero-value" id="rn-h4-val">—</div>
           </div>
-          <div class="scorecard na" id="rn-5">
-            <div class="scorecard-label">Enrolment fees</div>
-            <div class="scorecard-value">NA</div>
-            <div class="scorecard-sub">Not applicable for renewals</div>
-          </div>
-          <div class="scorecard loading" id="rn-6">
-            <div class="scorecard-label">Total receipts</div>
-            <div class="scorecard-value" id="rn-6-val">—</div>
-            <div class="scorecard-sub">Same as net course fees</div>
-          </div>
-          <div class="scorecard loading" id="rn-7">
-            <div class="scorecard-label">% Discount</div>
-            <div class="scorecard-value" id="rn-7-val">—</div>
-            <div class="scorecard-sub">Discount / gross course fees</div>
+        </div>
+
+        <!-- Breakdown toggle -->
+        <div class="breakdown-toggle" onclick="toggleBreakdown('rn')">
+          <i class="ti ti-chevron-down" id="rn-bd-icon"></i>
+          <span id="rn-bd-label">Show breakdown</span>
+        </div>
+
+        <!-- Breakdown cards -->
+        <div class="breakdown-body" id="rn-bd-body">
+          <div class="breakdown-grid">
+            <div class="scorecard loading" id="rn-b1">
+              <div class="scorecard-label">Gross course fees</div>
+              <div class="scorecard-value" id="rn-b1-val">—</div>
+            </div>
+            <div class="scorecard loading" id="rn-b2">
+              <div class="scorecard-label">Discount</div>
+              <div class="scorecard-value" id="rn-b2-val">—</div>
+            </div>
+            <div class="scorecard loading" id="rn-b3">
+              <div class="scorecard-label">Net course fees</div>
+              <div class="scorecard-value" id="rn-b3-val">—</div>
+            </div>
+            <div class="scorecard na">
+              <div class="scorecard-label">Enrolment fees</div>
+              <div class="scorecard-value">NA</div>
+            </div>
+            <div class="scorecard loading" id="rn-b5">
+              <div class="scorecard-label">Total receipts</div>
+              <div class="scorecard-value" id="rn-b5-val">—</div>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- TOTAL COLLECTIONS sub-section -->
+      <!-- ── TOTAL COLLECTIONS ── -->
       <div class="subsection">
         <div class="subsection-header">
           <span class="subsection-pill">Total collections — course fees</span>
           <div class="subsection-divider"></div>
         </div>
-        <div class="scorecards-grid">
-          <div class="scorecard total loading" id="tc-1">
-            <div class="scorecard-label">No. of transactions</div>
-            <div class="scorecard-value" id="tc-1-val">—</div>
-            <div class="scorecard-sub">Admissions + renewals</div>
+
+        <!-- Hero cards -->
+        <div class="hero-grid">
+          <div class="hero-card total-card loading" id="tc-h1">
+            <div class="hero-label">No. of transactions</div>
+            <div class="hero-value" id="tc-h1-val">—</div>
           </div>
-          <div class="scorecard total loading" id="tc-2">
-            <div class="scorecard-label">Gross course fees</div>
-            <div class="scorecard-value" id="tc-2-val">—</div>
-            <div class="scorecard-sub">Fresh sales + renewals</div>
+          <div class="hero-card total-card loading" id="tc-h2">
+            <div class="hero-label">Total collections</div>
+            <div class="hero-value" id="tc-h2-val">—</div>
           </div>
-          <div class="scorecard total loading" id="tc-3">
-            <div class="scorecard-label">Discount</div>
-            <div class="scorecard-value" id="tc-3-val">—</div>
-            <div class="scorecard-sub">Fresh sales + renewals</div>
+          <div class="hero-card total-card loading" id="tc-h3">
+            <div class="hero-label">ATV</div>
+            <div class="hero-value" id="tc-h3-val">—</div>
           </div>
-          <div class="scorecard total loading" id="tc-4">
-            <div class="scorecard-label">Net course fees</div>
-            <div class="scorecard-value" id="tc-4-val">—</div>
-            <div class="scorecard-sub">Fresh sales + renewals</div>
+          <div class="hero-card total-card loading" id="tc-h4">
+            <div class="hero-label">% Discount</div>
+            <div class="hero-value" id="tc-h4-val">—</div>
           </div>
-          <div class="scorecard total loading" id="tc-5">
-            <div class="scorecard-label">Enrolment fees</div>
-            <div class="scorecard-value" id="tc-5-val">—</div>
-            <div class="scorecard-sub">Fresh sales only</div>
-          </div>
-          <div class="scorecard total loading" id="tc-6">
-            <div class="scorecard-label">Total receipts</div>
-            <div class="scorecard-value" id="tc-6-val">—</div>
-            <div class="scorecard-sub">Fresh sales + renewals</div>
-          </div>
-          <div class="scorecard total loading" id="tc-7">
-            <div class="scorecard-label">% Discount</div>
-            <div class="scorecard-value" id="tc-7-val">—</div>
-            <div class="scorecard-sub">Combined discount / combined gross</div>
+        </div>
+
+        <!-- Breakdown toggle -->
+        <div class="breakdown-toggle" onclick="toggleBreakdown('tc')">
+          <i class="ti ti-chevron-down" id="tc-bd-icon"></i>
+          <span id="tc-bd-label">Show breakdown</span>
+        </div>
+
+        <!-- Breakdown cards -->
+        <div class="breakdown-body" id="tc-bd-body">
+          <div class="breakdown-grid">
+            <div class="scorecard total-sc loading" id="tc-b1">
+              <div class="scorecard-label">Gross course fees</div>
+              <div class="scorecard-value" id="tc-b1-val">—</div>
+            </div>
+            <div class="scorecard total-sc loading" id="tc-b2">
+              <div class="scorecard-label">Discount</div>
+              <div class="scorecard-value" id="tc-b2-val">—</div>
+            </div>
+            <div class="scorecard total-sc loading" id="tc-b3">
+              <div class="scorecard-label">Net course fees</div>
+              <div class="scorecard-value" id="tc-b3-val">—</div>
+            </div>
+            <div class="scorecard total-sc loading" id="tc-b4">
+              <div class="scorecard-label">Enrolment fees</div>
+              <div class="scorecard-value" id="tc-b4-val">—</div>
+            </div>
+            <div class="scorecard total-sc loading" id="tc-b5">
+              <div class="scorecard-label">Total receipts</div>
+              <div class="scorecard-value" id="tc-b5-val">—</div>
+            </div>
           </div>
         </div>
       </div>
@@ -369,259 +433,228 @@
     </div>
   </div>
 
-</div>
+</div><!-- /page -->
 
 <script>
   const FS_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRAVysitQgRpFNf94-ZH-I6KzBP4Zovlxj0NjgREoPLW1CY8lXNWAC-uXZs5P-o68hMqxwnzhXKljGr/pub?gid=184947403&single=true&output=csv';
   const RN_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRAVysitQgRpFNf94-ZH-I6KzBP4Zovlxj0NjgREoPLW1CY8lXNWAC-uXZs5P-o68hMqxwnzhXKljGr/pub?gid=1190272933&single=true&output=csv';
 
-  const COL = {
-    DATE: 0, GENDER: 5, AGE: 6, COURSE: 8, LEVEL: 9, TYPE: 10,
-    REG_FEES: 11, GROSS: 13, DISCOUNT: 15, NET: 16,
-    NAME: 4, RENEWAL_STATUS: 25, REASON: 28, TEACHER: 29
-  };
+  const COL = { DATE:0, NAME:4, GENDER:5, AGE:6, COURSE:8, LEVEL:9, TYPE:10, REG_FEES:11, GROSS:13, DISCOUNT:15, NET:16, RENEWAL_STATUS:25, REASON:28, TEACHER:29 };
 
-  // Renewals sheet has same column structure for the relevant fields
-  const RCOL = {
-    DATE: 0, GENDER: 5, AGE: 6, COURSE: 8, LEVEL: 9, TYPE: 10,
-    GROSS: 13, DISCOUNT: 15, NET: 16,
-    NAME: 4, RENEWAL_STATUS: 25, REASON: 28, TEACHER: 29
-  };
+  let fsRows = [], rnRows = [];
 
-  let fsRows = [];
-  let rnRows = [];
-
-  function toISO(d) {
-    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
-  }
+  /* ── Utilities ── */
+  function toISO(d) { return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
 
   function parseDate(str) {
     if (!str) return null;
     const s = str.trim();
     const dmy = s.match(/^(\d{1,2})-([A-Za-z]+)-(\d{2,4})$/);
     if (dmy) {
-      const months = {jan:0,feb:1,mar:2,apr:3,may:4,jun:5,jul:6,aug:7,sep:8,oct:9,nov:10,dec:11};
-      const m = months[dmy[2].toLowerCase().slice(0,3)];
-      const y = dmy[3].length === 2 ? 2000+parseInt(dmy[3]) : parseInt(dmy[3]);
-      if (m !== undefined) return new Date(y, m, parseInt(dmy[1]));
+      const mo = {jan:0,feb:1,mar:2,apr:3,may:4,jun:5,jul:6,aug:7,sep:8,oct:9,nov:10,dec:11};
+      const m = mo[dmy[2].toLowerCase().slice(0,3)];
+      const y = dmy[3].length===2 ? 2000+parseInt(dmy[3]) : parseInt(dmy[3]);
+      if (m!==undefined) return new Date(y,m,parseInt(dmy[1]));
     }
     const dmy2 = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})$/);
-    if (dmy2) {
-      const y = dmy2[3].length === 2 ? 2000+parseInt(dmy2[3]) : parseInt(dmy2[3]);
-      return new Date(y, parseInt(dmy2[2])-1, parseInt(dmy2[1]));
-    }
-    const d = new Date(s);
-    return isNaN(d) ? null : d;
+    if (dmy2) { const y=dmy2[3].length===2?2000+parseInt(dmy2[3]):parseInt(dmy2[3]); return new Date(y,parseInt(dmy2[2])-1,parseInt(dmy2[1])); }
+    const d = new Date(s); return isNaN(d)?null:d;
   }
 
-  function parseNum(str) {
-    if (!str) return 0;
-    return parseFloat(str.toString().replace(/,/g,'')) || 0;
-  }
-
-  function formatINR(val) {
-    return '₹' + Math.round(val).toLocaleString('en-IN');
-  }
-
-  function formatPct(val) {
-    return val.toFixed(2) + '%';
-  }
+  function parseNum(str) { if (!str) return 0; return parseFloat(str.toString().replace(/,/g,''))||0; }
+  function fINR(v) { return '₹'+Math.round(v).toLocaleString('en-IN'); }
+  function fPct(v) { return v.toFixed(2)+'%'; }
+  function fATV(v) { return '₹'+v.toFixed(1).replace(/\B(?=(\d{3})+(?!\d))/g,','); }
 
   function parseCSV(text) {
-    const rows = [];
+    const rows=[];
     for (const line of text.split('\n')) {
       if (!line.trim()) continue;
-      const cols = [];
-      let cur = '', inQ = false;
-      for (const ch of line) {
-        if (ch === '"') { inQ = !inQ; }
-        else if (ch === ',' && !inQ) { cols.push(cur.trim()); cur = ''; }
-        else { cur += ch; }
-      }
-      cols.push(cur.trim());
-      rows.push(cols);
+      const cols=[]; let cur='',inQ=false;
+      for (const ch of line) { if(ch==='"'){inQ=!inQ;}else if(ch===','&&!inQ){cols.push(cur.trim());cur='';}else{cur+=ch;} }
+      cols.push(cur.trim()); rows.push(cols);
     }
     return rows;
   }
 
+  /* ── Dates ── */
   function setDefaultDates() {
-    const today = new Date();
-    const first = new Date(today.getFullYear(), today.getMonth(), 1);
-    document.getElementById('f-from').value = toISO(first);
-    document.getElementById('f-to').value   = toISO(today);
-    document.getElementById('from-hint').textContent = '1st of this month';
-    document.getElementById('to-hint').textContent   = 'Today';
+    const today=new Date(), first=new Date(today.getFullYear(),today.getMonth(),1);
+    document.getElementById('f-from').value=toISO(first);
+    document.getElementById('f-to').value=toISO(today);
+    document.getElementById('from-hint').textContent='1st of this month';
+    document.getElementById('to-hint').textContent='Today';
   }
 
   function onYearMonthChange() {
-    const year  = document.getElementById('f-year').value;
-    const month = document.getElementById('f-month').value;
-    if (year && month) {
-      const first = new Date(+year, +month-1, 1);
-      const last  = new Date(+year, +month, 0);
-      document.getElementById('f-from').value = toISO(first);
-      document.getElementById('f-to').value   = toISO(last);
-      document.getElementById('from-hint').textContent = 'Auto-set';
-      document.getElementById('to-hint').textContent   = 'Auto-set';
+    const year=document.getElementById('f-year').value, month=document.getElementById('f-month').value;
+    if (year&&month) {
+      document.getElementById('f-from').value=toISO(new Date(+year,+month-1,1));
+      document.getElementById('f-to').value=toISO(new Date(+year,+month,0));
+      document.getElementById('from-hint').textContent=document.getElementById('to-hint').textContent='Auto-set';
     } else if (year) {
-      document.getElementById('f-from').value = toISO(new Date(+year, 0, 1));
-      document.getElementById('f-to').value   = toISO(new Date(+year, 11, 31));
-      document.getElementById('from-hint').textContent = 'Auto-set';
-      document.getElementById('to-hint').textContent   = 'Auto-set';
+      document.getElementById('f-from').value=toISO(new Date(+year,0,1));
+      document.getElementById('f-to').value=toISO(new Date(+year,11,31));
+      document.getElementById('from-hint').textContent=document.getElementById('to-hint').textContent='Auto-set';
     }
     applyFilters();
   }
 
-  function getFilters() {
-    return {
-      year:    document.getElementById('f-year').value,
-      month:   document.getElementById('f-month').value,
-      fromVal: document.getElementById('f-from').value,
-      toVal:   document.getElementById('f-to').value,
-      course:  document.getElementById('f-course').value,
-      level:   document.getElementById('f-level').value,
-      age:     document.getElementById('f-age').value,
-      gender:  document.getElementById('f-gender').value,
-      type:    document.getElementById('f-type').value,
-      renewal: document.getElementById('f-renewal').value,
-      reason:  document.getElementById('f-reason').value,
-      teacher: document.getElementById('f-teacher').value,
-    };
-  }
-
-  function filterRows(rows, f, colMap) {
-    const fromDate = f.fromVal ? new Date(f.fromVal) : null;
-    const toDate   = f.toVal   ? new Date(f.toVal + 'T23:59:59') : null;
+  /* ── Filter rows ── */
+  function filterRows(rows, f) {
+    const fromDate=f.fromVal?new Date(f.fromVal):null;
+    const toDate=f.toVal?new Date(f.toVal+'T23:59:59'):null;
     return rows.filter(r => {
-      const d = parseDate(r[colMap.DATE]);
-      if (!d) return false;
-      if (fromDate && d < fromDate) return false;
-      if (toDate   && d > toDate)   return false;
-      if (f.year   && d.getFullYear().toString() !== f.year)      return false;
-      if (f.month  && (d.getMonth()+1).toString() !== f.month)   return false;
-      if (f.course  && r[colMap.COURSE]         !== f.course)  return false;
-      if (f.level   && r[colMap.LEVEL]          !== f.level)   return false;
-      if (f.age     && r[colMap.AGE]            !== f.age)     return false;
-      if (f.gender  && r[colMap.GENDER]         !== f.gender)  return false;
-      if (f.type    && r[colMap.TYPE]           !== f.type)    return false;
-      if (f.renewal && r[colMap.RENEWAL_STATUS] !== f.renewal) return false;
-      if (f.reason  && r[colMap.REASON]         !== f.reason)  return false;
-      if (f.teacher && r[colMap.TEACHER]        !== f.teacher) return false;
+      const d=parseDate(r[COL.DATE]); if(!d) return false;
+      if(fromDate&&d<fromDate) return false;
+      if(toDate&&d>toDate) return false;
+      if(f.year&&d.getFullYear().toString()!==f.year) return false;
+      if(f.month&&(d.getMonth()+1).toString()!==f.month) return false;
+      if(f.course&&r[COL.COURSE]!==f.course) return false;
+      if(f.level&&r[COL.LEVEL]!==f.level) return false;
+      if(f.age&&r[COL.AGE]!==f.age) return false;
+      if(f.gender&&r[COL.GENDER]!==f.gender) return false;
+      if(f.type&&r[COL.TYPE]!==f.type) return false;
+      if(f.renewal&&r[COL.RENEWAL_STATUS]!==f.renewal) return false;
+      if(f.reason&&r[COL.REASON]!==f.reason) return false;
+      if(f.teacher&&r[COL.TEACHER]!==f.teacher) return false;
       return true;
     });
   }
 
+  /* ── Apply filters & update all scorecards ── */
   function applyFilters() {
-    const f = getFilters();
+    const f = {
+      year:document.getElementById('f-year').value,
+      month:document.getElementById('f-month').value,
+      fromVal:document.getElementById('f-from').value,
+      toVal:document.getElementById('f-to').value,
+      course:document.getElementById('f-course').value,
+      level:document.getElementById('f-level').value,
+      age:document.getElementById('f-age').value,
+      gender:document.getElementById('f-gender').value,
+      type:document.getElementById('f-type').value,
+      renewal:document.getElementById('f-renewal').value,
+      reason:document.getElementById('f-reason').value,
+      teacher:document.getElementById('f-teacher').value,
+    };
 
-    const fs = filterRows(fsRows, f, COL);
-    const rn = filterRows(rnRows, f, RCOL);
+    const fs = filterRows(fsRows, f);
+    const rn = filterRows(rnRows, f);
 
-    // Fresh Sales metrics
-    const fs_count   = fs.filter(r => r[COL.NAME] && r[COL.NAME].trim() !== '').length;
-    const fs_gross   = fs.reduce((s,r) => s + parseNum(r[COL.GROSS]),    0);
-    const fs_disc    = fs.reduce((s,r) => s + parseNum(r[COL.DISCOUNT]), 0);
-    const fs_net     = fs.reduce((s,r) => s + parseNum(r[COL.NET]),      0);
-    const fs_enrol   = fs.reduce((s,r) => s + parseNum(r[COL.REG_FEES]),0);
-    const fs_total   = fs_net + fs_enrol;
-    const fs_pct     = fs_gross > 0 ? (fs_disc / fs_gross) * 100 : 0;
+    /* Fresh Sales */
+    const fs_count = fs.filter(r=>r[COL.NAME]&&r[COL.NAME].trim()!=='').length;
+    const fs_gross = fs.reduce((s,r)=>s+parseNum(r[COL.GROSS]),0);
+    const fs_disc  = fs.reduce((s,r)=>s+parseNum(r[COL.DISCOUNT]),0);
+    const fs_net   = fs.reduce((s,r)=>s+parseNum(r[COL.NET]),0);
+    const fs_enrol = fs.reduce((s,r)=>s+parseNum(r[COL.REG_FEES]),0);
+    const fs_total = fs_net + fs_enrol;
+    const fs_atv   = fs_count > 0 ? fs_total / fs_count : 0;
+    const fs_pct   = fs_gross > 0 ? (fs_disc/fs_gross)*100 : 0;
 
-    document.getElementById('fs-1-val').textContent = fs_count.toLocaleString('en-IN');
-    document.getElementById('fs-2-val').textContent = formatINR(fs_gross);
-    document.getElementById('fs-3-val').textContent = formatINR(fs_disc);
-    document.getElementById('fs-4-val').textContent = formatINR(fs_net);
-    document.getElementById('fs-5-val').textContent = formatINR(fs_enrol);
-    document.getElementById('fs-6-val').textContent = formatINR(fs_total);
-    document.getElementById('fs-7-val').textContent = formatPct(fs_pct);
-    ['fs-1','fs-2','fs-3','fs-4','fs-5','fs-6','fs-7'].forEach(id => document.getElementById(id).classList.remove('loading'));
+    document.getElementById('fs-h1-val').textContent = fs_count.toLocaleString('en-IN');
+    document.getElementById('fs-h2-val').textContent = fINR(fs_total);
+    document.getElementById('fs-h3-val').textContent = fATV(fs_atv);
+    document.getElementById('fs-h4-val').textContent = fPct(fs_pct);
+    document.getElementById('fs-b1-val').textContent = fINR(fs_gross);
+    document.getElementById('fs-b2-val').textContent = fINR(fs_disc);
+    document.getElementById('fs-b3-val').textContent = fINR(fs_net);
+    document.getElementById('fs-b4-val').textContent = fINR(fs_enrol);
+    document.getElementById('fs-b5-val').textContent = fINR(fs_total);
+    ['fs-h1','fs-h2','fs-h3','fs-h4','fs-b1','fs-b2','fs-b3','fs-b4','fs-b5'].forEach(id=>document.getElementById(id).classList.remove('loading'));
 
-    // Renewals metrics
-    const rn_count   = rn.filter(r => r[RCOL.NAME] && r[RCOL.NAME].trim() !== '').length;
-    const rn_gross   = rn.reduce((s,r) => s + parseNum(r[RCOL.GROSS]),    0);
-    const rn_disc    = rn.reduce((s,r) => s + parseNum(r[RCOL.DISCOUNT]), 0);
-    const rn_net     = rn.reduce((s,r) => s + parseNum(r[RCOL.NET]),      0);
-    const rn_total   = rn_net;
-    const rn_pct     = rn_gross > 0 ? (rn_disc / rn_gross) * 100 : 0;
+    /* Renewals */
+    const rn_count = rn.filter(r=>r[COL.NAME]&&r[COL.NAME].trim()!=='').length;
+    const rn_gross = rn.reduce((s,r)=>s+parseNum(r[COL.GROSS]),0);
+    const rn_disc  = rn.reduce((s,r)=>s+parseNum(r[COL.DISCOUNT]),0);
+    const rn_net   = rn.reduce((s,r)=>s+parseNum(r[COL.NET]),0);
+    const rn_total = rn_net;
+    const rn_atv   = rn_count > 0 ? rn_total / rn_count : 0;
+    const rn_pct   = rn_gross > 0 ? (rn_disc/rn_gross)*100 : 0;
 
-    document.getElementById('rn-1-val').textContent = rn_count.toLocaleString('en-IN');
-    document.getElementById('rn-2-val').textContent = formatINR(rn_gross);
-    document.getElementById('rn-3-val').textContent = formatINR(rn_disc);
-    document.getElementById('rn-4-val').textContent = formatINR(rn_net);
-    document.getElementById('rn-6-val').textContent = formatINR(rn_total);
-    document.getElementById('rn-7-val').textContent = formatPct(rn_pct);
-    ['rn-1','rn-2','rn-3','rn-4','rn-6','rn-7'].forEach(id => document.getElementById(id).classList.remove('loading'));
+    document.getElementById('rn-h1-val').textContent = rn_count.toLocaleString('en-IN');
+    document.getElementById('rn-h2-val').textContent = fINR(rn_total);
+    document.getElementById('rn-h3-val').textContent = fATV(rn_atv);
+    document.getElementById('rn-h4-val').textContent = fPct(rn_pct);
+    document.getElementById('rn-b1-val').textContent = fINR(rn_gross);
+    document.getElementById('rn-b2-val').textContent = fINR(rn_disc);
+    document.getElementById('rn-b3-val').textContent = fINR(rn_net);
+    document.getElementById('rn-b5-val').textContent = fINR(rn_total);
+    ['rn-h1','rn-h2','rn-h3','rn-h4','rn-b1','rn-b2','rn-b3','rn-b5'].forEach(id=>document.getElementById(id).classList.remove('loading'));
 
-    // Total Collections metrics
-    const tc_count  = fs_count + rn_count;
-    const tc_gross  = fs_gross + rn_gross;
-    const tc_disc   = fs_disc  + rn_disc;
-    const tc_net    = fs_net   + rn_net;
-    const tc_enrol  = fs_enrol;
-    const tc_total  = fs_total + rn_total;
-    const tc_pct    = tc_gross > 0 ? (tc_disc / tc_gross) * 100 : 0;
+    /* Total Collections */
+    const tc_count = fs_count + rn_count;
+    const tc_gross = fs_gross + rn_gross;
+    const tc_disc  = fs_disc  + rn_disc;
+    const tc_net   = fs_net   + rn_net;
+    const tc_enrol = fs_enrol;
+    const tc_total = fs_total + rn_total;
+    const tc_atv   = tc_count > 0 ? tc_total / tc_count : 0;
+    const tc_pct   = tc_gross > 0 ? (tc_disc/tc_gross)*100 : 0;
 
-    document.getElementById('tc-1-val').textContent = tc_count.toLocaleString('en-IN');
-    document.getElementById('tc-2-val').textContent = formatINR(tc_gross);
-    document.getElementById('tc-3-val').textContent = formatINR(tc_disc);
-    document.getElementById('tc-4-val').textContent = formatINR(tc_net);
-    document.getElementById('tc-5-val').textContent = formatINR(tc_enrol);
-    document.getElementById('tc-6-val').textContent = formatINR(tc_total);
-    document.getElementById('tc-7-val').textContent = formatPct(tc_pct);
-    ['tc-1','tc-2','tc-3','tc-4','tc-5','tc-6','tc-7'].forEach(id => document.getElementById(id).classList.remove('loading'));
+    document.getElementById('tc-h1-val').textContent = tc_count.toLocaleString('en-IN');
+    document.getElementById('tc-h2-val').textContent = fINR(tc_total);
+    document.getElementById('tc-h3-val').textContent = fATV(tc_atv);
+    document.getElementById('tc-h4-val').textContent = fPct(tc_pct);
+    document.getElementById('tc-b1-val').textContent = fINR(tc_gross);
+    document.getElementById('tc-b2-val').textContent = fINR(tc_disc);
+    document.getElementById('tc-b3-val').textContent = fINR(tc_net);
+    document.getElementById('tc-b4-val').textContent = fINR(tc_enrol);
+    document.getElementById('tc-b5-val').textContent = fINR(tc_total);
+    ['tc-h1','tc-h2','tc-h3','tc-h4','tc-b1','tc-b2','tc-b3','tc-b4','tc-b5'].forEach(id=>document.getElementById(id).classList.remove('loading'));
 
-    document.getElementById('scorecards-badge').textContent =
-      (fs_count + rn_count) + ' transactions';
+    document.getElementById('scorecards-badge').textContent = tc_count + ' transactions';
   }
 
+  /* ── Load data ── */
   async function loadData() {
     try {
       const [fsRes, rnRes] = await Promise.all([fetch(FS_URL), fetch(RN_URL)]);
-      if (!fsRes.ok) throw new Error('Fresh Sales: HTTP ' + fsRes.status);
-      if (!rnRes.ok) throw new Error('Renewals: HTTP ' + rnRes.status);
+      if (!fsRes.ok) throw new Error('Fresh Sales: HTTP '+fsRes.status);
+      if (!rnRes.ok) throw new Error('Renewals: HTTP '+rnRes.status);
       const [fsText, rnText] = await Promise.all([fsRes.text(), rnRes.text()]);
-
-      const fsAll = parseCSV(fsText);
-      fsRows = fsAll.slice(2).filter(r => r[COL.DATE] && r[COL.DATE].trim() !== '' && r[COL.DATE].toLowerCase() !== 'date');
-
-      const rnAll = parseCSV(rnText);
-      rnRows = rnAll.slice(2).filter(r => r[RCOL.DATE] && r[RCOL.DATE].trim() !== '' && r[RCOL.DATE].toLowerCase() !== 'date');
-
-      const now = new Date();
+      fsRows = parseCSV(fsText).slice(2).filter(r=>r[COL.DATE]&&r[COL.DATE].trim()!==''&&r[COL.DATE].toLowerCase()!=='date');
+      rnRows = parseCSV(rnText).slice(2).filter(r=>r[COL.DATE]&&r[COL.DATE].trim()!==''&&r[COL.DATE].toLowerCase()!=='date');
+      const now=new Date();
       document.getElementById('last-updated-text').textContent =
-        'Updated ' + now.toLocaleDateString('en-IN', {day:'numeric',month:'short',year:'numeric'})
-        + ' · ' + now.toLocaleTimeString('en-IN', {hour:'2-digit',minute:'2-digit'});
-      document.getElementById('status-dot').className = 'status-dot';
+        'Updated '+now.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})+' · '+now.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
+      document.getElementById('status-dot').className='status-dot';
       applyFilters();
     } catch(e) {
-      document.getElementById('last-updated-text').textContent = 'Error — ' + e.message;
-      document.getElementById('status-dot').className = 'status-dot error';
+      document.getElementById('last-updated-text').textContent='Error — '+e.message;
+      document.getElementById('status-dot').className='status-dot error';
     }
   }
 
+  /* ── Filter controls ── */
   function resetToCurrentMonth() {
-    ['f-year','f-month','f-course','f-level','f-age','f-gender','f-type','f-renewal','f-reason','f-teacher']
-      .forEach(id => { document.getElementById(id).value = ''; });
-    setDefaultDates();
-    applyFilters();
+    ['f-year','f-month','f-course','f-level','f-age','f-gender','f-type','f-renewal','f-reason','f-teacher'].forEach(id=>{document.getElementById(id).value='';});
+    setDefaultDates(); applyFilters();
   }
-
   function clearFilters() {
-    ['f-year','f-month','f-course','f-level','f-age','f-gender','f-type','f-renewal','f-reason','f-teacher']
-      .forEach(id => { document.getElementById(id).value = ''; });
-    document.getElementById('f-from').value = '';
-    document.getElementById('f-to').value   = '';
-    document.getElementById('from-hint').textContent = 'Showing all dates';
-    document.getElementById('to-hint').textContent   = 'Showing all dates';
+    ['f-year','f-month','f-course','f-level','f-age','f-gender','f-type','f-renewal','f-reason','f-teacher'].forEach(id=>{document.getElementById(id).value='';});
+    document.getElementById('f-from').value=''; document.getElementById('f-to').value='';
+    document.getElementById('from-hint').textContent='Showing all dates';
+    document.getElementById('to-hint').textContent='Showing all dates';
     applyFilters();
   }
 
-  const sectionState = { filters: true, scorecards: true };
+  /* ── Section collapse ── */
+  const sectionState={filters:true,scorecards:true};
   function toggleSection(id) {
-    sectionState[id] = !sectionState[id];
-    const open = sectionState[id];
-    document.getElementById(id+'-body').style.display = open ? '' : 'none';
-    document.getElementById(id+'-icon').classList.toggle('collapsed', !open);
-    document.getElementById(id+'-label').textContent = open ? 'Collapse' : 'Expand';
+    sectionState[id]=!sectionState[id]; const open=sectionState[id];
+    document.getElementById(id+'-body').style.display=open?'':'none';
+    document.getElementById(id+'-icon').classList.toggle('collapsed',!open);
+    document.getElementById(id+'-label').textContent=open?'Collapse':'Expand';
+  }
+
+  /* ── Breakdown collapse ── */
+  const bdState={fs:false,rn:false,tc:false};
+  function toggleBreakdown(prefix) {
+    bdState[prefix]=!bdState[prefix]; const open=bdState[prefix];
+    document.getElementById(prefix+'-bd-body').style.display=open?'block':'none';
+    document.getElementById(prefix+'-bd-icon').classList.toggle('open',open);
+    document.getElementById(prefix+'-bd-label').textContent=open?'Hide breakdown':'Show breakdown';
   }
 
   setDefaultDates();
