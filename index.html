@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alwarpet, Chennai — Dashboard</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f5f4f0;
+      color: #1a1a18;
+      min-height: 100vh;
+    }
+
+    /* ── Page layout ── */
+    .page { max-width: 1200px; margin: 0 auto; padding: 1.5rem; }
+
+    .page-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 0.5px solid #dddcd6;
+    }
+    .page-title { font-size: 22px; font-weight: 500; color: #1a1a18; }
+    .page-subtitle { font-size: 13px; color: #888780; margin-top: 3px; }
+
+    .last-updated { font-size: 12px; color: #888780; display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+    .status-dot { width: 7px; height: 7px; border-radius: 50%; background: #63c17a; flex-shrink: 0; }
+    .status-dot.loading { background: #f0c05a; }
+    .status-dot.error   { background: #e2534a; }
+
+    /* ── Section cards ── */
+    .section-card {
+      background: #ffffff;
+      border: 0.5px solid #dddcd6;
+      border-radius: 12px;
+      margin-bottom: 1.25rem;
+      overflow: hidden;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.85rem 1.25rem;
+      cursor: pointer;
+      user-select: none;
+    }
+    .section-header:hover { background: #fafaf8; }
+
+    .section-header-left { display: flex; align-items: center; gap: 8px; }
+    .section-title { font-size: 13px; font-weight: 500; color: #5f5e5a; }
+
+    .badge {
+      font-size: 11px;
+      background: #f5f4f0;
+      color: #888780;
+      padding: 2px 7px;
+      border-radius: 999px;
+      border: 0.5px solid #dddcd6;
+    }
+
+    .toggle-btn {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 12px; color: #888780;
+      border: none; background: none; cursor: pointer;
+      padding: 4px 8px; border-radius: 6px;
+    }
+    .toggle-btn:hover { background: #f0efeb; color: #5f5e5a; }
+
+    .toggle-icon { font-size: 15px; transition: transform 0.2s ease; }
+    .toggle-icon.collapsed { transform: rotate(-90deg); }
+
+    .section-body {
+      padding: 0 1.25rem 1rem 1.25rem;
+      border-top: 0.5px solid #dddcd6;
+    }
+
+    /* ── Filters ── */
+    .divider-label {
+      font-size: 11px; color: #888780;
+      text-transform: uppercase; letter-spacing: 0.05em;
+      margin: 0.85rem 0 8px;
+    }
+
+    .date-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 0.5rem;
+    }
+
+    .filter-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+    }
+
+    .filter-group { display: flex; flex-direction: column; gap: 5px; }
+
+    .filter-label { font-size: 12px; color: #888780; font-weight: 500; }
+    .date-hint { font-size: 11px; color: #378add; margin-top: 2px; min-height: 14px; }
+
+    select, input[type="date"] {
+      width: 100%; font-size: 13px;
+      padding: 6px 10px;
+      border: 0.5px solid #c4c3bc;
+      border-radius: 8px;
+      background: #ffffff; color: #1a1a18;
+      height: 34px;
+      appearance: auto;
+    }
+    select:focus, input[type="date"]:focus {
+      outline: none; border-color: #378add;
+    }
+
+    .filter-actions {
+      display: flex; align-items: center; gap: 8px;
+      justify-content: flex-end;
+      margin-top: 0.75rem; padding-top: 0.75rem;
+      border-top: 0.5px solid #dddcd6;
+    }
+
+    .btn {
+      font-size: 13px; padding: 6px 14px;
+      border-radius: 8px; cursor: pointer;
+      border: 0.5px solid #c4c3bc;
+      background: transparent; color: #1a1a18;
+      height: 34px; display: flex; align-items: center; gap: 6px;
+    }
+    .btn:hover { background: #f5f4f0; }
+
+    .btn-ghost {
+      font-size: 13px; padding: 6px 14px;
+      border-radius: 8px; cursor: pointer;
+      border: 0.5px solid #c4c3bc;
+      background: transparent; color: #888780;
+      height: 34px; display: flex; align-items: center; gap: 6px;
+    }
+    .btn-ghost:hover { background: #f5f4f0; color: #1a1a18; }
+
+    /* ── Scorecards ── */
+    .scorecards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      padding: 1rem 0 0.25rem;
+    }
+
+    .scorecard {
+      background: #f5f4f0;
+      border-radius: 8px;
+      padding: 1rem;
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .scorecard-label { font-size: 12px; color: #888780; font-weight: 500; }
+    .scorecard-value { font-size: 24px; font-weight: 500; color: #1a1a18; }
+    .scorecard-sub   { font-size: 12px; color: #888780; }
+    .scorecard.loading .scorecard-value { color: #c4c3bc; }
+
+    /* ── Responsive ── */
+    @media (max-width: 700px) {
+      .date-row { grid-template-columns: 1fr 1fr; }
+      .page-header { flex-direction: column; gap: 8px; }
+    }
+    @media (max-width: 480px) {
+      .date-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div>
+      <div class="page-title">Alwarpet, Chennai</div>
+      <div class="page-subtitle">Centre performance dashboard</div>
+    </div>
+    <div class="last-updated">
+      <span class="status-dot loading" id="status-dot"></span>
+      <span id="last-updated-text">Loading data…</span>
+    </div>
+  </div>
+
+  <!-- ── FILTERS SECTION ── -->
+  <div class="section-card">
+    <div class="section-header" onclick="toggleSection('filters')">
+      <div class="section-header-left">
+        <i class="ti ti-filter" style="font-size:15px;color:#5f5e5a;" aria-hidden="true"></i>
+        <span class="section-title">Filters</span>
+        <span class="badge">All optional</span>
+      </div>
+      <button class="toggle-btn" aria-label="Toggle filters section">
+        <span style="font-size:12px;" id="filters-label">Collapse</span>
+        <i class="ti ti-chevron-down toggle-icon" id="filters-icon" aria-hidden="true"></i>
+      </button>
+    </div>
+
+    <div id="filters-body" class="section-body">
+      <div class="divider-label">Date filters</div>
+      <div class="date-row">
+        <div class="filter-group">
+          <label class="filter-label" for="f-year">Year</label>
+          <select id="f-year" onchange="onYearMonthChange()">
+            <option value="">All years</option>
+            <option>2023</option><option>2024</option><option>2025</option><option>2026</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label class="filter-label" for="f-month">Month</label>
+          <select id="f-month" onchange="onYearMonthChange()">
+            <option value="">All months</option>
+            <option value="1">January</option><option value="2">February</option>
+            <option value="3">March</option><option value="4">April</option>
+            <option value="5">May</option><option value="6">June</option>
+            <option value="7">July</option><option value="8">August</option>
+            <option value="9">September</option><option value="10">October</option>
+            <option value="11">November</option><option value="12">December</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label class="filter-label" for="f-from">From date</label>
+          <input type="date" id="f-from" onchange="applyFilters()" />
+          <span class="date-hint" id="from-hint"></span>
+        </div>
+        <div class="filter-group">
+          <label class="filter-label" for="f-to">To date</label>
+          <input type="date" id="f-to" onchange="applyFilters()" />
+          <span class="date-hint" id="to-hint"></span>
+        </div>
+      </div>
+
+      <div class="divider-label">Other filters</div>
+      <div class="filter-grid">
+        <div class="filter-group">
+          <label class="filter-label" for="f-course">Course name</label>
+          <select id="f-course" onchange="applyFilters()">
+            <option value="">All courses</option>
+            <option>PFM - Tamil</option><option>Carnatic Classical</option>
+            <option>Karaoke</option><option>Western Vocals</option>
+            <option>Guitar</option><option>Keyboard</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label class="filter-label" for="f-level">Course level</label>
+          <select id="f-level" onchange="applyFilters()">
+            <option value="">All levels</option>
+            <option>Preparatory</option><option>Intermediate</option>
+            <option>Proficient</option><option>Advanced</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label class="filter-label" for="f-age">Age group</label>
+          <select id="f-age" onchange="applyFilters()">
+            <option value="">All ages</option>
+            <option>0 to 5</option><option>6 to 12</option><option>13 to 21</option>
+            <option>22 to 30</option><option>31 to 40</option><option>40+</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label class="filter-label" for="f-gender">Gender</label>
+          <select id="f-gender" onchange="applyFilters()">
+            <option value="">All</option><option>M</option><option>F</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label class="filter-label" for="f-type">Type of sale</label>
+          <select id="f-type" onchange="applyFilters()">
+            <option value="">All types</option>
+            <option>Regular</option><option>Cross-Sale</option><option>Summer Camp</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label class="filter-label" for="f-renewal">Renewal status</label>
+          <select id="f-renewal" onchange="applyFilters()">
+            <option value="">All statuses</option>
+            <option>Renewed</option><option>Will Not Renew</option><option>Paused</option>
+            <option>Extended</option><option>Due</option><option>Not Yet Due</option>
+            <option>Transfer to Other centre</option><option>EFAC</option>
+            <option>Course Completed</option><option>Transfer to Online</option>
+            <option>To be checked</option><option>Course Change</option><option>Refund</option>
+            <option>Will Join at Another Centre</option><option>Revival</option>
+            <option>Inactive</option><option>Dormant</option><option>May Resume Later</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label class="filter-label" for="f-reason">Reason for not renewing</label>
+          <select id="f-reason" onchange="applyFilters()">
+            <option value="">All reasons</option>
+            <option>NA</option><option>Personal Reasons</option><option>No Visible Progress</option>
+            <option>Unhappy with Curriculum</option><option>Unhappy with Teacher</option>
+            <option>Unhappy with Staff</option><option>Scheduling Mismatch</option>
+            <option>Relocated</option><option>Affordability Issues</option><option>Lost Interest</option>
+            <option>Long Distance</option><option>Prioritising Other Commitments</option>
+            <option>Did Not Start</option><option>Ghosting</option>
+            <option>Admission Restricted</option><option>Transferred to Online</option>
+            <option>Too early to start learning</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label class="filter-label" for="f-teacher">Teacher name</label>
+          <select id="f-teacher" onchange="applyFilters()">
+            <option value="">All teachers</option>
+            <option>Rajashree</option><option>Pooja Jagan</option><option>Anila</option>
+            <option>Vishnu Prakash</option><option>Boja Rajan</option><option>Suriya Prakash</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="filter-actions">
+        <button class="btn-ghost" onclick="resetToCurrentMonth()">
+          <i class="ti ti-calendar" style="font-size:13px;" aria-hidden="true"></i>
+          Reset to this month
+        </button>
+        <button class="btn" onclick="clearFilters()">
+          <i class="ti ti-x" style="font-size:13px;" aria-hidden="true"></i>
+          Clear all
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SCORECARDS SECTION ── -->
+  <div class="section-card">
+    <div class="section-header" onclick="toggleSection('scorecards')">
+      <div class="section-header-left">
+        <i class="ti ti-layout-dashboard" style="font-size:15px;color:#5f5e5a;" aria-hidden="true"></i>
+        <span class="section-title">Scorecards</span>
+        <span class="badge" id="scorecards-badge">—</span>
+      </div>
+      <button class="toggle-btn" aria-label="Toggle scorecards section">
+        <span style="font-size:12px;" id="scorecards-label">Collapse</span>
+        <i class="ti ti-chevron-down toggle-icon" id="scorecards-icon" aria-hidden="true"></i>
+      </button>
+    </div>
+
+    <div id="scorecards-body" class="section-body">
+      <div class="scorecards-grid">
+        <div class="scorecard loading" id="sc-course-fees">
+          <div class="scorecard-label">Course fees</div>
+          <div class="scorecard-value" id="sc-course-fees-val">—</div>
+          <div class="scorecard-sub" id="sc-course-fees-sub">Gross coaching fees</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /page -->
+
+<script>
+  /* ─────────────────────────────────────────
+     DATA SOURCE
+     Replace the URL below if the sheet URL
+     ever changes.
+  ───────────────────────────────────────── */
+  const FRESH_SALES_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRAVysitQgRpFNf94-ZH-I6KzBP4Zovlxj0NjgREoPLW1CY8lXNWAC-uXZs5P-o68hMqxwnzhXKljGr/pub?gid=184947403&single=true&output=csv';
+
+  /* Column indices (0-based) for Fresh Sales sheet */
+  const COL = {
+    DATE:           0,   // A  - Date
+    MONTH:          1,   // B  - Month
+    ACADEMY:        2,   // C  - Academy
+    LEARNER_ID:     3,   // D  - Learner ID
+    NAME:           4,   // E  - Learner's Name
+    GENDER:         5,   // F  - Gender
+    AGE:            6,   // G  - Age-Group
+    MOBILE:         7,   // H  - Mobile Number
+    COURSE:         8,   // I  - Course
+    LEVEL:          9,   // J  - Course Level
+    TYPE:           10,  // K  - Type of Sale
+    REG_FEES:       11,  // L  - Registration Fees
+    MONTHS:         12,  // M  - No. of Months
+    GROSS:          13,  // N  - Gross Coaching Fees
+    DISC_PCT:       14,  // O  - % Discount
+    DISCOUNT:       15,  // P  - Discount
+    NET:            16,  // Q  - Net Coaching Fees
+    TOTAL:          17,  // R  - Total Receipts
+    PAYMENT:        18,  // S  - Payment Mode
+    AREA:           19,  // T  - Area / Locality
+    COMMUTE:        20,  // U  - Mode of Commute
+    DISCOVERY:      21,  // V  - Discovery Source
+    FIRST_CLASS:    22,  // W  - Date of First Class
+    END_DATE:       23,  // X  - Membership End-Date
+    RENEWAL_MONTH:  24,  // Y  - Renewal Month
+    RENEWAL_STATUS: 25,  // Z  - Renewal Status
+    RENEWAL_DATE:   26,  // AA - Renewal Date
+    TAT:            27,  // AB - TAT
+    REASON:         28,  // AC - Reason for Discontinuing
+    TEACHER:        29,  // AD - Teacher Name
+    COMPS:          30   // AE - No. of Compensations Due
+  };
+
+  let allRows = [];
+
+  /* ─── Utilities ─── */
+  function toISO(d) {
+    return d.getFullYear() + '-'
+      + String(d.getMonth() + 1).padStart(2, '0') + '-'
+      + String(d.getDate()).padStart(2, '0');
+  }
+
+  function parseDate(str) {
+    if (!str) return null;
+    const s = str.trim();
+    // DD-Mon-YY or DD-Mon-YYYY  e.g. 05-Jan-25
+    const dmy = s.match(/^(\d{1,2})-([A-Za-z]+)-(\d{2,4})$/);
+    if (dmy) {
+      const months = {jan:0,feb:1,mar:2,apr:3,may:4,jun:5,jul:6,aug:7,sep:8,oct:9,nov:10,dec:11};
+      const m = months[dmy[2].toLowerCase().slice(0, 3)];
+      const y = dmy[3].length === 2 ? 2000 + parseInt(dmy[3]) : parseInt(dmy[3]);
+      if (m !== undefined) return new Date(y, m, parseInt(dmy[1]));
+    }
+    // DD/MM/YYYY or DD-MM-YYYY
+    const dmy2 = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})$/);
+    if (dmy2) {
+      const y = dmy2[3].length === 2 ? 2000 + parseInt(dmy2[3]) : parseInt(dmy2[3]);
+      return new Date(y, parseInt(dmy2[2]) - 1, parseInt(dmy2[1]));
+    }
+    const d = new Date(s);
+    return isNaN(d) ? null : d;
+  }
+
+  function parseNum(str) {
+    if (!str) return 0;
+    return parseFloat(str.toString().replace(/,/g, '')) || 0;
+  }
+
+  function formatINR(val) {
+    return '₹' + Math.round(val).toLocaleString('en-IN');
+  }
+
+  function parseCSV(text) {
+    const rows = [];
+    const lines = text.split('\n');
+    for (const line of lines) {
+      if (!line.trim()) continue;
+      const cols = [];
+      let cur = '', inQ = false;
+      for (const ch of line) {
+        if (ch === '"') { inQ = !inQ; }
+        else if (ch === ',' && !inQ) { cols.push(cur.trim()); cur = ''; }
+        else { cur += ch; }
+      }
+      cols.push(cur.trim());
+      rows.push(cols);
+    }
+    return rows;
+  }
+
+  /* ─── Default dates: 1st of current month → today ─── */
+  function setDefaultDates() {
+    const today = new Date();
+    const first = new Date(today.getFullYear(), today.getMonth(), 1);
+    document.getElementById('f-from').value = toISO(first);
+    document.getElementById('f-to').value   = toISO(today);
+    document.getElementById('from-hint').textContent = '1st of this month';
+    document.getElementById('to-hint').textContent   = 'Today';
+  }
+
+  /* ─── Year / Month selectors auto-fill date range ─── */
+  function onYearMonthChange() {
+    const year  = document.getElementById('f-year').value;
+    const month = document.getElementById('f-month').value;
+    if (year && month) {
+      const first = new Date(+year, +month - 1, 1);
+      const last  = new Date(+year, +month, 0);
+      document.getElementById('f-from').value = toISO(first);
+      document.getElementById('f-to').value   = toISO(last);
+      document.getElementById('from-hint').textContent = 'Auto-set';
+      document.getElementById('to-hint').textContent   = 'Auto-set';
+    } else if (year) {
+      document.getElementById('f-from').value = toISO(new Date(+year, 0, 1));
+      document.getElementById('f-to').value   = toISO(new Date(+year, 11, 31));
+      document.getElementById('from-hint').textContent = 'Auto-set';
+      document.getElementById('to-hint').textContent   = 'Auto-set';
+    }
+    applyFilters();
+  }
+
+  /* ─── Load CSV from Google Sheets ─── */
+  async function loadData() {
+    try {
+      const res = await fetch(FRESH_SALES_URL);
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const text = await res.text();
+      const rows = parseCSV(text);
+      // Row 0 = headers, Row 1 = sub-headers, data starts row 2
+      allRows = rows.slice(2).filter(r =>
+        r[COL.DATE] && r[COL.DATE].trim() !== '' && r[COL.DATE].toLowerCase() !== 'date'
+      );
+      const now = new Date();
+      document.getElementById('last-updated-text').textContent =
+        'Updated ' + now.toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' })
+        + ' · ' + now.toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit' });
+      document.getElementById('status-dot').className = 'status-dot';
+      applyFilters();
+    } catch (e) {
+      document.getElementById('last-updated-text').textContent = 'Error loading data — ' + e.message;
+      document.getElementById('status-dot').className = 'status-dot error';
+      document.getElementById('sc-course-fees-val').textContent = '—';
+      document.getElementById('sc-course-fees-sub').textContent = 'Could not fetch sheet';
+      document.getElementById('sc-course-fees').classList.remove('loading');
+    }
+  }
+
+  /* ─── Apply all filters and update scorecards ─── */
+  function applyFilters() {
+    const year    = document.getElementById('f-year').value;
+    const month   = document.getElementById('f-month').value;
+    const fromVal = document.getElementById('f-from').value;
+    const toVal   = document.getElementById('f-to').value;
+    const course  = document.getElementById('f-course').value;
+    const level   = document.getElementById('f-level').value;
+    const age     = document.getElementById('f-age').value;
+    const gender  = document.getElementById('f-gender').value;
+    const type    = document.getElementById('f-type').value;
+    const renewal = document.getElementById('f-renewal').value;
+    const reason  = document.getElementById('f-reason').value;
+    const teacher = document.getElementById('f-teacher').value;
+
+    const fromDate = fromVal ? new Date(fromVal) : null;
+    const toDate   = toVal   ? new Date(toVal + 'T23:59:59') : null;
+
+    const filtered = allRows.filter(r => {
+      const d = parseDate(r[COL.DATE]);
+      if (!d) return false;
+      if (fromDate && d < fromDate) return false;
+      if (toDate   && d > toDate)   return false;
+      if (year   && d.getFullYear().toString() !== year)       return false;
+      if (month  && (d.getMonth() + 1).toString() !== month)  return false;
+      if (course  && r[COL.COURSE]         !== course)  return false;
+      if (level   && r[COL.LEVEL]          !== level)   return false;
+      if (age     && r[COL.AGE]            !== age)     return false;
+      if (gender  && r[COL.GENDER]         !== gender)  return false;
+      if (type    && r[COL.TYPE]           !== type)    return false;
+      if (renewal && r[COL.RENEWAL_STATUS] !== renewal) return false;
+      if (reason  && r[COL.REASON]         !== reason)  return false;
+      if (teacher && r[COL.TEACHER]        !== teacher) return false;
+      return true;
+    });
+
+    updateScorecards(filtered);
+  }
+
+  function updateScorecards(filtered) {
+    /* Course Fees */
+    const totalGross = filtered.reduce((s, r) => s + parseNum(r[COL.GROSS]), 0);
+    document.getElementById('sc-course-fees-val').textContent = formatINR(totalGross);
+    document.getElementById('sc-course-fees-sub').textContent = filtered.length + ' records';
+    document.getElementById('sc-course-fees').classList.remove('loading');
+
+    /* Badge on section header */
+    document.getElementById('scorecards-badge').textContent = filtered.length + ' records';
+  }
+
+  /* ─── Filter controls ─── */
+  function resetToCurrentMonth() {
+    ['f-year','f-month','f-course','f-level','f-age','f-gender','f-type','f-renewal','f-reason','f-teacher']
+      .forEach(id => { document.getElementById(id).value = ''; });
+    setDefaultDates();
+    applyFilters();
+  }
+
+  function clearFilters() {
+    ['f-year','f-month','f-course','f-level','f-age','f-gender','f-type','f-renewal','f-reason','f-teacher']
+      .forEach(id => { document.getElementById(id).value = ''; });
+    document.getElementById('f-from').value = '';
+    document.getElementById('f-to').value   = '';
+    document.getElementById('from-hint').textContent = 'Showing all dates';
+    document.getElementById('to-hint').textContent   = 'Showing all dates';
+    applyFilters();
+  }
+
+  /* ─── Collapse / expand sections ─── */
+  const sectionState = { filters: true, scorecards: true };
+
+  function toggleSection(id) {
+    sectionState[id] = !sectionState[id];
+    const open = sectionState[id];
+    document.getElementById(id + '-body').style.display = open ? '' : 'none';
+    document.getElementById(id + '-icon').classList.toggle('collapsed', !open);
+    document.getElementById(id + '-label').textContent = open ? 'Collapse' : 'Expand';
+  }
+
+  /* ─── Init ─── */
+  setDefaultDates();
+  loadData();
+</script>
+</body>
+</html>
