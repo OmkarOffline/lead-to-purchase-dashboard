@@ -7,160 +7,64 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #f5f4f0;
-      color: #1a1a18;
-      min-height: 100vh;
-    }
-
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f4f0; color: #1a1a18; min-height: 100vh; }
     .page { max-width: 1200px; margin: 0 auto; padding: 1.5rem; }
-
-    .page-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      margin-bottom: 1.5rem;
-      padding-bottom: 1rem;
-      border-bottom: 0.5px solid #dddcd6;
-    }
+    .page-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 0.5px solid #dddcd6; }
     .page-title { font-size: 22px; font-weight: 500; color: #1a1a18; }
     .page-subtitle { font-size: 13px; color: #888780; margin-top: 3px; }
-
     .last-updated { font-size: 12px; color: #888780; display: flex; align-items: center; gap: 6px; white-space: nowrap; }
     .status-dot { width: 7px; height: 7px; border-radius: 50%; background: #63c17a; flex-shrink: 0; }
     .status-dot.loading { background: #f0c05a; }
-    .status-dot.error   { background: #e2534a; }
+    .status-dot.error { background: #e2534a; }
 
-    .section-card {
-      background: #ffffff;
-      border: 0.5px solid #dddcd6;
-      border-radius: 12px;
-      margin-bottom: 1.25rem;
-      overflow: hidden;
-    }
-
-    .section-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.85rem 1.25rem;
-      cursor: pointer;
-      user-select: none;
-    }
+    .section-card { background: #ffffff; border: 0.5px solid #dddcd6; border-radius: 12px; margin-bottom: 1.25rem; overflow: hidden; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; padding: 0.85rem 1.25rem; cursor: pointer; user-select: none; }
     .section-header:hover { background: #fafaf8; }
     .section-header-left { display: flex; align-items: center; gap: 8px; }
     .section-title { font-size: 13px; font-weight: 500; color: #5f5e5a; }
-
-    .badge {
-      font-size: 11px;
-      background: #f5f4f0;
-      color: #888780;
-      padding: 2px 7px;
-      border-radius: 999px;
-      border: 0.5px solid #dddcd6;
-    }
-
-    .toggle-btn {
-      display: flex; align-items: center; gap: 5px;
-      font-size: 12px; color: #888780;
-      border: none; background: none; cursor: pointer;
-      padding: 4px 8px; border-radius: 6px;
-    }
+    .badge { font-size: 11px; background: #f5f4f0; color: #888780; padding: 2px 7px; border-radius: 999px; border: 0.5px solid #dddcd6; }
+    .toggle-btn { display: flex; align-items: center; gap: 5px; font-size: 12px; color: #888780; border: none; background: none; cursor: pointer; padding: 4px 8px; border-radius: 6px; }
     .toggle-btn:hover { background: #f0efeb; color: #5f5e5a; }
     .toggle-icon { font-size: 15px; transition: transform 0.2s ease; }
     .toggle-icon.collapsed { transform: rotate(-90deg); }
+    .section-body { padding: 0 1.25rem 1rem 1.25rem; border-top: 0.5px solid #dddcd6; }
 
-    .section-body {
-      padding: 0 1.25rem 1rem 1.25rem;
-      border-top: 0.5px solid #dddcd6;
-    }
-
-    .divider-label {
-      font-size: 11px; color: #888780;
-      text-transform: uppercase; letter-spacing: 0.05em;
-      margin: 0.85rem 0 8px;
-    }
-
-    .date-row {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-      margin-bottom: 0.5rem;
-    }
-
-    .filter-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 12px;
-    }
-
+    .divider-label { font-size: 11px; color: #888780; text-transform: uppercase; letter-spacing: 0.05em; margin: 0.85rem 0 8px; }
+    .date-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 0.5rem; }
+    .filter-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
     .filter-group { display: flex; flex-direction: column; gap: 5px; }
     .filter-label { font-size: 12px; color: #888780; font-weight: 500; }
     .date-hint { font-size: 11px; color: #378add; margin-top: 2px; min-height: 14px; }
-
-    select, input[type="date"] {
-      width: 100%; font-size: 13px;
-      padding: 6px 10px;
-      border: 0.5px solid #c4c3bc;
-      border-radius: 8px;
-      background: #ffffff; color: #1a1a18;
-      height: 34px;
-      appearance: auto;
-    }
+    select, input[type="date"] { width: 100%; font-size: 13px; padding: 6px 10px; border: 0.5px solid #c4c3bc; border-radius: 8px; background: #ffffff; color: #1a1a18; height: 34px; appearance: auto; }
     select:focus, input[type="date"]:focus { outline: none; border-color: #378add; }
-
-    .filter-actions {
-      display: flex; align-items: center; gap: 8px;
-      justify-content: flex-end;
-      margin-top: 0.75rem; padding-top: 0.75rem;
-      border-top: 0.5px solid #dddcd6;
-    }
-
-    .btn {
-      font-size: 13px; padding: 6px 14px;
-      border-radius: 8px; cursor: pointer;
-      border: 0.5px solid #c4c3bc;
-      background: transparent; color: #1a1a18;
-      height: 34px; display: flex; align-items: center; gap: 6px;
-    }
+    .filter-actions { display: flex; align-items: center; gap: 8px; justify-content: flex-end; margin-top: 0.75rem; padding-top: 0.75rem; border-top: 0.5px solid #dddcd6; }
+    .btn { font-size: 13px; padding: 6px 14px; border-radius: 8px; cursor: pointer; border: 0.5px solid #c4c3bc; background: transparent; color: #1a1a18; height: 34px; display: flex; align-items: center; gap: 6px; }
     .btn:hover { background: #f5f4f0; }
-
-    .btn-ghost {
-      font-size: 13px; padding: 6px 14px;
-      border-radius: 8px; cursor: pointer;
-      border: 0.5px solid #c4c3bc;
-      background: transparent; color: #888780;
-      height: 34px; display: flex; align-items: center; gap: 6px;
-    }
+    .btn-ghost { font-size: 13px; padding: 6px 14px; border-radius: 8px; cursor: pointer; border: 0.5px solid #c4c3bc; background: transparent; color: #888780; height: 34px; display: flex; align-items: center; gap: 6px; }
     .btn-ghost:hover { background: #f5f4f0; color: #1a1a18; }
 
-    .scorecards-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 12px;
-      padding: 1rem 0 0.25rem;
-    }
+    /* Sub-section */
+    .subsection { margin-top: 1rem; }
+    .subsection-header { display: flex; align-items: center; gap: 8px; margin-bottom: 0.75rem; }
+    .subsection-pill { font-size: 12px; font-weight: 500; color: #5f5e5a; background: #f0efeb; border: 0.5px solid #dddcd6; border-radius: 999px; padding: 3px 12px; }
+    .subsection-divider { flex: 1; height: 0.5px; background: #dddcd6; }
+    .subsection + .subsection { margin-top: 1.5rem; padding-top: 0.25rem; }
 
-    .scorecard {
-      background: #f5f4f0;
-      border-radius: 8px;
-      padding: 1rem;
-      display: flex; flex-direction: column; gap: 6px;
-    }
+    /* Scorecards */
+    .scorecards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+    .scorecard { background: #f5f4f0; border-radius: 8px; padding: 1rem; display: flex; flex-direction: column; gap: 6px; }
     .scorecard-label { font-size: 12px; color: #888780; font-weight: 500; }
-    .scorecard-value { font-size: 24px; font-weight: 500; color: #1a1a18; }
-    .scorecard-sub   { font-size: 12px; color: #888780; }
+    .scorecard-value { font-size: 22px; font-weight: 500; color: #1a1a18; }
+    .scorecard-sub { font-size: 12px; color: #888780; }
     .scorecard.loading .scorecard-value { color: #c4c3bc; }
+    .scorecard.na .scorecard-value { font-size: 16px; color: #c4c3bc; }
 
-    @media (max-width: 700px) {
-      .date-row { grid-template-columns: 1fr 1fr; }
-      .page-header { flex-direction: column; gap: 8px; }
-    }
-    @media (max-width: 480px) {
-      .date-row { grid-template-columns: 1fr; }
-    }
+    /* Total Collections highlight */
+    .scorecard.total { background: #eef5fb; }
+    .scorecard.total .scorecard-value { color: #185fa5; }
+
+    @media (max-width: 700px) { .date-row { grid-template-columns: 1fr 1fr; } .page-header { flex-direction: column; gap: 8px; } }
+    @media (max-width: 480px) { .date-row { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -326,71 +230,169 @@
       </button>
     </div>
     <div id="scorecards-body" class="section-body">
-      <div class="scorecards-grid">
 
-        <!-- SC1: Gross Course Fees -->
-        <div class="scorecard loading" id="sc-1">
-          <div class="scorecard-label">Gross course fees</div>
-          <div class="scorecard-value" id="sc-1-val">—</div>
-          <div class="scorecard-sub">Sum of gross coaching fees</div>
+      <!-- FRESH SALES sub-section -->
+      <div class="subsection">
+        <div class="subsection-header">
+          <span class="subsection-pill">Fresh sales</span>
+          <div class="subsection-divider"></div>
         </div>
-
-        <!-- SC2: Discount -->
-        <div class="scorecard loading" id="sc-2">
-          <div class="scorecard-label">Discount</div>
-          <div class="scorecard-value" id="sc-2-val">—</div>
-          <div class="scorecard-sub">Total discount allowed</div>
+        <div class="scorecards-grid">
+          <div class="scorecard loading" id="fs-1">
+            <div class="scorecard-label">No. of admissions</div>
+            <div class="scorecard-value" id="fs-1-val">—</div>
+            <div class="scorecard-sub">Non-empty learner records</div>
+          </div>
+          <div class="scorecard loading" id="fs-2">
+            <div class="scorecard-label">Gross course fees</div>
+            <div class="scorecard-value" id="fs-2-val">—</div>
+            <div class="scorecard-sub">Sum of gross coaching fees</div>
+          </div>
+          <div class="scorecard loading" id="fs-3">
+            <div class="scorecard-label">Discount</div>
+            <div class="scorecard-value" id="fs-3-val">—</div>
+            <div class="scorecard-sub">Total discount allowed</div>
+          </div>
+          <div class="scorecard loading" id="fs-4">
+            <div class="scorecard-label">Net course fees</div>
+            <div class="scorecard-value" id="fs-4-val">—</div>
+            <div class="scorecard-sub">After discount</div>
+          </div>
+          <div class="scorecard loading" id="fs-5">
+            <div class="scorecard-label">Enrolment fees</div>
+            <div class="scorecard-value" id="fs-5-val">—</div>
+            <div class="scorecard-sub">Registration fees collected</div>
+          </div>
+          <div class="scorecard loading" id="fs-6">
+            <div class="scorecard-label">Total receipts</div>
+            <div class="scorecard-value" id="fs-6-val">—</div>
+            <div class="scorecard-sub">Net course fees + enrolment fees</div>
+          </div>
+          <div class="scorecard loading" id="fs-7">
+            <div class="scorecard-label">% Discount</div>
+            <div class="scorecard-value" id="fs-7-val">—</div>
+            <div class="scorecard-sub">Discount / gross course fees</div>
+          </div>
         </div>
-
-        <!-- SC3: Net Course Fees -->
-        <div class="scorecard loading" id="sc-3">
-          <div class="scorecard-label">Net course fees</div>
-          <div class="scorecard-value" id="sc-3-val">—</div>
-          <div class="scorecard-sub">After discount</div>
-        </div>
-
-        <!-- SC4: Enrolment Fees -->
-        <div class="scorecard loading" id="sc-4">
-          <div class="scorecard-label">Enrolment fees</div>
-          <div class="scorecard-value" id="sc-4-val">—</div>
-          <div class="scorecard-sub">Registration fees collected</div>
-        </div>
-
-        <!-- SC5: Total Receipts -->
-        <div class="scorecard loading" id="sc-5">
-          <div class="scorecard-label">Total receipts</div>
-          <div class="scorecard-value" id="sc-5-val">—</div>
-          <div class="scorecard-sub">Net course fees + enrolment fees</div>
-        </div>
-
-        <!-- SC6: % Discount -->
-        <div class="scorecard loading" id="sc-6">
-          <div class="scorecard-label">% Discount</div>
-          <div class="scorecard-value" id="sc-6-val">—</div>
-          <div class="scorecard-sub">Discount / gross course fees</div>
-        </div>
-
       </div>
+
+      <!-- RENEWALS sub-section -->
+      <div class="subsection">
+        <div class="subsection-header">
+          <span class="subsection-pill">Renewals</span>
+          <div class="subsection-divider"></div>
+        </div>
+        <div class="scorecards-grid">
+          <div class="scorecard loading" id="rn-1">
+            <div class="scorecard-label">No. of renewals</div>
+            <div class="scorecard-value" id="rn-1-val">—</div>
+            <div class="scorecard-sub">Non-empty learner records</div>
+          </div>
+          <div class="scorecard loading" id="rn-2">
+            <div class="scorecard-label">Gross course fees</div>
+            <div class="scorecard-value" id="rn-2-val">—</div>
+            <div class="scorecard-sub">Sum of gross coaching fees</div>
+          </div>
+          <div class="scorecard loading" id="rn-3">
+            <div class="scorecard-label">Discount</div>
+            <div class="scorecard-value" id="rn-3-val">—</div>
+            <div class="scorecard-sub">Total discount allowed</div>
+          </div>
+          <div class="scorecard loading" id="rn-4">
+            <div class="scorecard-label">Net course fees</div>
+            <div class="scorecard-value" id="rn-4-val">—</div>
+            <div class="scorecard-sub">After discount</div>
+          </div>
+          <div class="scorecard na" id="rn-5">
+            <div class="scorecard-label">Enrolment fees</div>
+            <div class="scorecard-value">NA</div>
+            <div class="scorecard-sub">Not applicable for renewals</div>
+          </div>
+          <div class="scorecard loading" id="rn-6">
+            <div class="scorecard-label">Total receipts</div>
+            <div class="scorecard-value" id="rn-6-val">—</div>
+            <div class="scorecard-sub">Same as net course fees</div>
+          </div>
+          <div class="scorecard loading" id="rn-7">
+            <div class="scorecard-label">% Discount</div>
+            <div class="scorecard-value" id="rn-7-val">—</div>
+            <div class="scorecard-sub">Discount / gross course fees</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOTAL COLLECTIONS sub-section -->
+      <div class="subsection">
+        <div class="subsection-header">
+          <span class="subsection-pill">Total collections — course fees</span>
+          <div class="subsection-divider"></div>
+        </div>
+        <div class="scorecards-grid">
+          <div class="scorecard total loading" id="tc-1">
+            <div class="scorecard-label">No. of transactions</div>
+            <div class="scorecard-value" id="tc-1-val">—</div>
+            <div class="scorecard-sub">Admissions + renewals</div>
+          </div>
+          <div class="scorecard total loading" id="tc-2">
+            <div class="scorecard-label">Gross course fees</div>
+            <div class="scorecard-value" id="tc-2-val">—</div>
+            <div class="scorecard-sub">Fresh sales + renewals</div>
+          </div>
+          <div class="scorecard total loading" id="tc-3">
+            <div class="scorecard-label">Discount</div>
+            <div class="scorecard-value" id="tc-3-val">—</div>
+            <div class="scorecard-sub">Fresh sales + renewals</div>
+          </div>
+          <div class="scorecard total loading" id="tc-4">
+            <div class="scorecard-label">Net course fees</div>
+            <div class="scorecard-value" id="tc-4-val">—</div>
+            <div class="scorecard-sub">Fresh sales + renewals</div>
+          </div>
+          <div class="scorecard total loading" id="tc-5">
+            <div class="scorecard-label">Enrolment fees</div>
+            <div class="scorecard-value" id="tc-5-val">—</div>
+            <div class="scorecard-sub">Fresh sales only</div>
+          </div>
+          <div class="scorecard total loading" id="tc-6">
+            <div class="scorecard-label">Total receipts</div>
+            <div class="scorecard-value" id="tc-6-val">—</div>
+            <div class="scorecard-sub">Fresh sales + renewals</div>
+          </div>
+          <div class="scorecard total loading" id="tc-7">
+            <div class="scorecard-label">% Discount</div>
+            <div class="scorecard-value" id="tc-7-val">—</div>
+            <div class="scorecard-sub">Combined discount / combined gross</div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
 </div>
 
 <script>
-  const FRESH_SALES_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRAVysitQgRpFNf94-ZH-I6KzBP4Zovlxj0NjgREoPLW1CY8lXNWAC-uXZs5P-o68hMqxwnzhXKljGr/pub?gid=184947403&single=true&output=csv';
+  const FS_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRAVysitQgRpFNf94-ZH-I6KzBP4Zovlxj0NjgREoPLW1CY8lXNWAC-uXZs5P-o68hMqxwnzhXKljGr/pub?gid=184947403&single=true&output=csv';
+  const RN_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRAVysitQgRpFNf94-ZH-I6KzBP4Zovlxj0NjgREoPLW1CY8lXNWAC-uXZs5P-o68hMqxwnzhXKljGr/pub?gid=1190272933&single=true&output=csv';
 
   const COL = {
     DATE: 0, GENDER: 5, AGE: 6, COURSE: 8, LEVEL: 9, TYPE: 10,
     REG_FEES: 11, GROSS: 13, DISCOUNT: 15, NET: 16,
-    RENEWAL_STATUS: 25, REASON: 28, TEACHER: 29
+    NAME: 4, RENEWAL_STATUS: 25, REASON: 28, TEACHER: 29
   };
 
-  let allRows = [];
+  // Renewals sheet has same column structure for the relevant fields
+  const RCOL = {
+    DATE: 0, GENDER: 5, AGE: 6, COURSE: 8, LEVEL: 9, TYPE: 10,
+    GROSS: 13, DISCOUNT: 15, NET: 16,
+    NAME: 4, RENEWAL_STATUS: 25, REASON: 28, TEACHER: 29
+  };
+
+  let fsRows = [];
+  let rnRows = [];
 
   function toISO(d) {
-    return d.getFullYear() + '-'
-      + String(d.getMonth() + 1).padStart(2, '0') + '-'
-      + String(d.getDate()).padStart(2, '0');
+    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
   }
 
   function parseDate(str) {
@@ -399,14 +401,14 @@
     const dmy = s.match(/^(\d{1,2})-([A-Za-z]+)-(\d{2,4})$/);
     if (dmy) {
       const months = {jan:0,feb:1,mar:2,apr:3,may:4,jun:5,jul:6,aug:7,sep:8,oct:9,nov:10,dec:11};
-      const m = months[dmy[2].toLowerCase().slice(0, 3)];
-      const y = dmy[3].length === 2 ? 2000 + parseInt(dmy[3]) : parseInt(dmy[3]);
+      const m = months[dmy[2].toLowerCase().slice(0,3)];
+      const y = dmy[3].length === 2 ? 2000+parseInt(dmy[3]) : parseInt(dmy[3]);
       if (m !== undefined) return new Date(y, m, parseInt(dmy[1]));
     }
     const dmy2 = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})$/);
     if (dmy2) {
-      const y = dmy2[3].length === 2 ? 2000 + parseInt(dmy2[3]) : parseInt(dmy2[3]);
-      return new Date(y, parseInt(dmy2[2]) - 1, parseInt(dmy2[1]));
+      const y = dmy2[3].length === 2 ? 2000+parseInt(dmy2[3]) : parseInt(dmy2[3]);
+      return new Date(y, parseInt(dmy2[2])-1, parseInt(dmy2[1]));
     }
     const d = new Date(s);
     return isNaN(d) ? null : d;
@@ -414,7 +416,7 @@
 
   function parseNum(str) {
     if (!str) return 0;
-    return parseFloat(str.toString().replace(/,/g, '')) || 0;
+    return parseFloat(str.toString().replace(/,/g,'')) || 0;
   }
 
   function formatINR(val) {
@@ -455,7 +457,7 @@
     const year  = document.getElementById('f-year').value;
     const month = document.getElementById('f-month').value;
     if (year && month) {
-      const first = new Date(+year, +month - 1, 1);
+      const first = new Date(+year, +month-1, 1);
       const last  = new Date(+year, +month, 0);
       document.getElementById('f-from').value = toISO(first);
       document.getElementById('f-to').value   = toISO(last);
@@ -470,89 +472,130 @@
     applyFilters();
   }
 
-  async function loadData() {
-    try {
-      const res = await fetch(FRESH_SALES_URL);
-      if (!res.ok) throw new Error('HTTP ' + res.status);
-      const text = await res.text();
-      const rows = parseCSV(text);
-      allRows = rows.slice(2).filter(r =>
-        r[COL.DATE] && r[COL.DATE].trim() !== '' && r[COL.DATE].toLowerCase() !== 'date'
-      );
-      const now = new Date();
-      document.getElementById('last-updated-text').textContent =
-        'Updated ' + now.toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' })
-        + ' · ' + now.toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit' });
-      document.getElementById('status-dot').className = 'status-dot';
-      applyFilters();
-    } catch (e) {
-      document.getElementById('last-updated-text').textContent = 'Error loading data — ' + e.message;
-      document.getElementById('status-dot').className = 'status-dot error';
-      ['sc-1','sc-2','sc-3','sc-4','sc-5','sc-6'].forEach(id => {
-        document.getElementById(id + '-val').textContent = '—';
-        document.getElementById(id).classList.remove('loading');
-      });
-    }
+  function getFilters() {
+    return {
+      year:    document.getElementById('f-year').value,
+      month:   document.getElementById('f-month').value,
+      fromVal: document.getElementById('f-from').value,
+      toVal:   document.getElementById('f-to').value,
+      course:  document.getElementById('f-course').value,
+      level:   document.getElementById('f-level').value,
+      age:     document.getElementById('f-age').value,
+      gender:  document.getElementById('f-gender').value,
+      type:    document.getElementById('f-type').value,
+      renewal: document.getElementById('f-renewal').value,
+      reason:  document.getElementById('f-reason').value,
+      teacher: document.getElementById('f-teacher').value,
+    };
   }
 
-  function applyFilters() {
-    const year    = document.getElementById('f-year').value;
-    const month   = document.getElementById('f-month').value;
-    const fromVal = document.getElementById('f-from').value;
-    const toVal   = document.getElementById('f-to').value;
-    const course  = document.getElementById('f-course').value;
-    const level   = document.getElementById('f-level').value;
-    const age     = document.getElementById('f-age').value;
-    const gender  = document.getElementById('f-gender').value;
-    const type    = document.getElementById('f-type').value;
-    const renewal = document.getElementById('f-renewal').value;
-    const reason  = document.getElementById('f-reason').value;
-    const teacher = document.getElementById('f-teacher').value;
-
-    const fromDate = fromVal ? new Date(fromVal) : null;
-    const toDate   = toVal   ? new Date(toVal + 'T23:59:59') : null;
-
-    const filtered = allRows.filter(r => {
-      const d = parseDate(r[COL.DATE]);
+  function filterRows(rows, f, colMap) {
+    const fromDate = f.fromVal ? new Date(f.fromVal) : null;
+    const toDate   = f.toVal   ? new Date(f.toVal + 'T23:59:59') : null;
+    return rows.filter(r => {
+      const d = parseDate(r[colMap.DATE]);
       if (!d) return false;
       if (fromDate && d < fromDate) return false;
       if (toDate   && d > toDate)   return false;
-      if (year   && d.getFullYear().toString() !== year)      return false;
-      if (month  && (d.getMonth() + 1).toString() !== month) return false;
-      if (course  && r[COL.COURSE]         !== course)  return false;
-      if (level   && r[COL.LEVEL]          !== level)   return false;
-      if (age     && r[COL.AGE]            !== age)     return false;
-      if (gender  && r[COL.GENDER]         !== gender)  return false;
-      if (type    && r[COL.TYPE]           !== type)    return false;
-      if (renewal && r[COL.RENEWAL_STATUS] !== renewal) return false;
-      if (reason  && r[COL.REASON]         !== reason)  return false;
-      if (teacher && r[COL.TEACHER]        !== teacher) return false;
+      if (f.year   && d.getFullYear().toString() !== f.year)      return false;
+      if (f.month  && (d.getMonth()+1).toString() !== f.month)   return false;
+      if (f.course  && r[colMap.COURSE]         !== f.course)  return false;
+      if (f.level   && r[colMap.LEVEL]          !== f.level)   return false;
+      if (f.age     && r[colMap.AGE]            !== f.age)     return false;
+      if (f.gender  && r[colMap.GENDER]         !== f.gender)  return false;
+      if (f.type    && r[colMap.TYPE]           !== f.type)    return false;
+      if (f.renewal && r[colMap.RENEWAL_STATUS] !== f.renewal) return false;
+      if (f.reason  && r[colMap.REASON]         !== f.reason)  return false;
+      if (f.teacher && r[colMap.TEACHER]        !== f.teacher) return false;
       return true;
     });
-
-    updateScorecards(filtered);
   }
 
-  function updateScorecards(filtered) {
-    const gross    = filtered.reduce((s, r) => s + parseNum(r[COL.GROSS]),    0);
-    const discount = filtered.reduce((s, r) => s + parseNum(r[COL.DISCOUNT]), 0);
-    const net      = filtered.reduce((s, r) => s + parseNum(r[COL.NET]),      0);
-    const enrol    = filtered.reduce((s, r) => s + parseNum(r[COL.REG_FEES]), 0);
-    const total    = net + enrol;
-    const pctDisc  = gross > 0 ? (discount / gross) * 100 : 0;
+  function applyFilters() {
+    const f = getFilters();
 
-    document.getElementById('sc-1-val').textContent = formatINR(gross);
-    document.getElementById('sc-2-val').textContent = formatINR(discount);
-    document.getElementById('sc-3-val').textContent = formatINR(net);
-    document.getElementById('sc-4-val').textContent = formatINR(enrol);
-    document.getElementById('sc-5-val').textContent = formatINR(total);
-    document.getElementById('sc-6-val').textContent = formatPct(pctDisc);
+    const fs = filterRows(fsRows, f, COL);
+    const rn = filterRows(rnRows, f, RCOL);
 
-    ['sc-1','sc-2','sc-3','sc-4','sc-5','sc-6'].forEach(id => {
-      document.getElementById(id).classList.remove('loading');
-    });
+    // Fresh Sales metrics
+    const fs_count   = fs.filter(r => r[COL.NAME] && r[COL.NAME].trim() !== '').length;
+    const fs_gross   = fs.reduce((s,r) => s + parseNum(r[COL.GROSS]),    0);
+    const fs_disc    = fs.reduce((s,r) => s + parseNum(r[COL.DISCOUNT]), 0);
+    const fs_net     = fs.reduce((s,r) => s + parseNum(r[COL.NET]),      0);
+    const fs_enrol   = fs.reduce((s,r) => s + parseNum(r[COL.REG_FEES]),0);
+    const fs_total   = fs_net + fs_enrol;
+    const fs_pct     = fs_gross > 0 ? (fs_disc / fs_gross) * 100 : 0;
 
-    document.getElementById('scorecards-badge').textContent = filtered.length + ' records';
+    document.getElementById('fs-1-val').textContent = fs_count.toLocaleString('en-IN');
+    document.getElementById('fs-2-val').textContent = formatINR(fs_gross);
+    document.getElementById('fs-3-val').textContent = formatINR(fs_disc);
+    document.getElementById('fs-4-val').textContent = formatINR(fs_net);
+    document.getElementById('fs-5-val').textContent = formatINR(fs_enrol);
+    document.getElementById('fs-6-val').textContent = formatINR(fs_total);
+    document.getElementById('fs-7-val').textContent = formatPct(fs_pct);
+    ['fs-1','fs-2','fs-3','fs-4','fs-5','fs-6','fs-7'].forEach(id => document.getElementById(id).classList.remove('loading'));
+
+    // Renewals metrics
+    const rn_count   = rn.filter(r => r[RCOL.NAME] && r[RCOL.NAME].trim() !== '').length;
+    const rn_gross   = rn.reduce((s,r) => s + parseNum(r[RCOL.GROSS]),    0);
+    const rn_disc    = rn.reduce((s,r) => s + parseNum(r[RCOL.DISCOUNT]), 0);
+    const rn_net     = rn.reduce((s,r) => s + parseNum(r[RCOL.NET]),      0);
+    const rn_total   = rn_net;
+    const rn_pct     = rn_gross > 0 ? (rn_disc / rn_gross) * 100 : 0;
+
+    document.getElementById('rn-1-val').textContent = rn_count.toLocaleString('en-IN');
+    document.getElementById('rn-2-val').textContent = formatINR(rn_gross);
+    document.getElementById('rn-3-val').textContent = formatINR(rn_disc);
+    document.getElementById('rn-4-val').textContent = formatINR(rn_net);
+    document.getElementById('rn-6-val').textContent = formatINR(rn_total);
+    document.getElementById('rn-7-val').textContent = formatPct(rn_pct);
+    ['rn-1','rn-2','rn-3','rn-4','rn-6','rn-7'].forEach(id => document.getElementById(id).classList.remove('loading'));
+
+    // Total Collections metrics
+    const tc_count  = fs_count + rn_count;
+    const tc_gross  = fs_gross + rn_gross;
+    const tc_disc   = fs_disc  + rn_disc;
+    const tc_net    = fs_net   + rn_net;
+    const tc_enrol  = fs_enrol;
+    const tc_total  = fs_total + rn_total;
+    const tc_pct    = tc_gross > 0 ? (tc_disc / tc_gross) * 100 : 0;
+
+    document.getElementById('tc-1-val').textContent = tc_count.toLocaleString('en-IN');
+    document.getElementById('tc-2-val').textContent = formatINR(tc_gross);
+    document.getElementById('tc-3-val').textContent = formatINR(tc_disc);
+    document.getElementById('tc-4-val').textContent = formatINR(tc_net);
+    document.getElementById('tc-5-val').textContent = formatINR(tc_enrol);
+    document.getElementById('tc-6-val').textContent = formatINR(tc_total);
+    document.getElementById('tc-7-val').textContent = formatPct(tc_pct);
+    ['tc-1','tc-2','tc-3','tc-4','tc-5','tc-6','tc-7'].forEach(id => document.getElementById(id).classList.remove('loading'));
+
+    document.getElementById('scorecards-badge').textContent =
+      (fs_count + rn_count) + ' transactions';
+  }
+
+  async function loadData() {
+    try {
+      const [fsRes, rnRes] = await Promise.all([fetch(FS_URL), fetch(RN_URL)]);
+      if (!fsRes.ok) throw new Error('Fresh Sales: HTTP ' + fsRes.status);
+      if (!rnRes.ok) throw new Error('Renewals: HTTP ' + rnRes.status);
+      const [fsText, rnText] = await Promise.all([fsRes.text(), rnRes.text()]);
+
+      const fsAll = parseCSV(fsText);
+      fsRows = fsAll.slice(2).filter(r => r[COL.DATE] && r[COL.DATE].trim() !== '' && r[COL.DATE].toLowerCase() !== 'date');
+
+      const rnAll = parseCSV(rnText);
+      rnRows = rnAll.slice(2).filter(r => r[RCOL.DATE] && r[RCOL.DATE].trim() !== '' && r[RCOL.DATE].toLowerCase() !== 'date');
+
+      const now = new Date();
+      document.getElementById('last-updated-text').textContent =
+        'Updated ' + now.toLocaleDateString('en-IN', {day:'numeric',month:'short',year:'numeric'})
+        + ' · ' + now.toLocaleTimeString('en-IN', {hour:'2-digit',minute:'2-digit'});
+      document.getElementById('status-dot').className = 'status-dot';
+      applyFilters();
+    } catch(e) {
+      document.getElementById('last-updated-text').textContent = 'Error — ' + e.message;
+      document.getElementById('status-dot').className = 'status-dot error';
+    }
   }
 
   function resetToCurrentMonth() {
@@ -576,9 +619,9 @@
   function toggleSection(id) {
     sectionState[id] = !sectionState[id];
     const open = sectionState[id];
-    document.getElementById(id + '-body').style.display = open ? '' : 'none';
-    document.getElementById(id + '-icon').classList.toggle('collapsed', !open);
-    document.getElementById(id + '-label').textContent = open ? 'Collapse' : 'Expand';
+    document.getElementById(id+'-body').style.display = open ? '' : 'none';
+    document.getElementById(id+'-icon').classList.toggle('collapsed', !open);
+    document.getElementById(id+'-label').textContent = open ? 'Collapse' : 'Expand';
   }
 
   setDefaultDates();
