@@ -15,7 +15,6 @@
       min-height: 100vh;
     }
 
-    /* ── Page layout ── */
     .page { max-width: 1200px; margin: 0 auto; padding: 1.5rem; }
 
     .page-header {
@@ -34,7 +33,6 @@
     .status-dot.loading { background: #f0c05a; }
     .status-dot.error   { background: #e2534a; }
 
-    /* ── Section cards ── */
     .section-card {
       background: #ffffff;
       border: 0.5px solid #dddcd6;
@@ -52,7 +50,6 @@
       user-select: none;
     }
     .section-header:hover { background: #fafaf8; }
-
     .section-header-left { display: flex; align-items: center; gap: 8px; }
     .section-title { font-size: 13px; font-weight: 500; color: #5f5e5a; }
 
@@ -72,7 +69,6 @@
       padding: 4px 8px; border-radius: 6px;
     }
     .toggle-btn:hover { background: #f0efeb; color: #5f5e5a; }
-
     .toggle-icon { font-size: 15px; transition: transform 0.2s ease; }
     .toggle-icon.collapsed { transform: rotate(-90deg); }
 
@@ -81,7 +77,6 @@
       border-top: 0.5px solid #dddcd6;
     }
 
-    /* ── Filters ── */
     .divider-label {
       font-size: 11px; color: #888780;
       text-transform: uppercase; letter-spacing: 0.05em;
@@ -102,7 +97,6 @@
     }
 
     .filter-group { display: flex; flex-direction: column; gap: 5px; }
-
     .filter-label { font-size: 12px; color: #888780; font-weight: 500; }
     .date-hint { font-size: 11px; color: #378add; margin-top: 2px; min-height: 14px; }
 
@@ -115,9 +109,7 @@
       height: 34px;
       appearance: auto;
     }
-    select:focus, input[type="date"]:focus {
-      outline: none; border-color: #378add;
-    }
+    select:focus, input[type="date"]:focus { outline: none; border-color: #378add; }
 
     .filter-actions {
       display: flex; align-items: center; gap: 8px;
@@ -144,7 +136,6 @@
     }
     .btn-ghost:hover { background: #f5f4f0; color: #1a1a18; }
 
-    /* ── Scorecards ── */
     .scorecards-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -163,7 +154,6 @@
     .scorecard-sub   { font-size: 12px; color: #888780; }
     .scorecard.loading .scorecard-value { color: #c4c3bc; }
 
-    /* ── Responsive ── */
     @media (max-width: 700px) {
       .date-row { grid-template-columns: 1fr 1fr; }
       .page-header { flex-direction: column; gap: 8px; }
@@ -176,7 +166,6 @@
 <body>
 <div class="page">
 
-  <!-- PAGE HEADER -->
   <div class="page-header">
     <div>
       <div class="page-title">Alwarpet, Chennai</div>
@@ -188,7 +177,7 @@
     </div>
   </div>
 
-  <!-- ── FILTERS SECTION ── -->
+  <!-- FILTERS -->
   <div class="section-card">
     <div class="section-header" onclick="toggleSection('filters')">
       <div class="section-header-left">
@@ -201,7 +190,6 @@
         <i class="ti ti-chevron-down toggle-icon" id="filters-icon" aria-hidden="true"></i>
       </button>
     </div>
-
     <div id="filters-body" class="section-body">
       <div class="divider-label">Date filters</div>
       <div class="date-row">
@@ -235,7 +223,6 @@
           <span class="date-hint" id="to-hint"></span>
         </div>
       </div>
-
       <div class="divider-label">Other filters</div>
       <div class="filter-grid">
         <div class="filter-group">
@@ -312,7 +299,6 @@
           </select>
         </div>
       </div>
-
       <div class="filter-actions">
         <button class="btn-ghost" onclick="resetToCurrentMonth()">
           <i class="ti ti-calendar" style="font-size:13px;" aria-hidden="true"></i>
@@ -326,7 +312,7 @@
     </div>
   </div>
 
-  <!-- ── SCORECARDS SECTION ── -->
+  <!-- SCORECARDS -->
   <div class="section-card">
     <div class="section-header" onclick="toggleSection('scorecards')">
       <div class="section-header-left">
@@ -339,66 +325,68 @@
         <i class="ti ti-chevron-down toggle-icon" id="scorecards-icon" aria-hidden="true"></i>
       </button>
     </div>
-
     <div id="scorecards-body" class="section-body">
       <div class="scorecards-grid">
-        <div class="scorecard loading" id="sc-course-fees">
-          <div class="scorecard-label">Course fees</div>
-          <div class="scorecard-value" id="sc-course-fees-val">—</div>
-          <div class="scorecard-sub" id="sc-course-fees-sub">Gross coaching fees</div>
+
+        <!-- SC1: Gross Course Fees -->
+        <div class="scorecard loading" id="sc-1">
+          <div class="scorecard-label">Gross course fees</div>
+          <div class="scorecard-value" id="sc-1-val">—</div>
+          <div class="scorecard-sub">Sum of gross coaching fees</div>
         </div>
+
+        <!-- SC2: Discount -->
+        <div class="scorecard loading" id="sc-2">
+          <div class="scorecard-label">Discount</div>
+          <div class="scorecard-value" id="sc-2-val">—</div>
+          <div class="scorecard-sub">Total discount allowed</div>
+        </div>
+
+        <!-- SC3: Net Course Fees -->
+        <div class="scorecard loading" id="sc-3">
+          <div class="scorecard-label">Net course fees</div>
+          <div class="scorecard-value" id="sc-3-val">—</div>
+          <div class="scorecard-sub">After discount</div>
+        </div>
+
+        <!-- SC4: Enrolment Fees -->
+        <div class="scorecard loading" id="sc-4">
+          <div class="scorecard-label">Enrolment fees</div>
+          <div class="scorecard-value" id="sc-4-val">—</div>
+          <div class="scorecard-sub">Registration fees collected</div>
+        </div>
+
+        <!-- SC5: Total Receipts -->
+        <div class="scorecard loading" id="sc-5">
+          <div class="scorecard-label">Total receipts</div>
+          <div class="scorecard-value" id="sc-5-val">—</div>
+          <div class="scorecard-sub">Net course fees + enrolment fees</div>
+        </div>
+
+        <!-- SC6: % Discount -->
+        <div class="scorecard loading" id="sc-6">
+          <div class="scorecard-label">% Discount</div>
+          <div class="scorecard-value" id="sc-6-val">—</div>
+          <div class="scorecard-sub">Discount / gross course fees</div>
+        </div>
+
       </div>
     </div>
   </div>
 
-</div><!-- /page -->
+</div>
 
 <script>
-  /* ─────────────────────────────────────────
-     DATA SOURCE
-     Replace the URL below if the sheet URL
-     ever changes.
-  ───────────────────────────────────────── */
   const FRESH_SALES_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRAVysitQgRpFNf94-ZH-I6KzBP4Zovlxj0NjgREoPLW1CY8lXNWAC-uXZs5P-o68hMqxwnzhXKljGr/pub?gid=184947403&single=true&output=csv';
 
-  /* Column indices (0-based) for Fresh Sales sheet */
   const COL = {
-    DATE:           0,   // A  - Date
-    MONTH:          1,   // B  - Month
-    ACADEMY:        2,   // C  - Academy
-    LEARNER_ID:     3,   // D  - Learner ID
-    NAME:           4,   // E  - Learner's Name
-    GENDER:         5,   // F  - Gender
-    AGE:            6,   // G  - Age-Group
-    MOBILE:         7,   // H  - Mobile Number
-    COURSE:         8,   // I  - Course
-    LEVEL:          9,   // J  - Course Level
-    TYPE:           10,  // K  - Type of Sale
-    REG_FEES:       11,  // L  - Registration Fees
-    MONTHS:         12,  // M  - No. of Months
-    GROSS:          13,  // N  - Gross Coaching Fees
-    DISC_PCT:       14,  // O  - % Discount
-    DISCOUNT:       15,  // P  - Discount
-    NET:            16,  // Q  - Net Coaching Fees
-    TOTAL:          17,  // R  - Total Receipts
-    PAYMENT:        18,  // S  - Payment Mode
-    AREA:           19,  // T  - Area / Locality
-    COMMUTE:        20,  // U  - Mode of Commute
-    DISCOVERY:      21,  // V  - Discovery Source
-    FIRST_CLASS:    22,  // W  - Date of First Class
-    END_DATE:       23,  // X  - Membership End-Date
-    RENEWAL_MONTH:  24,  // Y  - Renewal Month
-    RENEWAL_STATUS: 25,  // Z  - Renewal Status
-    RENEWAL_DATE:   26,  // AA - Renewal Date
-    TAT:            27,  // AB - TAT
-    REASON:         28,  // AC - Reason for Discontinuing
-    TEACHER:        29,  // AD - Teacher Name
-    COMPS:          30   // AE - No. of Compensations Due
+    DATE: 0, GENDER: 5, AGE: 6, COURSE: 8, LEVEL: 9, TYPE: 10,
+    REG_FEES: 11, GROSS: 13, DISCOUNT: 15, NET: 16,
+    RENEWAL_STATUS: 25, REASON: 28, TEACHER: 29
   };
 
   let allRows = [];
 
-  /* ─── Utilities ─── */
   function toISO(d) {
     return d.getFullYear() + '-'
       + String(d.getMonth() + 1).padStart(2, '0') + '-'
@@ -408,7 +396,6 @@
   function parseDate(str) {
     if (!str) return null;
     const s = str.trim();
-    // DD-Mon-YY or DD-Mon-YYYY  e.g. 05-Jan-25
     const dmy = s.match(/^(\d{1,2})-([A-Za-z]+)-(\d{2,4})$/);
     if (dmy) {
       const months = {jan:0,feb:1,mar:2,apr:3,may:4,jun:5,jul:6,aug:7,sep:8,oct:9,nov:10,dec:11};
@@ -416,7 +403,6 @@
       const y = dmy[3].length === 2 ? 2000 + parseInt(dmy[3]) : parseInt(dmy[3]);
       if (m !== undefined) return new Date(y, m, parseInt(dmy[1]));
     }
-    // DD/MM/YYYY or DD-MM-YYYY
     const dmy2 = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})$/);
     if (dmy2) {
       const y = dmy2[3].length === 2 ? 2000 + parseInt(dmy2[3]) : parseInt(dmy2[3]);
@@ -435,10 +421,13 @@
     return '₹' + Math.round(val).toLocaleString('en-IN');
   }
 
+  function formatPct(val) {
+    return val.toFixed(2) + '%';
+  }
+
   function parseCSV(text) {
     const rows = [];
-    const lines = text.split('\n');
-    for (const line of lines) {
+    for (const line of text.split('\n')) {
       if (!line.trim()) continue;
       const cols = [];
       let cur = '', inQ = false;
@@ -453,7 +442,6 @@
     return rows;
   }
 
-  /* ─── Default dates: 1st of current month → today ─── */
   function setDefaultDates() {
     const today = new Date();
     const first = new Date(today.getFullYear(), today.getMonth(), 1);
@@ -463,7 +451,6 @@
     document.getElementById('to-hint').textContent   = 'Today';
   }
 
-  /* ─── Year / Month selectors auto-fill date range ─── */
   function onYearMonthChange() {
     const year  = document.getElementById('f-year').value;
     const month = document.getElementById('f-month').value;
@@ -483,14 +470,12 @@
     applyFilters();
   }
 
-  /* ─── Load CSV from Google Sheets ─── */
   async function loadData() {
     try {
       const res = await fetch(FRESH_SALES_URL);
       if (!res.ok) throw new Error('HTTP ' + res.status);
       const text = await res.text();
       const rows = parseCSV(text);
-      // Row 0 = headers, Row 1 = sub-headers, data starts row 2
       allRows = rows.slice(2).filter(r =>
         r[COL.DATE] && r[COL.DATE].trim() !== '' && r[COL.DATE].toLowerCase() !== 'date'
       );
@@ -503,13 +488,13 @@
     } catch (e) {
       document.getElementById('last-updated-text').textContent = 'Error loading data — ' + e.message;
       document.getElementById('status-dot').className = 'status-dot error';
-      document.getElementById('sc-course-fees-val').textContent = '—';
-      document.getElementById('sc-course-fees-sub').textContent = 'Could not fetch sheet';
-      document.getElementById('sc-course-fees').classList.remove('loading');
+      ['sc-1','sc-2','sc-3','sc-4','sc-5','sc-6'].forEach(id => {
+        document.getElementById(id + '-val').textContent = '—';
+        document.getElementById(id).classList.remove('loading');
+      });
     }
   }
 
-  /* ─── Apply all filters and update scorecards ─── */
   function applyFilters() {
     const year    = document.getElementById('f-year').value;
     const month   = document.getElementById('f-month').value;
@@ -532,8 +517,8 @@
       if (!d) return false;
       if (fromDate && d < fromDate) return false;
       if (toDate   && d > toDate)   return false;
-      if (year   && d.getFullYear().toString() !== year)       return false;
-      if (month  && (d.getMonth() + 1).toString() !== month)  return false;
+      if (year   && d.getFullYear().toString() !== year)      return false;
+      if (month  && (d.getMonth() + 1).toString() !== month) return false;
       if (course  && r[COL.COURSE]         !== course)  return false;
       if (level   && r[COL.LEVEL]          !== level)   return false;
       if (age     && r[COL.AGE]            !== age)     return false;
@@ -549,17 +534,27 @@
   }
 
   function updateScorecards(filtered) {
-    /* Course Fees */
-    const totalGross = filtered.reduce((s, r) => s + parseNum(r[COL.GROSS]), 0);
-    document.getElementById('sc-course-fees-val').textContent = formatINR(totalGross);
-    document.getElementById('sc-course-fees-sub').textContent = filtered.length + ' records';
-    document.getElementById('sc-course-fees').classList.remove('loading');
+    const gross    = filtered.reduce((s, r) => s + parseNum(r[COL.GROSS]),    0);
+    const discount = filtered.reduce((s, r) => s + parseNum(r[COL.DISCOUNT]), 0);
+    const net      = filtered.reduce((s, r) => s + parseNum(r[COL.NET]),      0);
+    const enrol    = filtered.reduce((s, r) => s + parseNum(r[COL.REG_FEES]), 0);
+    const total    = net + enrol;
+    const pctDisc  = gross > 0 ? (discount / gross) * 100 : 0;
 
-    /* Badge on section header */
+    document.getElementById('sc-1-val').textContent = formatINR(gross);
+    document.getElementById('sc-2-val').textContent = formatINR(discount);
+    document.getElementById('sc-3-val').textContent = formatINR(net);
+    document.getElementById('sc-4-val').textContent = formatINR(enrol);
+    document.getElementById('sc-5-val').textContent = formatINR(total);
+    document.getElementById('sc-6-val').textContent = formatPct(pctDisc);
+
+    ['sc-1','sc-2','sc-3','sc-4','sc-5','sc-6'].forEach(id => {
+      document.getElementById(id).classList.remove('loading');
+    });
+
     document.getElementById('scorecards-badge').textContent = filtered.length + ' records';
   }
 
-  /* ─── Filter controls ─── */
   function resetToCurrentMonth() {
     ['f-year','f-month','f-course','f-level','f-age','f-gender','f-type','f-renewal','f-reason','f-teacher']
       .forEach(id => { document.getElementById(id).value = ''; });
@@ -577,9 +572,7 @@
     applyFilters();
   }
 
-  /* ─── Collapse / expand sections ─── */
   const sectionState = { filters: true, scorecards: true };
-
   function toggleSection(id) {
     sectionState[id] = !sectionState[id];
     const open = sectionState[id];
@@ -588,7 +581,6 @@
     document.getElementById(id + '-label').textContent = open ? 'Collapse' : 'Expand';
   }
 
-  /* ─── Init ─── */
   setDefaultDates();
   loadData();
 </script>
