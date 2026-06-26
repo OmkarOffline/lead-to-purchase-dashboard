@@ -10,432 +10,133 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
       --font-primary: 'Montserrat', 'Inter', -apple-system, sans-serif;
       --font-body: 'Inter', -apple-system, sans-serif;
-
-      /* Backgrounds */
       --bg-primary: #FFFFFF;
       --bg-secondary: #F8FAFC;
       --bg-hover: #F1F5F9;
-
-      /* Borders */
       --border-primary: #E2E8F0;
       --border-secondary: #CBD5E1;
-
-      /* Text */
       --text-h1: #17213C;
       --text-h2: #1E3A5F;
       --text-h3: #334155;
       --text-body: #475569;
       --text-secondary: #64748B;
       --text-disabled: #94A3B8;
-
-      /* Brand */
       --navy: #17213C;
       --blue: #2563EB;
       --teal: #0891B2;
       --purple: #7C3AED;
-
-      /* Functional */
       --success: #059669;
       --success-bg: #ECFDF5;
       --warning: #D97706;
       --warning-bg: #FEF3C7;
       --error: #DC2626;
-      --error-bg: #FEF2F2;
       --info-bg: #EFF6FF;
-
-      /* Cards */
       --card-radius: 18px;
       --card-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-
-      /* Spacing */
       --outer-margin: 48px;
       --card-padding: 24px;
       --section-gap: 40px;
       --card-gap: 24px;
-      --title-gap: 16px;
     }
+    body { font-family: var(--font-body); background: var(--bg-secondary); color: var(--text-body); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+    .page { max-width: 1280px; margin: 0 auto; padding: var(--outer-margin); }
 
-    body {
-      font-family: var(--font-body);
-      background: var(--bg-secondary);
-      color: var(--text-body);
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    .page {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: var(--outer-margin);
-    }
-
-    /* ── Page Header ── */
-    .page-header {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      margin-bottom: var(--section-gap);
-      padding-bottom: 24px;
-      border-bottom: 1px solid var(--border-primary);
-    }
-
-    .page-title {
-      font-family: var(--font-primary);
-      font-size: 28px;
-      font-weight: 700;
-      color: var(--text-h1);
-      letter-spacing: -0.3px;
-      line-height: 1.2;
-    }
-
-    .page-subtitle {
-      font-size: 14px;
-      color: var(--text-secondary);
-      margin-top: 6px;
-      font-weight: 400;
-    }
-
-    .last-updated {
-      font-size: 13px;
-      color: var(--text-secondary);
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      white-space: nowrap;
-    }
-
-    .status-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: var(--success);
-      flex-shrink: 0;
-    }
+    /* Page header */
+    .page-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: var(--section-gap); padding-bottom: 24px; border-bottom: 1px solid var(--border-primary); }
+    .page-title { font-family: var(--font-primary); font-size: 28px; font-weight: 700; color: var(--text-h1); letter-spacing: -0.3px; line-height: 1.2; }
+    .page-subtitle { font-size: 14px; color: var(--text-secondary); margin-top: 6px; }
+    .last-updated { font-size: 13px; color: var(--text-secondary); display: flex; align-items: center; gap: 7px; white-space: nowrap; }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--success); flex-shrink: 0; }
     .status-dot.loading { background: var(--warning); }
-    .status-dot.error   { background: var(--error); }
+    .status-dot.error { background: var(--error); }
 
-    /* ── Section Cards ── */
-    .section-card {
-      background: var(--bg-primary);
-      border: 1px solid var(--border-primary);
-      border-radius: var(--card-radius);
-      margin-bottom: var(--card-gap);
-      box-shadow: var(--card-shadow);
-      overflow: hidden;
-    }
-
-    .section-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 18px var(--card-padding);
-      cursor: pointer;
-      user-select: none;
-    }
+    /* Section cards */
+    .section-card { background: var(--bg-primary); border: 1px solid var(--border-primary); border-radius: var(--card-radius); margin-bottom: var(--card-gap); box-shadow: var(--card-shadow); overflow: hidden; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; padding: 18px var(--card-padding); cursor: pointer; user-select: none; }
     .section-header:hover { background: var(--bg-hover); }
-
     .section-header-left { display: flex; align-items: center; gap: 10px; }
-
-    .section-title {
-      font-family: var(--font-primary);
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-h2);
-      letter-spacing: 0.01em;
-    }
-
-    .section-badge {
-      font-size: 11px;
-      font-weight: 500;
-      background: var(--bg-secondary);
-      color: var(--text-secondary);
-      padding: 3px 9px;
-      border-radius: 999px;
-      border: 1px solid var(--border-primary);
-    }
-
-    .toggle-btn {
-      display: flex; align-items: center; gap: 5px;
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--text-secondary);
-      border: none; background: none; cursor: pointer;
-      padding: 5px 10px;
-      border-radius: 8px;
-      font-family: var(--font-body);
-    }
+    .section-title { font-family: var(--font-primary); font-size: 14px; font-weight: 600; color: var(--text-h2); letter-spacing: 0.01em; }
+    .section-badge { font-size: 11px; font-weight: 500; background: var(--bg-secondary); color: var(--text-secondary); padding: 3px 9px; border-radius: 999px; border: 1px solid var(--border-primary); }
+    .toggle-btn { display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 500; color: var(--text-secondary); border: none; background: none; cursor: pointer; padding: 5px 10px; border-radius: 8px; font-family: var(--font-body); }
     .toggle-btn:hover { background: var(--bg-hover); color: var(--text-h3); }
-
     .toggle-icon { font-size: 16px; transition: transform 0.2s ease; }
     .toggle-icon.collapsed { transform: rotate(-90deg); }
+    .section-body { padding: 0 var(--card-padding) var(--card-padding) var(--card-padding); border-top: 1px solid var(--border-primary); }
 
-    .section-body {
-      padding: 0 var(--card-padding) var(--card-padding) var(--card-padding);
-      border-top: 1px solid var(--border-primary);
-    }
-
-    /* ── Filters ── */
-    .filter-group-label {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--text-disabled);
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      margin: 20px 0 10px;
-    }
-
-    .date-row {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: var(--card-gap);
-      margin-bottom: 4px;
-    }
-
-    .filter-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-      gap: 16px;
-    }
-
+    /* Filters */
+    .filter-group-label { font-size: 11px; font-weight: 600; color: var(--text-disabled); text-transform: uppercase; letter-spacing: 0.07em; margin: 20px 0 10px; }
+    .date-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--card-gap); margin-bottom: 4px; }
+    .filter-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 16px; }
     .filter-group { display: flex; flex-direction: column; gap: 6px; }
-
-    .filter-label {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--text-h3);
-      letter-spacing: 0.01em;
-    }
-
-    .date-hint {
-      font-size: 11px;
-      color: var(--blue);
-      margin-top: 3px;
-      min-height: 14px;
-    }
-
-    select, input[type="date"] {
-      width: 100%;
-      font-family: var(--font-body);
-      font-size: 13px;
-      padding: 8px 12px;
-      border: 1px solid var(--border-primary);
-      border-radius: 10px;
-      background: var(--bg-primary);
-      color: var(--text-body);
-      height: 38px;
-      appearance: auto;
-      transition: border-color 0.15s;
-    }
+    .filter-label { font-size: 12px; font-weight: 600; color: var(--text-h3); letter-spacing: 0.01em; }
+    .date-hint { font-size: 11px; color: var(--blue); margin-top: 3px; min-height: 14px; }
+    select, input[type="date"] { width: 100%; font-family: var(--font-body); font-size: 13px; padding: 8px 12px; border: 1px solid var(--border-primary); border-radius: 10px; background: var(--bg-primary); color: var(--text-body); height: 38px; appearance: auto; transition: border-color 0.15s; }
     select:hover, input[type="date"]:hover { border-color: var(--border-secondary); }
     select:focus, input[type="date"]:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(37,99,235,0.08); }
-
-    .filter-actions {
-      display: flex; align-items: center; gap: 10px;
-      justify-content: flex-end;
-      margin-top: 20px; padding-top: 20px;
-      border-top: 1px solid var(--border-primary);
-    }
-
-    .btn {
-      font-family: var(--font-body);
-      font-size: 13px;
-      font-weight: 500;
-      padding: 8px 16px;
-      border-radius: 10px;
-      cursor: pointer;
-      border: 1px solid var(--border-secondary);
-      background: var(--bg-primary);
-      color: var(--text-h3);
-      height: 38px;
-      display: flex; align-items: center; gap: 6px;
-      transition: background 0.15s;
-    }
+    .filter-actions { display: flex; align-items: center; gap: 10px; justify-content: flex-end; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border-primary); }
+    .btn { font-family: var(--font-body); font-size: 13px; font-weight: 500; padding: 8px 16px; border-radius: 10px; cursor: pointer; border: 1px solid var(--border-secondary); background: var(--bg-primary); color: var(--text-h3); height: 38px; display: flex; align-items: center; gap: 6px; transition: background 0.15s; }
     .btn:hover { background: var(--bg-hover); }
-
-    .btn-ghost {
-      font-family: var(--font-body);
-      font-size: 13px;
-      font-weight: 500;
-      padding: 8px 16px;
-      border-radius: 10px;
-      cursor: pointer;
-      border: 1px solid var(--border-primary);
-      background: transparent;
-      color: var(--text-secondary);
-      height: 38px;
-      display: flex; align-items: center; gap: 6px;
-    }
+    .btn-ghost { font-family: var(--font-body); font-size: 13px; font-weight: 500; padding: 8px 16px; border-radius: 10px; cursor: pointer; border: 1px solid var(--border-primary); background: transparent; color: var(--text-secondary); height: 38px; display: flex; align-items: center; gap: 6px; }
     .btn-ghost:hover { background: var(--bg-hover); color: var(--text-h3); }
 
-    /* ── Sub-sections ── */
+    /* Sub-sections */
     .subsection { margin-top: 28px; }
     .subsection + .subsection { margin-top: var(--section-gap); }
-
-    .subsection-header {
-      display: flex; align-items: center; gap: 12px;
-      margin-bottom: 20px;
-    }
-
-    .subsection-pill {
-      font-family: var(--font-primary);
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-h2);
-      background: var(--info-bg);
-      border: 1px solid #BFDBFE;
-      border-radius: 999px;
-      padding: 4px 14px;
-      white-space: nowrap;
-    }
-
-    .subsection-pill.total {
-      background: #EEF2FF;
-      border-color: #C7D2FE;
-      color: #312E81;
-    }
-
+    .subsection-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+    .subsection-pill { font-family: var(--font-primary); font-size: 13px; font-weight: 600; color: var(--text-h2); background: var(--info-bg); border: 1px solid #BFDBFE; border-radius: 999px; padding: 4px 14px; white-space: nowrap; }
+    .subsection-pill.total { background: #EEF2FF; border-color: #C7D2FE; color: #312E81; }
+    .subsection-pill.other { background: #F0FDFA; border-color: #99F6E4; color: #0F766E; }
     .subsection-divider { flex: 1; height: 1px; background: var(--border-primary); }
 
-    /* ── Hero Cards ── */
-    .hero-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: var(--card-gap);
-      margin-bottom: 16px;
-    }
+    /* Sub-sub-section */
+    .subsubsection { margin-top: 20px; }
+    .subsubsection-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+    .subsubsection-pill { font-family: var(--font-primary); font-size: 12px; font-weight: 600; color: #0F766E; background: #F0FDFA; border: 1px solid #CCFBF1; border-radius: 999px; padding: 3px 12px; white-space: nowrap; }
+    .subsubsection-divider { flex: 1; height: 0.5px; background: var(--border-primary); }
 
-    .hero-card {
-      background: var(--bg-primary);
-      border: 1px solid var(--border-primary);
-      border-radius: var(--card-radius);
-      padding: var(--card-padding);
-      display: flex; flex-direction: column; gap: 8px;
-      box-shadow: var(--card-shadow);
-      transition: box-shadow 0.15s;
-    }
+    /* Hero cards */
+    .hero-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--card-gap); margin-bottom: 16px; }
+    .hero-card { background: var(--bg-primary); border: 1px solid var(--border-primary); border-radius: var(--card-radius); padding: var(--card-padding); display: flex; flex-direction: column; gap: 8px; box-shadow: var(--card-shadow); transition: box-shadow 0.15s; }
     .hero-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-
-    .hero-card.total-card {
-      background: #F5F3FF;
-      border-color: #DDD6FE;
-    }
-
+    .hero-card.total-card { background: #F5F3FF; border-color: #DDD6FE; }
+    .hero-card.other-card { background: #F0FDFA; border-color: #99F6E4; }
     .hero-card.loading .hero-value { color: var(--text-disabled); }
-
-    .hero-icon {
-      width: 36px; height: 36px;
-      border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 18px;
-      margin-bottom: 4px;
-    }
-    .hero-icon.blue   { background: var(--info-bg);    color: var(--blue); }
-    .hero-icon.teal   { background: #F0FDFA;            color: var(--teal); }
-    .hero-icon.purple { background: #FAF5FF;            color: var(--purple); }
-    .hero-icon.navy   { background: #EFF6FF;            color: var(--navy); }
-    .hero-icon.total  { background: #EEF2FF;            color: #4338CA; }
-
-    .hero-label {
-      font-family: var(--font-primary);
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--text-h3);
-      letter-spacing: 0.02em;
-    }
-
-    .hero-value {
-      font-family: var(--font-primary);
-      font-size: 28px;
-      font-weight: 700;
-      color: var(--blue);
-      line-height: 1.1;
-      letter-spacing: -0.5px;
-    }
-
+    .hero-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; margin-bottom: 4px; }
+    .hero-icon.blue   { background: var(--info-bg);  color: var(--blue); }
+    .hero-icon.teal   { background: #F0FDFA;          color: var(--teal); }
+    .hero-icon.purple { background: #FAF5FF;          color: var(--purple); }
+    .hero-icon.navy   { background: #EFF6FF;          color: var(--navy); }
+    .hero-icon.total  { background: #EEF2FF;          color: #4338CA; }
+    .hero-icon.green  { background: var(--success-bg); color: var(--success); }
+    .hero-label { font-family: var(--font-primary); font-size: 12px; font-weight: 600; color: var(--text-h3); letter-spacing: 0.02em; }
+    .hero-value { font-family: var(--font-primary); font-size: 28px; font-weight: 700; color: var(--blue); line-height: 1.1; letter-spacing: -0.5px; }
     .hero-card.total-card .hero-value { color: #4338CA; }
+    .hero-card.other-card .hero-value { color: #0F766E; }
 
-    /* ── Breakdown toggle ── */
-    .breakdown-toggle {
-      display: inline-flex;
-      align-items: center; gap: 6px;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--text-secondary);
-      cursor: pointer;
-      user-select: none;
-      padding: 5px 10px 5px 0;
-      border: none;
-      background: none;
-      font-family: var(--font-body);
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-    }
+    /* Breakdown toggle */
+    .breakdown-toggle { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--text-secondary); cursor: pointer; user-select: none; padding: 5px 10px 5px 0; border: none; background: none; font-family: var(--font-body); letter-spacing: 0.02em; text-transform: uppercase; }
     .breakdown-toggle:hover { color: var(--text-h3); }
     .breakdown-toggle .ti { font-size: 15px; transition: transform 0.2s ease; }
     .breakdown-toggle .ti.open { transform: rotate(180deg); }
 
-    /* ── Breakdown Cards ── */
+    /* Breakdown cards */
     .breakdown-body { display: none; margin-top: 14px; }
-
-    .breakdown-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 14px;
-    }
-
-    .scorecard {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-primary);
-      border-radius: 14px;
-      padding: 18px 20px;
-      display: flex; flex-direction: column; gap: 6px;
-    }
-
-    .scorecard.total-sc {
-      background: #EEF2FF;
-      border-color: #C7D2FE;
-    }
-
+    .breakdown-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; }
+    .scorecard { background: var(--bg-secondary); border: 1px solid var(--border-primary); border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; gap: 6px; }
+    .scorecard.total-sc { background: #EEF2FF; border-color: #C7D2FE; }
+    .scorecard.other-sc { background: #F0FDFA; border-color: #CCFBF1; }
     .scorecard.loading .scorecard-value { color: var(--text-disabled); }
-
-    .scorecard.na .scorecard-value {
-      font-size: 14px;
-      color: var(--text-disabled);
-      font-weight: 400;
-    }
-
-    .scorecard-label {
-      font-family: var(--font-primary);
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--text-secondary);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-
-    .scorecard-value {
-      font-family: var(--font-primary);
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--text-h1);
-    }
-
+    .scorecard.na .scorecard-value { font-size: 14px; color: var(--text-disabled); font-weight: 400; }
+    .scorecard-label { font-family: var(--font-primary); font-size: 11px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.06em; }
+    .scorecard-value { font-family: var(--font-primary); font-size: 20px; font-weight: 700; color: var(--text-h1); }
     .scorecard.total-sc .scorecard-value { color: #312E81; }
+    .scorecard.other-sc .scorecard-value { color: #0F766E; }
 
-    /* ── Responsive ── */
-    @media (max-width: 768px) {
-      :root { --outer-margin: 20px; }
-      .date-row { grid-template-columns: 1fr 1fr; }
-      .page-header { flex-direction: column; gap: 12px; align-items: flex-start; }
-      .hero-grid { grid-template-columns: 1fr 1fr; }
-    }
-    @media (max-width: 480px) {
-      .date-row { grid-template-columns: 1fr; }
-      .hero-grid { grid-template-columns: 1fr; }
-    }
+    @media (max-width: 768px) { :root { --outer-margin: 20px; } .date-row { grid-template-columns: 1fr 1fr; } .page-header { flex-direction: column; gap: 12px; align-items: flex-start; } .hero-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 480px) { .date-row { grid-template-columns: 1fr; } .hero-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -453,7 +154,7 @@
     </div>
   </div>
 
-  <!-- ── FILTERS ── -->
+  <!-- FILTERS -->
   <div class="section-card">
     <div class="section-header" onclick="toggleSection('filters')">
       <div class="section-header-left">
@@ -466,7 +167,6 @@
         <i class="ti ti-chevron-down toggle-icon" id="filters-icon" aria-hidden="true"></i>
       </button>
     </div>
-
     <div id="filters-body" class="section-body">
       <div class="filter-group-label">Date range</div>
       <div class="date-row">
@@ -500,7 +200,6 @@
           <span class="date-hint" id="to-hint"></span>
         </div>
       </div>
-
       <div class="filter-group-label">Segment filters</div>
       <div class="filter-grid">
         <div class="filter-group">
@@ -577,7 +276,6 @@
           </select>
         </div>
       </div>
-
       <div class="filter-actions">
         <button class="btn-ghost" onclick="resetToCurrentMonth()">
           <i class="ti ti-calendar" style="font-size:14px;" aria-hidden="true"></i>
@@ -591,7 +289,7 @@
     </div>
   </div>
 
-  <!-- ── SCORECARDS ── -->
+  <!-- SCORECARDS -->
   <div class="section-card">
     <div class="section-header" onclick="toggleSection('scorecards')">
       <div class="section-header-left">
@@ -607,7 +305,7 @@
 
     <div id="scorecards-body" class="section-body">
 
-      <!-- FRESH SALES -->
+      <!-- ── FRESH SALES ── -->
       <div class="subsection">
         <div class="subsection-header">
           <span class="subsection-pill">Fresh sales</span>
@@ -650,7 +348,7 @@
         </div>
       </div>
 
-      <!-- RENEWALS -->
+      <!-- ── RENEWALS ── -->
       <div class="subsection">
         <div class="subsection-header">
           <span class="subsection-pill">Renewals</span>
@@ -693,7 +391,7 @@
         </div>
       </div>
 
-      <!-- TOTAL COLLECTIONS -->
+      <!-- ── TOTAL COLLECTIONS ── -->
       <div class="subsection">
         <div class="subsection-header">
           <span class="subsection-pill total">Total collections — course fees</span>
@@ -736,6 +434,53 @@
         </div>
       </div>
 
+      <!-- ── OTHER INCOME ── -->
+      <div class="subsection">
+        <div class="subsection-header">
+          <span class="subsection-pill other">Other income</span>
+          <div class="subsection-divider"></div>
+        </div>
+
+        <!-- Instrument Sales sub-sub-section -->
+        <div class="subsubsection">
+          <div class="subsubsection-header">
+            <span class="subsubsection-pill">Instrument sales</span>
+            <div class="subsubsection-divider"></div>
+          </div>
+          <div class="hero-grid">
+            <div class="hero-card other-card loading" id="is-h1">
+              <div class="hero-icon green"><i class="ti ti-guitar-pick" aria-hidden="true"></i></div>
+              <div class="hero-label">No. of instruments sold</div>
+              <div class="hero-value" id="is-h1-val">—</div>
+            </div>
+            <div class="hero-card other-card loading" id="is-h2">
+              <div class="hero-icon green"><i class="ti ti-cash" aria-hidden="true"></i></div>
+              <div class="hero-label">Collections — instrument sales</div>
+              <div class="hero-value" id="is-h2-val">—</div>
+            </div>
+          </div>
+          <button class="breakdown-toggle" onclick="toggleBreakdown('is')">
+            <i class="ti ti-chevron-down" id="is-bd-icon"></i>
+            <span id="is-bd-label">Show breakdown</span>
+          </button>
+          <div class="breakdown-body" id="is-bd-body">
+            <div class="breakdown-grid">
+              <div class="scorecard other-sc loading" id="is-b1"><div class="scorecard-label">Collections — instrument only</div><div class="scorecard-value" id="is-b1-val">—</div></div>
+              <div class="scorecard other-sc loading" id="is-b2"><div class="scorecard-label">Collections — accessories</div><div class="scorecard-value" id="is-b2-val">—</div></div>
+              <div class="scorecard other-sc loading" id="is-b3"><div class="scorecard-label">Collections — total</div><div class="scorecard-value" id="is-b3-val">—</div></div>
+              <div class="scorecard other-sc loading" id="is-b4"><div class="scorecard-label">Cost — incl. GST</div><div class="scorecard-value" id="is-b4-val">—</div></div>
+              <div class="scorecard other-sc loading" id="is-b5"><div class="scorecard-label">Gross profit</div><div class="scorecard-value" id="is-b5-val">—</div></div>
+              <div class="scorecard other-sc loading" id="is-b6"><div class="scorecard-label">GST adjustment</div><div class="scorecard-value" id="is-b6-val">—</div></div>
+              <div class="scorecard other-sc loading" id="is-b7"><div class="scorecard-label">Net profit</div><div class="scorecard-value" id="is-b7-val">—</div></div>
+              <div class="scorecard other-sc loading" id="is-b8"><div class="scorecard-label">Net cost</div><div class="scorecard-value" id="is-b8-val">—</div></div>
+              <div class="scorecard other-sc loading" id="is-b9"><div class="scorecard-label">% Net profit</div><div class="scorecard-value" id="is-b9-val">—</div></div>
+            </div>
+          </div>
+        </div>
+        <!-- More sub-sub-sections will be added here -->
+
+      </div>
+
     </div>
   </div>
 
@@ -744,44 +489,61 @@
 <script>
   const FS_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRAVysitQgRpFNf94-ZH-I6KzBP4Zovlxj0NjgREoPLW1CY8lXNWAC-uXZs5P-o68hMqxwnzhXKljGr/pub?gid=184947403&single=true&output=csv';
   const RN_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRAVysitQgRpFNf94-ZH-I6KzBP4Zovlxj0NjgREoPLW1CY8lXNWAC-uXZs5P-o68hMqxwnzhXKljGr/pub?gid=1190272933&single=true&output=csv';
+  const IS_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRAVysitQgRpFNf94-ZH-I6KzBP4Zovlxj0NjgREoPLW1CY8lXNWAC-uXZs5P-o68hMqxwnzhXKljGr/pub?gid=32760902&single=true&output=csv';
 
+  /* Column indices — Course sheets (0-based) */
   const COL = { DATE:0, NAME:4, GENDER:5, AGE:6, COURSE:8, LEVEL:9, TYPE:10, REG_FEES:11, GROSS:13, DISCOUNT:15, NET:16, RENEWAL_STATUS:25, REASON:28, TEACHER:29 };
 
-  let fsRows = [], rnRows = [];
+  /* Column indices — Instrument Sales sheet (0-based) */
+  const ICOL = {
+    DATE:0,       // A
+    NAME:3,       // D  — instrument name (COUNTA)
+    INST_ONLY:6,  // G  — collections instrument only
+    ACCESSORIES:8,// I  — collections accessories
+    TOTAL_COLL:9, // J  — total collections
+    COST_GST:12,  // M  — cost incl GST
+    GST_OUT:15,   // P  — GST output (for adjustment)
+    GST_IN:17,    // R  — GST input (for adjustment)
+    NET_COST:18   // S  — net cost
+  };
 
-  function toISO(d) { return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+  let fsRows=[], rnRows=[], isRows=[];
 
-  function parseDate(str) {
-    if (!str) return null;
-    const s = str.trim();
-    const dmy = s.match(/^(\d{1,2})-([A-Za-z]+)-(\d{2,4})$/);
-    if (dmy) {
+  /* ── Utilities ── */
+  function toISO(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+
+  function parseDate(str){
+    if(!str) return null;
+    const s=str.trim();
+    const dmy=s.match(/^(\d{1,2})-([A-Za-z]+)-(\d{2,4})$/);
+    if(dmy){
       const mo={jan:0,feb:1,mar:2,apr:3,may:4,jun:5,jul:6,aug:7,sep:8,oct:9,nov:10,dec:11};
       const m=mo[dmy[2].toLowerCase().slice(0,3)], y=dmy[3].length===2?2000+parseInt(dmy[3]):parseInt(dmy[3]);
-      if (m!==undefined) return new Date(y,m,parseInt(dmy[1]));
+      if(m!==undefined) return new Date(y,m,parseInt(dmy[1]));
     }
-    const dmy2 = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})$/);
-    if (dmy2) { const y=dmy2[3].length===2?2000+parseInt(dmy2[3]):parseInt(dmy2[3]); return new Date(y,parseInt(dmy2[2])-1,parseInt(dmy2[1])); }
+    const dmy2=s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})$/);
+    if(dmy2){const y=dmy2[3].length===2?2000+parseInt(dmy2[3]):parseInt(dmy2[3]); return new Date(y,parseInt(dmy2[2])-1,parseInt(dmy2[1]));}
     const d=new Date(s); return isNaN(d)?null:d;
   }
 
-  function parseNum(s) { if(!s) return 0; return parseFloat(s.toString().replace(/,/g,''))||0; }
-  function fINR(v) { return '₹'+Math.round(v).toLocaleString('en-IN'); }
-  function fPct(v) { return v.toFixed(2)+'%'; }
-  function fATV(v) { return '₹'+v.toFixed(1).replace(/\B(?=(\d{3})+(?!\d))/g,','); }
+  function parseNum(s){ if(!s) return 0; return parseFloat(s.toString().replace(/,/g,''))||0; }
+  function fINR(v){ return '₹'+Math.round(v).toLocaleString('en-IN'); }
+  function fPct(v){ return v.toFixed(2)+'%'; }
+  function fATV(v){ return '₹'+v.toFixed(1).replace(/\B(?=(\d{3})+(?!\d))/g,','); }
 
-  function parseCSV(text) {
+  function parseCSV(text){
     const rows=[];
-    for (const line of text.split('\n')) {
-      if (!line.trim()) continue;
+    for(const line of text.split('\n')){
+      if(!line.trim()) continue;
       const cols=[]; let cur='',inQ=false;
-      for (const ch of line){if(ch==='"'){inQ=!inQ;}else if(ch===','&&!inQ){cols.push(cur.trim());cur='';}else{cur+=ch;}}
+      for(const ch of line){if(ch==='"'){inQ=!inQ;}else if(ch===','&&!inQ){cols.push(cur.trim());cur='';}else{cur+=ch;}}
       cols.push(cur.trim()); rows.push(cols);
     }
     return rows;
   }
 
-  function setDefaultDates() {
+  /* ── Default dates ── */
+  function setDefaultDates(){
     const today=new Date(), first=new Date(today.getFullYear(),today.getMonth(),1);
     document.getElementById('f-from').value=toISO(first);
     document.getElementById('f-to').value=toISO(today);
@@ -789,7 +551,7 @@
     document.getElementById('to-hint').textContent='Today';
   }
 
-  function onYearMonthChange() {
+  function onYearMonthChange(){
     const year=document.getElementById('f-year').value, month=document.getElementById('f-month').value;
     if(year&&month){
       document.getElementById('f-from').value=toISO(new Date(+year,+month-1,1));
@@ -803,7 +565,7 @@
     applyFilters();
   }
 
-  function getF() {
+  function getF(){
     return {
       year:document.getElementById('f-year').value, month:document.getElementById('f-month').value,
       fromVal:document.getElementById('f-from').value, toVal:document.getElementById('f-to').value,
@@ -814,7 +576,20 @@
     };
   }
 
-  function filterRows(rows, f) {
+  /* Date-only filter for Instrument Sales (no segment filters apply) */
+  function filterByDate(rows, f, dateCol){
+    const fd=f.fromVal?new Date(f.fromVal):null, td=f.toVal?new Date(f.toVal+'T23:59:59'):null;
+    return rows.filter(r=>{
+      const d=parseDate(r[dateCol]); if(!d) return false;
+      if(fd&&d<fd) return false; if(td&&d>td) return false;
+      if(f.year&&d.getFullYear().toString()!==f.year) return false;
+      if(f.month&&(d.getMonth()+1).toString()!==f.month) return false;
+      return true;
+    });
+  }
+
+  /* Full filter for course sheets */
+  function filterRows(rows, f){
     const fd=f.fromVal?new Date(f.fromVal):null, td=f.toVal?new Date(f.toVal+'T23:59:59'):null;
     return rows.filter(r=>{
       const d=parseDate(r[COL.DATE]); if(!d) return false;
@@ -833,83 +608,98 @@
     });
   }
 
-  function set(id, val) { document.getElementById(id).textContent=val; }
-  function unload(ids) { ids.forEach(id=>document.getElementById(id).classList.remove('loading')); }
+  function set(id,val){ const el=document.getElementById(id); if(el) el.textContent=val; }
+  function unload(ids){ ids.forEach(id=>{const el=document.getElementById(id); if(el) el.classList.remove('loading');}); }
 
-  function applyFilters() {
-    const f=getF(), fs=filterRows(fsRows,f), rn=filterRows(rnRows,f);
+  function applyFilters(){
+    const f=getF();
+    const fs=filterRows(fsRows,f), rn=filterRows(rnRows,f), is=filterByDate(isRows,f,ICOL.DATE);
 
+    /* Fresh Sales */
     const fs_count=fs.filter(r=>r[COL.NAME]&&r[COL.NAME].trim()!=='').length;
     const fs_gross=fs.reduce((s,r)=>s+parseNum(r[COL.GROSS]),0);
     const fs_disc=fs.reduce((s,r)=>s+parseNum(r[COL.DISCOUNT]),0);
     const fs_net=fs.reduce((s,r)=>s+parseNum(r[COL.NET]),0);
     const fs_enrol=fs.reduce((s,r)=>s+parseNum(r[COL.REG_FEES]),0);
     const fs_total=fs_net+fs_enrol;
-
-    set('fs-h1-val', fs_count.toLocaleString('en-IN'));
-    set('fs-h2-val', fINR(fs_total));
-    set('fs-h3-val', fATV(fs_count>0?fs_total/fs_count:0));
-    set('fs-h4-val', fPct(fs_gross>0?(fs_disc/fs_gross)*100:0));
-    set('fs-b1-val', fINR(fs_gross)); set('fs-b2-val', fINR(fs_disc));
-    set('fs-b3-val', fINR(fs_net));   set('fs-b4-val', fINR(fs_enrol));
-    set('fs-b5-val', fINR(fs_total));
+    set('fs-h1-val',fs_count.toLocaleString('en-IN')); set('fs-h2-val',fINR(fs_total));
+    set('fs-h3-val',fATV(fs_count>0?fs_total/fs_count:0)); set('fs-h4-val',fPct(fs_gross>0?(fs_disc/fs_gross)*100:0));
+    set('fs-b1-val',fINR(fs_gross)); set('fs-b2-val',fINR(fs_disc)); set('fs-b3-val',fINR(fs_net));
+    set('fs-b4-val',fINR(fs_enrol)); set('fs-b5-val',fINR(fs_total));
     unload(['fs-h1','fs-h2','fs-h3','fs-h4','fs-b1','fs-b2','fs-b3','fs-b4','fs-b5']);
 
+    /* Renewals */
     const rn_count=rn.filter(r=>r[COL.NAME]&&r[COL.NAME].trim()!=='').length;
     const rn_gross=rn.reduce((s,r)=>s+parseNum(r[COL.GROSS]),0);
     const rn_disc=rn.reduce((s,r)=>s+parseNum(r[COL.DISCOUNT]),0);
     const rn_net=rn.reduce((s,r)=>s+parseNum(r[COL.NET]),0);
-
-    set('rn-h1-val', rn_count.toLocaleString('en-IN'));
-    set('rn-h2-val', fINR(rn_net));
-    set('rn-h3-val', fATV(rn_count>0?rn_net/rn_count:0));
-    set('rn-h4-val', fPct(rn_gross>0?(rn_disc/rn_gross)*100:0));
-    set('rn-b1-val', fINR(rn_gross)); set('rn-b2-val', fINR(rn_disc));
-    set('rn-b3-val', fINR(rn_net));   set('rn-b5-val', fINR(rn_net));
+    set('rn-h1-val',rn_count.toLocaleString('en-IN')); set('rn-h2-val',fINR(rn_net));
+    set('rn-h3-val',fATV(rn_count>0?rn_net/rn_count:0)); set('rn-h4-val',fPct(rn_gross>0?(rn_disc/rn_gross)*100:0));
+    set('rn-b1-val',fINR(rn_gross)); set('rn-b2-val',fINR(rn_disc)); set('rn-b3-val',fINR(rn_net)); set('rn-b5-val',fINR(rn_net));
     unload(['rn-h1','rn-h2','rn-h3','rn-h4','rn-b1','rn-b2','rn-b3','rn-b5']);
 
-    const tc_count=fs_count+rn_count, tc_gross=fs_gross+rn_gross;
-    const tc_disc=fs_disc+rn_disc, tc_net=fs_net+rn_net;
-    const tc_enrol=fs_enrol, tc_total=fs_total+rn_net;
-
-    set('tc-h1-val', tc_count.toLocaleString('en-IN'));
-    set('tc-h2-val', fINR(tc_total));
-    set('tc-h3-val', fATV(tc_count>0?tc_total/tc_count:0));
-    set('tc-h4-val', fPct(tc_gross>0?(tc_disc/tc_gross)*100:0));
-    set('tc-b1-val', fINR(tc_gross)); set('tc-b2-val', fINR(tc_disc));
-    set('tc-b3-val', fINR(tc_net));   set('tc-b4-val', fINR(tc_enrol));
-    set('tc-b5-val', fINR(tc_total));
+    /* Total Collections */
+    const tc_count=fs_count+rn_count, tc_gross=fs_gross+rn_gross, tc_disc=fs_disc+rn_disc;
+    const tc_net=fs_net+rn_net, tc_total=fs_total+rn_net;
+    set('tc-h1-val',tc_count.toLocaleString('en-IN')); set('tc-h2-val',fINR(tc_total));
+    set('tc-h3-val',fATV(tc_count>0?tc_total/tc_count:0)); set('tc-h4-val',fPct(tc_gross>0?(tc_disc/tc_gross)*100:0));
+    set('tc-b1-val',fINR(tc_gross)); set('tc-b2-val',fINR(tc_disc)); set('tc-b3-val',fINR(tc_net));
+    set('tc-b4-val',fINR(fs_enrol)); set('tc-b5-val',fINR(tc_total));
     unload(['tc-h1','tc-h2','tc-h3','tc-h4','tc-b1','tc-b2','tc-b3','tc-b4','tc-b5']);
+
+    /* Instrument Sales */
+    const is_count=is.filter(r=>r[ICOL.NAME]&&r[ICOL.NAME].trim()!=='').length;
+    const is_inst=is.reduce((s,r)=>s+parseNum(r[ICOL.INST_ONLY]),0);
+    const is_acc=is.reduce((s,r)=>s+parseNum(r[ICOL.ACCESSORIES]),0);
+    const is_total=is.reduce((s,r)=>s+parseNum(r[ICOL.TOTAL_COLL]),0);
+    const is_cost=is.reduce((s,r)=>s+parseNum(r[ICOL.COST_GST]),0);
+    const is_gross_profit=is_total-is_cost;
+    const is_gst_in=is.reduce((s,r)=>s+parseNum(r[ICOL.GST_IN]),0);
+    const is_gst_out=is.reduce((s,r)=>s+parseNum(r[ICOL.GST_OUT]),0);
+    const is_gst_adj=is_gst_in-is_gst_out;
+    const is_net_profit=is_gross_profit-is_gst_adj;
+    const is_net_cost=is.reduce((s,r)=>s+parseNum(r[ICOL.NET_COST]),0);
+    const is_pct=is_net_cost>0?(is_net_profit/is_net_cost)*100:0;
+
+    set('is-h1-val',is_count.toLocaleString('en-IN')); set('is-h2-val',fINR(is_total));
+    set('is-b1-val',fINR(is_inst)); set('is-b2-val',fINR(is_acc)); set('is-b3-val',fINR(is_total));
+    set('is-b4-val',fINR(is_cost)); set('is-b5-val',fINR(is_gross_profit));
+    set('is-b6-val',fINR(is_gst_adj)); set('is-b7-val',fINR(is_net_profit));
+    set('is-b8-val',fINR(is_net_cost)); set('is-b9-val',fPct(is_pct));
+    unload(['is-h1','is-h2','is-b1','is-b2','is-b3','is-b4','is-b5','is-b6','is-b7','is-b8','is-b9']);
 
     document.getElementById('scorecards-badge').textContent=tc_count+' transactions';
   }
 
-  async function loadData() {
+  async function loadData(){
     try {
-      const [r1,r2]=await Promise.all([fetch(FS_URL),fetch(RN_URL)]);
+      const [r1,r2,r3]=await Promise.all([fetch(FS_URL),fetch(RN_URL),fetch(IS_URL)]);
       if(!r1.ok) throw new Error('Fresh Sales: HTTP '+r1.status);
       if(!r2.ok) throw new Error('Renewals: HTTP '+r2.status);
-      const [t1,t2]=await Promise.all([r1.text(),r2.text()]);
+      if(!r3.ok) throw new Error('Instrument Sales: HTTP '+r3.status);
+      const [t1,t2,t3]=await Promise.all([r1.text(),r2.text(),r3.text()]);
       fsRows=parseCSV(t1).slice(2).filter(r=>r[COL.DATE]&&r[COL.DATE].trim()!==''&&r[COL.DATE].toLowerCase()!=='date');
       rnRows=parseCSV(t2).slice(2).filter(r=>r[COL.DATE]&&r[COL.DATE].trim()!==''&&r[COL.DATE].toLowerCase()!=='date');
+      // Instrument Sales starts from row 2 (slice(1) skips header row only)
+      isRows=parseCSV(t3).slice(1).filter(r=>r[ICOL.DATE]&&r[ICOL.DATE].trim()!==''&&r[ICOL.DATE].toLowerCase()!=='date');
       const now=new Date();
       document.getElementById('last-updated-text').textContent=
         'Updated '+now.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})+
         ' · '+now.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
       document.getElementById('status-dot').className='status-dot';
       applyFilters();
-    } catch(e) {
+    } catch(e){
       document.getElementById('last-updated-text').textContent='Error — '+e.message;
       document.getElementById('status-dot').className='status-dot error';
     }
   }
 
-  function resetToCurrentMonth() {
+  function resetToCurrentMonth(){
     ['f-year','f-month','f-course','f-level','f-age','f-gender','f-type','f-renewal','f-reason','f-teacher'].forEach(id=>{document.getElementById(id).value='';});
     setDefaultDates(); applyFilters();
   }
 
-  function clearFilters() {
+  function clearFilters(){
     ['f-year','f-month','f-course','f-level','f-age','f-gender','f-type','f-renewal','f-reason','f-teacher'].forEach(id=>{document.getElementById(id).value='';});
     document.getElementById('f-from').value=''; document.getElementById('f-to').value='';
     document.getElementById('from-hint').textContent='Showing all dates';
@@ -918,15 +708,15 @@
   }
 
   const sectionState={filters:true,scorecards:true};
-  function toggleSection(id) {
+  function toggleSection(id){
     sectionState[id]=!sectionState[id]; const open=sectionState[id];
     document.getElementById(id+'-body').style.display=open?'':'none';
     document.getElementById(id+'-icon').classList.toggle('collapsed',!open);
     document.getElementById(id+'-label').textContent=open?'Collapse':'Expand';
   }
 
-  const bdState={fs:false,rn:false,tc:false};
-  function toggleBreakdown(p) {
+  const bdState={fs:false,rn:false,tc:false,is:false};
+  function toggleBreakdown(p){
     bdState[p]=!bdState[p]; const open=bdState[p];
     document.getElementById(p+'-bd-body').style.display=open?'block':'none';
     document.getElementById(p+'-bd-icon').classList.toggle('open',open);
