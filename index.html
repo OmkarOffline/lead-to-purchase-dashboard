@@ -4,84 +4,438 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Alwarpet, Chennai — Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f4f0; color: #1a1a18; min-height: 100vh; }
-    .page { max-width: 1200px; margin: 0 auto; padding: 1.5rem; }
 
-    /* Page header */
-    .page-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 0.5px solid #dddcd6; }
-    .page-title { font-size: 22px; font-weight: 500; color: #1a1a18; }
-    .page-subtitle { font-size: 13px; color: #888780; margin-top: 3px; }
-    .last-updated { font-size: 12px; color: #888780; display: flex; align-items: center; gap: 6px; white-space: nowrap; }
-    .status-dot { width: 7px; height: 7px; border-radius: 50%; background: #63c17a; flex-shrink: 0; }
-    .status-dot.loading { background: #f0c05a; }
-    .status-dot.error { background: #e2534a; }
+    :root {
+      --font-primary: 'Montserrat', 'Inter', -apple-system, sans-serif;
+      --font-body: 'Inter', -apple-system, sans-serif;
 
-    /* Section cards */
-    .section-card { background: #ffffff; border: 0.5px solid #dddcd6; border-radius: 12px; margin-bottom: 1.25rem; overflow: hidden; }
-    .section-header { display: flex; align-items: center; justify-content: space-between; padding: 0.85rem 1.25rem; cursor: pointer; user-select: none; }
-    .section-header:hover { background: #fafaf8; }
-    .section-header-left { display: flex; align-items: center; gap: 8px; }
-    .section-title { font-size: 13px; font-weight: 500; color: #5f5e5a; }
-    .badge { font-size: 11px; background: #f5f4f0; color: #888780; padding: 2px 7px; border-radius: 999px; border: 0.5px solid #dddcd6; }
-    .toggle-btn { display: flex; align-items: center; gap: 5px; font-size: 12px; color: #888780; border: none; background: none; cursor: pointer; padding: 4px 8px; border-radius: 6px; }
-    .toggle-btn:hover { background: #f0efeb; color: #5f5e5a; }
-    .toggle-icon { font-size: 15px; transition: transform 0.2s ease; }
+      /* Backgrounds */
+      --bg-primary: #FFFFFF;
+      --bg-secondary: #F8FAFC;
+      --bg-hover: #F1F5F9;
+
+      /* Borders */
+      --border-primary: #E2E8F0;
+      --border-secondary: #CBD5E1;
+
+      /* Text */
+      --text-h1: #17213C;
+      --text-h2: #1E3A5F;
+      --text-h3: #334155;
+      --text-body: #475569;
+      --text-secondary: #64748B;
+      --text-disabled: #94A3B8;
+
+      /* Brand */
+      --navy: #17213C;
+      --blue: #2563EB;
+      --teal: #0891B2;
+      --purple: #7C3AED;
+
+      /* Functional */
+      --success: #059669;
+      --success-bg: #ECFDF5;
+      --warning: #D97706;
+      --warning-bg: #FEF3C7;
+      --error: #DC2626;
+      --error-bg: #FEF2F2;
+      --info-bg: #EFF6FF;
+
+      /* Cards */
+      --card-radius: 18px;
+      --card-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+
+      /* Spacing */
+      --outer-margin: 48px;
+      --card-padding: 24px;
+      --section-gap: 40px;
+      --card-gap: 24px;
+      --title-gap: 16px;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-secondary);
+      color: var(--text-body);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: var(--outer-margin);
+    }
+
+    /* ── Page Header ── */
+    .page-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: var(--section-gap);
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border-primary);
+    }
+
+    .page-title {
+      font-family: var(--font-primary);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text-h1);
+      letter-spacing: -0.3px;
+      line-height: 1.2;
+    }
+
+    .page-subtitle {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-top: 6px;
+      font-weight: 400;
+    }
+
+    .last-updated {
+      font-size: 13px;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      white-space: nowrap;
+    }
+
+    .status-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+      flex-shrink: 0;
+    }
+    .status-dot.loading { background: var(--warning); }
+    .status-dot.error   { background: var(--error); }
+
+    /* ── Section Cards ── */
+    .section-card {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-primary);
+      border-radius: var(--card-radius);
+      margin-bottom: var(--card-gap);
+      box-shadow: var(--card-shadow);
+      overflow: hidden;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px var(--card-padding);
+      cursor: pointer;
+      user-select: none;
+    }
+    .section-header:hover { background: var(--bg-hover); }
+
+    .section-header-left { display: flex; align-items: center; gap: 10px; }
+
+    .section-title {
+      font-family: var(--font-primary);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-h2);
+      letter-spacing: 0.01em;
+    }
+
+    .section-badge {
+      font-size: 11px;
+      font-weight: 500;
+      background: var(--bg-secondary);
+      color: var(--text-secondary);
+      padding: 3px 9px;
+      border-radius: 999px;
+      border: 1px solid var(--border-primary);
+    }
+
+    .toggle-btn {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      border: none; background: none; cursor: pointer;
+      padding: 5px 10px;
+      border-radius: 8px;
+      font-family: var(--font-body);
+    }
+    .toggle-btn:hover { background: var(--bg-hover); color: var(--text-h3); }
+
+    .toggle-icon { font-size: 16px; transition: transform 0.2s ease; }
     .toggle-icon.collapsed { transform: rotate(-90deg); }
-    .section-body { padding: 0 1.25rem 1rem 1.25rem; border-top: 0.5px solid #dddcd6; }
 
-    /* Filters */
-    .divider-label { font-size: 11px; color: #888780; text-transform: uppercase; letter-spacing: 0.05em; margin: 0.85rem 0 8px; }
-    .date-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 0.5rem; }
-    .filter-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
-    .filter-group { display: flex; flex-direction: column; gap: 5px; }
-    .filter-label { font-size: 12px; color: #888780; font-weight: 500; }
-    .date-hint { font-size: 11px; color: #378add; margin-top: 2px; min-height: 14px; }
-    select, input[type="date"] { width: 100%; font-size: 13px; padding: 6px 10px; border: 0.5px solid #c4c3bc; border-radius: 8px; background: #ffffff; color: #1a1a18; height: 34px; appearance: auto; }
-    select:focus, input[type="date"]:focus { outline: none; border-color: #378add; }
-    .filter-actions { display: flex; align-items: center; gap: 8px; justify-content: flex-end; margin-top: 0.75rem; padding-top: 0.75rem; border-top: 0.5px solid #dddcd6; }
-    .btn { font-size: 13px; padding: 6px 14px; border-radius: 8px; cursor: pointer; border: 0.5px solid #c4c3bc; background: transparent; color: #1a1a18; height: 34px; display: flex; align-items: center; gap: 6px; }
-    .btn:hover { background: #f5f4f0; }
-    .btn-ghost { font-size: 13px; padding: 6px 14px; border-radius: 8px; cursor: pointer; border: 0.5px solid #c4c3bc; background: transparent; color: #888780; height: 34px; display: flex; align-items: center; gap: 6px; }
-    .btn-ghost:hover { background: #f5f4f0; color: #1a1a18; }
+    .section-body {
+      padding: 0 var(--card-padding) var(--card-padding) var(--card-padding);
+      border-top: 1px solid var(--border-primary);
+    }
 
-    /* Sub-sections */
-    .subsection { margin-top: 1rem; }
-    .subsection + .subsection { margin-top: 1.75rem; }
-    .subsection-header { display: flex; align-items: center; gap: 8px; margin-bottom: 0.85rem; }
-    .subsection-pill { font-size: 12px; font-weight: 500; color: #5f5e5a; background: #f0efeb; border: 0.5px solid #dddcd6; border-radius: 999px; padding: 3px 12px; white-space: nowrap; }
-    .subsection-divider { flex: 1; height: 0.5px; background: #dddcd6; }
+    /* ── Filters ── */
+    .filter-group-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-disabled);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin: 20px 0 10px;
+    }
 
-    /* Hero scorecards */
-    .hero-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-bottom: 0.75rem; }
-    .hero-card { background: #ffffff; border: 0.5px solid #dddcd6; border-radius: 10px; padding: 1rem 1.1rem; display: flex; flex-direction: column; gap: 5px; }
-    .hero-card.total-card { background: #eef5fb; border-color: #b5d4f4; }
-    .hero-label { font-size: 12px; color: #888780; font-weight: 500; }
-    .hero-value { font-size: 26px; font-weight: 500; color: #1a1a18; line-height: 1.1; }
-    .hero-card.total-card .hero-value { color: #185fa5; }
-    .hero-card.loading .hero-value { color: #c4c3bc; }
+    .date-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--card-gap);
+      margin-bottom: 4px;
+    }
 
-    /* Breakdown toggle */
-    .breakdown-toggle { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #888780; cursor: pointer; user-select: none; padding: 5px 0; width: fit-content; margin-bottom: 0; }
-    .breakdown-toggle:hover { color: #5f5e5a; }
-    .breakdown-toggle .ti { font-size: 14px; transition: transform 0.2s ease; }
+    .filter-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 16px;
+    }
+
+    .filter-group { display: flex; flex-direction: column; gap: 6px; }
+
+    .filter-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-h3);
+      letter-spacing: 0.01em;
+    }
+
+    .date-hint {
+      font-size: 11px;
+      color: var(--blue);
+      margin-top: 3px;
+      min-height: 14px;
+    }
+
+    select, input[type="date"] {
+      width: 100%;
+      font-family: var(--font-body);
+      font-size: 13px;
+      padding: 8px 12px;
+      border: 1px solid var(--border-primary);
+      border-radius: 10px;
+      background: var(--bg-primary);
+      color: var(--text-body);
+      height: 38px;
+      appearance: auto;
+      transition: border-color 0.15s;
+    }
+    select:hover, input[type="date"]:hover { border-color: var(--border-secondary); }
+    select:focus, input[type="date"]:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(37,99,235,0.08); }
+
+    .filter-actions {
+      display: flex; align-items: center; gap: 10px;
+      justify-content: flex-end;
+      margin-top: 20px; padding-top: 20px;
+      border-top: 1px solid var(--border-primary);
+    }
+
+    .btn {
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      border: 1px solid var(--border-secondary);
+      background: var(--bg-primary);
+      color: var(--text-h3);
+      height: 38px;
+      display: flex; align-items: center; gap: 6px;
+      transition: background 0.15s;
+    }
+    .btn:hover { background: var(--bg-hover); }
+
+    .btn-ghost {
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      border: 1px solid var(--border-primary);
+      background: transparent;
+      color: var(--text-secondary);
+      height: 38px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .btn-ghost:hover { background: var(--bg-hover); color: var(--text-h3); }
+
+    /* ── Sub-sections ── */
+    .subsection { margin-top: 28px; }
+    .subsection + .subsection { margin-top: var(--section-gap); }
+
+    .subsection-header {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .subsection-pill {
+      font-family: var(--font-primary);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-h2);
+      background: var(--info-bg);
+      border: 1px solid #BFDBFE;
+      border-radius: 999px;
+      padding: 4px 14px;
+      white-space: nowrap;
+    }
+
+    .subsection-pill.total {
+      background: #EEF2FF;
+      border-color: #C7D2FE;
+      color: #312E81;
+    }
+
+    .subsection-divider { flex: 1; height: 1px; background: var(--border-primary); }
+
+    /* ── Hero Cards ── */
+    .hero-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--card-gap);
+      margin-bottom: 16px;
+    }
+
+    .hero-card {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-primary);
+      border-radius: var(--card-radius);
+      padding: var(--card-padding);
+      display: flex; flex-direction: column; gap: 8px;
+      box-shadow: var(--card-shadow);
+      transition: box-shadow 0.15s;
+    }
+    .hero-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+
+    .hero-card.total-card {
+      background: #F5F3FF;
+      border-color: #DDD6FE;
+    }
+
+    .hero-card.loading .hero-value { color: var(--text-disabled); }
+
+    .hero-icon {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      margin-bottom: 4px;
+    }
+    .hero-icon.blue   { background: var(--info-bg);    color: var(--blue); }
+    .hero-icon.teal   { background: #F0FDFA;            color: var(--teal); }
+    .hero-icon.purple { background: #FAF5FF;            color: var(--purple); }
+    .hero-icon.navy   { background: #EFF6FF;            color: var(--navy); }
+    .hero-icon.total  { background: #EEF2FF;            color: #4338CA; }
+
+    .hero-label {
+      font-family: var(--font-primary);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-h3);
+      letter-spacing: 0.02em;
+    }
+
+    .hero-value {
+      font-family: var(--font-primary);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--blue);
+      line-height: 1.1;
+      letter-spacing: -0.5px;
+    }
+
+    .hero-card.total-card .hero-value { color: #4338CA; }
+
+    /* ── Breakdown toggle ── */
+    .breakdown-toggle {
+      display: inline-flex;
+      align-items: center; gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer;
+      user-select: none;
+      padding: 5px 10px 5px 0;
+      border: none;
+      background: none;
+      font-family: var(--font-body);
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+    .breakdown-toggle:hover { color: var(--text-h3); }
+    .breakdown-toggle .ti { font-size: 15px; transition: transform 0.2s ease; }
     .breakdown-toggle .ti.open { transform: rotate(180deg); }
 
-    /* Breakdown scorecards */
-    .breakdown-body { display: none; margin-top: 0.75rem; }
-    .breakdown-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
-    .scorecard { background: #f5f4f0; border-radius: 8px; padding: 0.85rem 1rem; display: flex; flex-direction: column; gap: 5px; }
-    .scorecard.total-sc { background: #ddeaf7; }
-    .scorecard-label { font-size: 11px; color: #888780; font-weight: 500; text-transform: uppercase; letter-spacing: 0.03em; }
-    .scorecard-value { font-size: 18px; font-weight: 500; color: #1a1a18; }
-    .scorecard.total-sc .scorecard-value { color: #185fa5; }
-    .scorecard.loading .scorecard-value { color: #c4c3bc; }
-    .scorecard.na .scorecard-value { font-size: 14px; color: #c4c3bc; }
+    /* ── Breakdown Cards ── */
+    .breakdown-body { display: none; margin-top: 14px; }
 
-    @media (max-width: 700px) { .date-row { grid-template-columns: 1fr 1fr; } .page-header { flex-direction: column; gap: 8px; } .hero-grid { grid-template-columns: 1fr 1fr; } }
-    @media (max-width: 480px) { .date-row { grid-template-columns: 1fr; } .hero-grid { grid-template-columns: 1fr; } }
+    .breakdown-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 14px;
+    }
+
+    .scorecard {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-primary);
+      border-radius: 14px;
+      padding: 18px 20px;
+      display: flex; flex-direction: column; gap: 6px;
+    }
+
+    .scorecard.total-sc {
+      background: #EEF2FF;
+      border-color: #C7D2FE;
+    }
+
+    .scorecard.loading .scorecard-value { color: var(--text-disabled); }
+
+    .scorecard.na .scorecard-value {
+      font-size: 14px;
+      color: var(--text-disabled);
+      font-weight: 400;
+    }
+
+    .scorecard-label {
+      font-family: var(--font-primary);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .scorecard-value {
+      font-family: var(--font-primary);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-h1);
+    }
+
+    .scorecard.total-sc .scorecard-value { color: #312E81; }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      :root { --outer-margin: 20px; }
+      .date-row { grid-template-columns: 1fr 1fr; }
+      .page-header { flex-direction: column; gap: 12px; align-items: flex-start; }
+      .hero-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) {
+      .date-row { grid-template-columns: 1fr; }
+      .hero-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -99,21 +453,22 @@
     </div>
   </div>
 
-  <!-- FILTERS -->
+  <!-- ── FILTERS ── -->
   <div class="section-card">
     <div class="section-header" onclick="toggleSection('filters')">
       <div class="section-header-left">
-        <i class="ti ti-filter" style="font-size:15px;color:#5f5e5a;" aria-hidden="true"></i>
+        <i class="ti ti-adjustments-horizontal" style="font-size:17px;color:var(--teal);" aria-hidden="true"></i>
         <span class="section-title">Filters</span>
-        <span class="badge">All optional</span>
+        <span class="section-badge">All optional</span>
       </div>
       <button class="toggle-btn" aria-label="Toggle filters">
-        <span style="font-size:12px;" id="filters-label">Collapse</span>
+        <span id="filters-label">Collapse</span>
         <i class="ti ti-chevron-down toggle-icon" id="filters-icon" aria-hidden="true"></i>
       </button>
     </div>
+
     <div id="filters-body" class="section-body">
-      <div class="divider-label">Date filters</div>
+      <div class="filter-group-label">Date range</div>
       <div class="date-row">
         <div class="filter-group">
           <label class="filter-label" for="f-year">Year</label>
@@ -145,7 +500,8 @@
           <span class="date-hint" id="to-hint"></span>
         </div>
       </div>
-      <div class="divider-label">Other filters</div>
+
+      <div class="filter-group-label">Segment filters</div>
       <div class="filter-grid">
         <div class="filter-group">
           <label class="filter-label" for="f-course">Course name</label>
@@ -221,211 +577,161 @@
           </select>
         </div>
       </div>
+
       <div class="filter-actions">
         <button class="btn-ghost" onclick="resetToCurrentMonth()">
-          <i class="ti ti-calendar" style="font-size:13px;" aria-hidden="true"></i>
+          <i class="ti ti-calendar" style="font-size:14px;" aria-hidden="true"></i>
           Reset to this month
         </button>
         <button class="btn" onclick="clearFilters()">
-          <i class="ti ti-x" style="font-size:13px;" aria-hidden="true"></i>
+          <i class="ti ti-x" style="font-size:14px;" aria-hidden="true"></i>
           Clear all
         </button>
       </div>
     </div>
   </div>
 
-  <!-- SCORECARDS -->
+  <!-- ── SCORECARDS ── -->
   <div class="section-card">
     <div class="section-header" onclick="toggleSection('scorecards')">
       <div class="section-header-left">
-        <i class="ti ti-layout-dashboard" style="font-size:15px;color:#5f5e5a;" aria-hidden="true"></i>
+        <i class="ti ti-chart-bar" style="font-size:17px;color:var(--blue);" aria-hidden="true"></i>
         <span class="section-title">Scorecards</span>
-        <span class="badge" id="scorecards-badge">—</span>
+        <span class="section-badge" id="scorecards-badge">—</span>
       </div>
       <button class="toggle-btn" aria-label="Toggle scorecards">
-        <span style="font-size:12px;" id="scorecards-label">Collapse</span>
+        <span id="scorecards-label">Collapse</span>
         <i class="ti ti-chevron-down toggle-icon" id="scorecards-icon" aria-hidden="true"></i>
       </button>
     </div>
 
     <div id="scorecards-body" class="section-body">
 
-      <!-- ── FRESH SALES ── -->
+      <!-- FRESH SALES -->
       <div class="subsection">
         <div class="subsection-header">
           <span class="subsection-pill">Fresh sales</span>
           <div class="subsection-divider"></div>
         </div>
-
-        <!-- Hero cards -->
         <div class="hero-grid">
           <div class="hero-card loading" id="fs-h1">
+            <div class="hero-icon blue"><i class="ti ti-users" aria-hidden="true"></i></div>
             <div class="hero-label">No. of admissions</div>
             <div class="hero-value" id="fs-h1-val">—</div>
           </div>
           <div class="hero-card loading" id="fs-h2">
+            <div class="hero-icon teal"><i class="ti ti-cash" aria-hidden="true"></i></div>
             <div class="hero-label">Fresh sales collections</div>
             <div class="hero-value" id="fs-h2-val">—</div>
           </div>
           <div class="hero-card loading" id="fs-h3">
+            <div class="hero-icon purple"><i class="ti ti-trending-up" aria-hidden="true"></i></div>
             <div class="hero-label">ATV</div>
             <div class="hero-value" id="fs-h3-val">—</div>
           </div>
           <div class="hero-card loading" id="fs-h4">
+            <div class="hero-icon navy"><i class="ti ti-percentage" aria-hidden="true"></i></div>
             <div class="hero-label">% Discount</div>
             <div class="hero-value" id="fs-h4-val">—</div>
           </div>
         </div>
-
-        <!-- Breakdown toggle -->
-        <div class="breakdown-toggle" onclick="toggleBreakdown('fs')">
+        <button class="breakdown-toggle" onclick="toggleBreakdown('fs')">
           <i class="ti ti-chevron-down" id="fs-bd-icon"></i>
           <span id="fs-bd-label">Show breakdown</span>
-        </div>
-
-        <!-- Breakdown cards -->
+        </button>
         <div class="breakdown-body" id="fs-bd-body">
           <div class="breakdown-grid">
-            <div class="scorecard loading" id="fs-b1">
-              <div class="scorecard-label">Gross course fees</div>
-              <div class="scorecard-value" id="fs-b1-val">—</div>
-            </div>
-            <div class="scorecard loading" id="fs-b2">
-              <div class="scorecard-label">Discount</div>
-              <div class="scorecard-value" id="fs-b2-val">—</div>
-            </div>
-            <div class="scorecard loading" id="fs-b3">
-              <div class="scorecard-label">Net course fees</div>
-              <div class="scorecard-value" id="fs-b3-val">—</div>
-            </div>
-            <div class="scorecard loading" id="fs-b4">
-              <div class="scorecard-label">Enrolment fees</div>
-              <div class="scorecard-value" id="fs-b4-val">—</div>
-            </div>
-            <div class="scorecard loading" id="fs-b5">
-              <div class="scorecard-label">Total receipts</div>
-              <div class="scorecard-value" id="fs-b5-val">—</div>
-            </div>
+            <div class="scorecard loading" id="fs-b1"><div class="scorecard-label">Gross course fees</div><div class="scorecard-value" id="fs-b1-val">—</div></div>
+            <div class="scorecard loading" id="fs-b2"><div class="scorecard-label">Discount</div><div class="scorecard-value" id="fs-b2-val">—</div></div>
+            <div class="scorecard loading" id="fs-b3"><div class="scorecard-label">Net course fees</div><div class="scorecard-value" id="fs-b3-val">—</div></div>
+            <div class="scorecard loading" id="fs-b4"><div class="scorecard-label">Enrolment fees</div><div class="scorecard-value" id="fs-b4-val">—</div></div>
+            <div class="scorecard loading" id="fs-b5"><div class="scorecard-label">Total receipts</div><div class="scorecard-value" id="fs-b5-val">—</div></div>
           </div>
         </div>
       </div>
 
-      <!-- ── RENEWALS ── -->
+      <!-- RENEWALS -->
       <div class="subsection">
         <div class="subsection-header">
           <span class="subsection-pill">Renewals</span>
           <div class="subsection-divider"></div>
         </div>
-
-        <!-- Hero cards -->
         <div class="hero-grid">
           <div class="hero-card loading" id="rn-h1">
+            <div class="hero-icon blue"><i class="ti ti-refresh" aria-hidden="true"></i></div>
             <div class="hero-label">No. of renewals</div>
             <div class="hero-value" id="rn-h1-val">—</div>
           </div>
           <div class="hero-card loading" id="rn-h2">
+            <div class="hero-icon teal"><i class="ti ti-cash" aria-hidden="true"></i></div>
             <div class="hero-label">Renewals collections</div>
             <div class="hero-value" id="rn-h2-val">—</div>
           </div>
           <div class="hero-card loading" id="rn-h3">
+            <div class="hero-icon purple"><i class="ti ti-trending-up" aria-hidden="true"></i></div>
             <div class="hero-label">ATV</div>
             <div class="hero-value" id="rn-h3-val">—</div>
           </div>
           <div class="hero-card loading" id="rn-h4">
+            <div class="hero-icon navy"><i class="ti ti-percentage" aria-hidden="true"></i></div>
             <div class="hero-label">% Discount</div>
             <div class="hero-value" id="rn-h4-val">—</div>
           </div>
         </div>
-
-        <!-- Breakdown toggle -->
-        <div class="breakdown-toggle" onclick="toggleBreakdown('rn')">
+        <button class="breakdown-toggle" onclick="toggleBreakdown('rn')">
           <i class="ti ti-chevron-down" id="rn-bd-icon"></i>
           <span id="rn-bd-label">Show breakdown</span>
-        </div>
-
-        <!-- Breakdown cards -->
+        </button>
         <div class="breakdown-body" id="rn-bd-body">
           <div class="breakdown-grid">
-            <div class="scorecard loading" id="rn-b1">
-              <div class="scorecard-label">Gross course fees</div>
-              <div class="scorecard-value" id="rn-b1-val">—</div>
-            </div>
-            <div class="scorecard loading" id="rn-b2">
-              <div class="scorecard-label">Discount</div>
-              <div class="scorecard-value" id="rn-b2-val">—</div>
-            </div>
-            <div class="scorecard loading" id="rn-b3">
-              <div class="scorecard-label">Net course fees</div>
-              <div class="scorecard-value" id="rn-b3-val">—</div>
-            </div>
-            <div class="scorecard na">
-              <div class="scorecard-label">Enrolment fees</div>
-              <div class="scorecard-value">NA</div>
-            </div>
-            <div class="scorecard loading" id="rn-b5">
-              <div class="scorecard-label">Total receipts</div>
-              <div class="scorecard-value" id="rn-b5-val">—</div>
-            </div>
+            <div class="scorecard loading" id="rn-b1"><div class="scorecard-label">Gross course fees</div><div class="scorecard-value" id="rn-b1-val">—</div></div>
+            <div class="scorecard loading" id="rn-b2"><div class="scorecard-label">Discount</div><div class="scorecard-value" id="rn-b2-val">—</div></div>
+            <div class="scorecard loading" id="rn-b3"><div class="scorecard-label">Net course fees</div><div class="scorecard-value" id="rn-b3-val">—</div></div>
+            <div class="scorecard na"><div class="scorecard-label">Enrolment fees</div><div class="scorecard-value">NA</div></div>
+            <div class="scorecard loading" id="rn-b5"><div class="scorecard-label">Total receipts</div><div class="scorecard-value" id="rn-b5-val">—</div></div>
           </div>
         </div>
       </div>
 
-      <!-- ── TOTAL COLLECTIONS ── -->
+      <!-- TOTAL COLLECTIONS -->
       <div class="subsection">
         <div class="subsection-header">
-          <span class="subsection-pill">Total collections — course fees</span>
+          <span class="subsection-pill total">Total collections — course fees</span>
           <div class="subsection-divider"></div>
         </div>
-
-        <!-- Hero cards -->
         <div class="hero-grid">
           <div class="hero-card total-card loading" id="tc-h1">
+            <div class="hero-icon total"><i class="ti ti-sum" aria-hidden="true"></i></div>
             <div class="hero-label">No. of transactions</div>
             <div class="hero-value" id="tc-h1-val">—</div>
           </div>
           <div class="hero-card total-card loading" id="tc-h2">
+            <div class="hero-icon total"><i class="ti ti-cash" aria-hidden="true"></i></div>
             <div class="hero-label">Total collections</div>
             <div class="hero-value" id="tc-h2-val">—</div>
           </div>
           <div class="hero-card total-card loading" id="tc-h3">
+            <div class="hero-icon total"><i class="ti ti-trending-up" aria-hidden="true"></i></div>
             <div class="hero-label">ATV</div>
             <div class="hero-value" id="tc-h3-val">—</div>
           </div>
           <div class="hero-card total-card loading" id="tc-h4">
+            <div class="hero-icon total"><i class="ti ti-percentage" aria-hidden="true"></i></div>
             <div class="hero-label">% Discount</div>
             <div class="hero-value" id="tc-h4-val">—</div>
           </div>
         </div>
-
-        <!-- Breakdown toggle -->
-        <div class="breakdown-toggle" onclick="toggleBreakdown('tc')">
+        <button class="breakdown-toggle" onclick="toggleBreakdown('tc')">
           <i class="ti ti-chevron-down" id="tc-bd-icon"></i>
           <span id="tc-bd-label">Show breakdown</span>
-        </div>
-
-        <!-- Breakdown cards -->
+        </button>
         <div class="breakdown-body" id="tc-bd-body">
           <div class="breakdown-grid">
-            <div class="scorecard total-sc loading" id="tc-b1">
-              <div class="scorecard-label">Gross course fees</div>
-              <div class="scorecard-value" id="tc-b1-val">—</div>
-            </div>
-            <div class="scorecard total-sc loading" id="tc-b2">
-              <div class="scorecard-label">Discount</div>
-              <div class="scorecard-value" id="tc-b2-val">—</div>
-            </div>
-            <div class="scorecard total-sc loading" id="tc-b3">
-              <div class="scorecard-label">Net course fees</div>
-              <div class="scorecard-value" id="tc-b3-val">—</div>
-            </div>
-            <div class="scorecard total-sc loading" id="tc-b4">
-              <div class="scorecard-label">Enrolment fees</div>
-              <div class="scorecard-value" id="tc-b4-val">—</div>
-            </div>
-            <div class="scorecard total-sc loading" id="tc-b5">
-              <div class="scorecard-label">Total receipts</div>
-              <div class="scorecard-value" id="tc-b5-val">—</div>
-            </div>
+            <div class="scorecard total-sc loading" id="tc-b1"><div class="scorecard-label">Gross course fees</div><div class="scorecard-value" id="tc-b1-val">—</div></div>
+            <div class="scorecard total-sc loading" id="tc-b2"><div class="scorecard-label">Discount</div><div class="scorecard-value" id="tc-b2-val">—</div></div>
+            <div class="scorecard total-sc loading" id="tc-b3"><div class="scorecard-label">Net course fees</div><div class="scorecard-value" id="tc-b3-val">—</div></div>
+            <div class="scorecard total-sc loading" id="tc-b4"><div class="scorecard-label">Enrolment fees</div><div class="scorecard-value" id="tc-b4-val">—</div></div>
+            <div class="scorecard total-sc loading" id="tc-b5"><div class="scorecard-label">Total receipts</div><div class="scorecard-value" id="tc-b5-val">—</div></div>
           </div>
         </div>
       </div>
@@ -443,7 +749,6 @@
 
   let fsRows = [], rnRows = [];
 
-  /* ── Utilities ── */
   function toISO(d) { return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
 
   function parseDate(str) {
@@ -451,17 +756,16 @@
     const s = str.trim();
     const dmy = s.match(/^(\d{1,2})-([A-Za-z]+)-(\d{2,4})$/);
     if (dmy) {
-      const mo = {jan:0,feb:1,mar:2,apr:3,may:4,jun:5,jul:6,aug:7,sep:8,oct:9,nov:10,dec:11};
-      const m = mo[dmy[2].toLowerCase().slice(0,3)];
-      const y = dmy[3].length===2 ? 2000+parseInt(dmy[3]) : parseInt(dmy[3]);
+      const mo={jan:0,feb:1,mar:2,apr:3,may:4,jun:5,jul:6,aug:7,sep:8,oct:9,nov:10,dec:11};
+      const m=mo[dmy[2].toLowerCase().slice(0,3)], y=dmy[3].length===2?2000+parseInt(dmy[3]):parseInt(dmy[3]);
       if (m!==undefined) return new Date(y,m,parseInt(dmy[1]));
     }
     const dmy2 = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})$/);
     if (dmy2) { const y=dmy2[3].length===2?2000+parseInt(dmy2[3]):parseInt(dmy2[3]); return new Date(y,parseInt(dmy2[2])-1,parseInt(dmy2[1])); }
-    const d = new Date(s); return isNaN(d)?null:d;
+    const d=new Date(s); return isNaN(d)?null:d;
   }
 
-  function parseNum(str) { if (!str) return 0; return parseFloat(str.toString().replace(/,/g,''))||0; }
+  function parseNum(s) { if(!s) return 0; return parseFloat(s.toString().replace(/,/g,''))||0; }
   function fINR(v) { return '₹'+Math.round(v).toLocaleString('en-IN'); }
   function fPct(v) { return v.toFixed(2)+'%'; }
   function fATV(v) { return '₹'+v.toFixed(1).replace(/\B(?=(\d{3})+(?!\d))/g,','); }
@@ -471,13 +775,12 @@
     for (const line of text.split('\n')) {
       if (!line.trim()) continue;
       const cols=[]; let cur='',inQ=false;
-      for (const ch of line) { if(ch==='"'){inQ=!inQ;}else if(ch===','&&!inQ){cols.push(cur.trim());cur='';}else{cur+=ch;} }
+      for (const ch of line){if(ch==='"'){inQ=!inQ;}else if(ch===','&&!inQ){cols.push(cur.trim());cur='';}else{cur+=ch;}}
       cols.push(cur.trim()); rows.push(cols);
     }
     return rows;
   }
 
-  /* ── Dates ── */
   function setDefaultDates() {
     const today=new Date(), first=new Date(today.getFullYear(),today.getMonth(),1);
     document.getElementById('f-from').value=toISO(first);
@@ -488,11 +791,11 @@
 
   function onYearMonthChange() {
     const year=document.getElementById('f-year').value, month=document.getElementById('f-month').value;
-    if (year&&month) {
+    if(year&&month){
       document.getElementById('f-from').value=toISO(new Date(+year,+month-1,1));
       document.getElementById('f-to').value=toISO(new Date(+year,+month,0));
       document.getElementById('from-hint').textContent=document.getElementById('to-hint').textContent='Auto-set';
-    } else if (year) {
+    } else if(year){
       document.getElementById('f-from').value=toISO(new Date(+year,0,1));
       document.getElementById('f-to').value=toISO(new Date(+year,11,31));
       document.getElementById('from-hint').textContent=document.getElementById('to-hint').textContent='Auto-set';
@@ -500,14 +803,22 @@
     applyFilters();
   }
 
-  /* ── Filter rows ── */
+  function getF() {
+    return {
+      year:document.getElementById('f-year').value, month:document.getElementById('f-month').value,
+      fromVal:document.getElementById('f-from').value, toVal:document.getElementById('f-to').value,
+      course:document.getElementById('f-course').value, level:document.getElementById('f-level').value,
+      age:document.getElementById('f-age').value, gender:document.getElementById('f-gender').value,
+      type:document.getElementById('f-type').value, renewal:document.getElementById('f-renewal').value,
+      reason:document.getElementById('f-reason').value, teacher:document.getElementById('f-teacher').value,
+    };
+  }
+
   function filterRows(rows, f) {
-    const fromDate=f.fromVal?new Date(f.fromVal):null;
-    const toDate=f.toVal?new Date(f.toVal+'T23:59:59'):null;
-    return rows.filter(r => {
+    const fd=f.fromVal?new Date(f.fromVal):null, td=f.toVal?new Date(f.toVal+'T23:59:59'):null;
+    return rows.filter(r=>{
       const d=parseDate(r[COL.DATE]); if(!d) return false;
-      if(fromDate&&d<fromDate) return false;
-      if(toDate&&d>toDate) return false;
+      if(fd&&d<fd) return false; if(td&&d>td) return false;
       if(f.year&&d.getFullYear().toString()!==f.year) return false;
       if(f.month&&(d.getMonth()+1).toString()!==f.month) return false;
       if(f.course&&r[COL.COURSE]!==f.course) return false;
@@ -522,102 +833,69 @@
     });
   }
 
-  /* ── Apply filters & update all scorecards ── */
+  function set(id, val) { document.getElementById(id).textContent=val; }
+  function unload(ids) { ids.forEach(id=>document.getElementById(id).classList.remove('loading')); }
+
   function applyFilters() {
-    const f = {
-      year:document.getElementById('f-year').value,
-      month:document.getElementById('f-month').value,
-      fromVal:document.getElementById('f-from').value,
-      toVal:document.getElementById('f-to').value,
-      course:document.getElementById('f-course').value,
-      level:document.getElementById('f-level').value,
-      age:document.getElementById('f-age').value,
-      gender:document.getElementById('f-gender').value,
-      type:document.getElementById('f-type').value,
-      renewal:document.getElementById('f-renewal').value,
-      reason:document.getElementById('f-reason').value,
-      teacher:document.getElementById('f-teacher').value,
-    };
+    const f=getF(), fs=filterRows(fsRows,f), rn=filterRows(rnRows,f);
 
-    const fs = filterRows(fsRows, f);
-    const rn = filterRows(rnRows, f);
+    const fs_count=fs.filter(r=>r[COL.NAME]&&r[COL.NAME].trim()!=='').length;
+    const fs_gross=fs.reduce((s,r)=>s+parseNum(r[COL.GROSS]),0);
+    const fs_disc=fs.reduce((s,r)=>s+parseNum(r[COL.DISCOUNT]),0);
+    const fs_net=fs.reduce((s,r)=>s+parseNum(r[COL.NET]),0);
+    const fs_enrol=fs.reduce((s,r)=>s+parseNum(r[COL.REG_FEES]),0);
+    const fs_total=fs_net+fs_enrol;
 
-    /* Fresh Sales */
-    const fs_count = fs.filter(r=>r[COL.NAME]&&r[COL.NAME].trim()!=='').length;
-    const fs_gross = fs.reduce((s,r)=>s+parseNum(r[COL.GROSS]),0);
-    const fs_disc  = fs.reduce((s,r)=>s+parseNum(r[COL.DISCOUNT]),0);
-    const fs_net   = fs.reduce((s,r)=>s+parseNum(r[COL.NET]),0);
-    const fs_enrol = fs.reduce((s,r)=>s+parseNum(r[COL.REG_FEES]),0);
-    const fs_total = fs_net + fs_enrol;
-    const fs_atv   = fs_count > 0 ? fs_total / fs_count : 0;
-    const fs_pct   = fs_gross > 0 ? (fs_disc/fs_gross)*100 : 0;
+    set('fs-h1-val', fs_count.toLocaleString('en-IN'));
+    set('fs-h2-val', fINR(fs_total));
+    set('fs-h3-val', fATV(fs_count>0?fs_total/fs_count:0));
+    set('fs-h4-val', fPct(fs_gross>0?(fs_disc/fs_gross)*100:0));
+    set('fs-b1-val', fINR(fs_gross)); set('fs-b2-val', fINR(fs_disc));
+    set('fs-b3-val', fINR(fs_net));   set('fs-b4-val', fINR(fs_enrol));
+    set('fs-b5-val', fINR(fs_total));
+    unload(['fs-h1','fs-h2','fs-h3','fs-h4','fs-b1','fs-b2','fs-b3','fs-b4','fs-b5']);
 
-    document.getElementById('fs-h1-val').textContent = fs_count.toLocaleString('en-IN');
-    document.getElementById('fs-h2-val').textContent = fINR(fs_total);
-    document.getElementById('fs-h3-val').textContent = fATV(fs_atv);
-    document.getElementById('fs-h4-val').textContent = fPct(fs_pct);
-    document.getElementById('fs-b1-val').textContent = fINR(fs_gross);
-    document.getElementById('fs-b2-val').textContent = fINR(fs_disc);
-    document.getElementById('fs-b3-val').textContent = fINR(fs_net);
-    document.getElementById('fs-b4-val').textContent = fINR(fs_enrol);
-    document.getElementById('fs-b5-val').textContent = fINR(fs_total);
-    ['fs-h1','fs-h2','fs-h3','fs-h4','fs-b1','fs-b2','fs-b3','fs-b4','fs-b5'].forEach(id=>document.getElementById(id).classList.remove('loading'));
+    const rn_count=rn.filter(r=>r[COL.NAME]&&r[COL.NAME].trim()!=='').length;
+    const rn_gross=rn.reduce((s,r)=>s+parseNum(r[COL.GROSS]),0);
+    const rn_disc=rn.reduce((s,r)=>s+parseNum(r[COL.DISCOUNT]),0);
+    const rn_net=rn.reduce((s,r)=>s+parseNum(r[COL.NET]),0);
 
-    /* Renewals */
-    const rn_count = rn.filter(r=>r[COL.NAME]&&r[COL.NAME].trim()!=='').length;
-    const rn_gross = rn.reduce((s,r)=>s+parseNum(r[COL.GROSS]),0);
-    const rn_disc  = rn.reduce((s,r)=>s+parseNum(r[COL.DISCOUNT]),0);
-    const rn_net   = rn.reduce((s,r)=>s+parseNum(r[COL.NET]),0);
-    const rn_total = rn_net;
-    const rn_atv   = rn_count > 0 ? rn_total / rn_count : 0;
-    const rn_pct   = rn_gross > 0 ? (rn_disc/rn_gross)*100 : 0;
+    set('rn-h1-val', rn_count.toLocaleString('en-IN'));
+    set('rn-h2-val', fINR(rn_net));
+    set('rn-h3-val', fATV(rn_count>0?rn_net/rn_count:0));
+    set('rn-h4-val', fPct(rn_gross>0?(rn_disc/rn_gross)*100:0));
+    set('rn-b1-val', fINR(rn_gross)); set('rn-b2-val', fINR(rn_disc));
+    set('rn-b3-val', fINR(rn_net));   set('rn-b5-val', fINR(rn_net));
+    unload(['rn-h1','rn-h2','rn-h3','rn-h4','rn-b1','rn-b2','rn-b3','rn-b5']);
 
-    document.getElementById('rn-h1-val').textContent = rn_count.toLocaleString('en-IN');
-    document.getElementById('rn-h2-val').textContent = fINR(rn_total);
-    document.getElementById('rn-h3-val').textContent = fATV(rn_atv);
-    document.getElementById('rn-h4-val').textContent = fPct(rn_pct);
-    document.getElementById('rn-b1-val').textContent = fINR(rn_gross);
-    document.getElementById('rn-b2-val').textContent = fINR(rn_disc);
-    document.getElementById('rn-b3-val').textContent = fINR(rn_net);
-    document.getElementById('rn-b5-val').textContent = fINR(rn_total);
-    ['rn-h1','rn-h2','rn-h3','rn-h4','rn-b1','rn-b2','rn-b3','rn-b5'].forEach(id=>document.getElementById(id).classList.remove('loading'));
+    const tc_count=fs_count+rn_count, tc_gross=fs_gross+rn_gross;
+    const tc_disc=fs_disc+rn_disc, tc_net=fs_net+rn_net;
+    const tc_enrol=fs_enrol, tc_total=fs_total+rn_net;
 
-    /* Total Collections */
-    const tc_count = fs_count + rn_count;
-    const tc_gross = fs_gross + rn_gross;
-    const tc_disc  = fs_disc  + rn_disc;
-    const tc_net   = fs_net   + rn_net;
-    const tc_enrol = fs_enrol;
-    const tc_total = fs_total + rn_total;
-    const tc_atv   = tc_count > 0 ? tc_total / tc_count : 0;
-    const tc_pct   = tc_gross > 0 ? (tc_disc/tc_gross)*100 : 0;
+    set('tc-h1-val', tc_count.toLocaleString('en-IN'));
+    set('tc-h2-val', fINR(tc_total));
+    set('tc-h3-val', fATV(tc_count>0?tc_total/tc_count:0));
+    set('tc-h4-val', fPct(tc_gross>0?(tc_disc/tc_gross)*100:0));
+    set('tc-b1-val', fINR(tc_gross)); set('tc-b2-val', fINR(tc_disc));
+    set('tc-b3-val', fINR(tc_net));   set('tc-b4-val', fINR(tc_enrol));
+    set('tc-b5-val', fINR(tc_total));
+    unload(['tc-h1','tc-h2','tc-h3','tc-h4','tc-b1','tc-b2','tc-b3','tc-b4','tc-b5']);
 
-    document.getElementById('tc-h1-val').textContent = tc_count.toLocaleString('en-IN');
-    document.getElementById('tc-h2-val').textContent = fINR(tc_total);
-    document.getElementById('tc-h3-val').textContent = fATV(tc_atv);
-    document.getElementById('tc-h4-val').textContent = fPct(tc_pct);
-    document.getElementById('tc-b1-val').textContent = fINR(tc_gross);
-    document.getElementById('tc-b2-val').textContent = fINR(tc_disc);
-    document.getElementById('tc-b3-val').textContent = fINR(tc_net);
-    document.getElementById('tc-b4-val').textContent = fINR(tc_enrol);
-    document.getElementById('tc-b5-val').textContent = fINR(tc_total);
-    ['tc-h1','tc-h2','tc-h3','tc-h4','tc-b1','tc-b2','tc-b3','tc-b4','tc-b5'].forEach(id=>document.getElementById(id).classList.remove('loading'));
-
-    document.getElementById('scorecards-badge').textContent = tc_count + ' transactions';
+    document.getElementById('scorecards-badge').textContent=tc_count+' transactions';
   }
 
-  /* ── Load data ── */
   async function loadData() {
     try {
-      const [fsRes, rnRes] = await Promise.all([fetch(FS_URL), fetch(RN_URL)]);
-      if (!fsRes.ok) throw new Error('Fresh Sales: HTTP '+fsRes.status);
-      if (!rnRes.ok) throw new Error('Renewals: HTTP '+rnRes.status);
-      const [fsText, rnText] = await Promise.all([fsRes.text(), rnRes.text()]);
-      fsRows = parseCSV(fsText).slice(2).filter(r=>r[COL.DATE]&&r[COL.DATE].trim()!==''&&r[COL.DATE].toLowerCase()!=='date');
-      rnRows = parseCSV(rnText).slice(2).filter(r=>r[COL.DATE]&&r[COL.DATE].trim()!==''&&r[COL.DATE].toLowerCase()!=='date');
+      const [r1,r2]=await Promise.all([fetch(FS_URL),fetch(RN_URL)]);
+      if(!r1.ok) throw new Error('Fresh Sales: HTTP '+r1.status);
+      if(!r2.ok) throw new Error('Renewals: HTTP '+r2.status);
+      const [t1,t2]=await Promise.all([r1.text(),r2.text()]);
+      fsRows=parseCSV(t1).slice(2).filter(r=>r[COL.DATE]&&r[COL.DATE].trim()!==''&&r[COL.DATE].toLowerCase()!=='date');
+      rnRows=parseCSV(t2).slice(2).filter(r=>r[COL.DATE]&&r[COL.DATE].trim()!==''&&r[COL.DATE].toLowerCase()!=='date');
       const now=new Date();
-      document.getElementById('last-updated-text').textContent =
-        'Updated '+now.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})+' · '+now.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
+      document.getElementById('last-updated-text').textContent=
+        'Updated '+now.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})+
+        ' · '+now.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
       document.getElementById('status-dot').className='status-dot';
       applyFilters();
     } catch(e) {
@@ -626,11 +904,11 @@
     }
   }
 
-  /* ── Filter controls ── */
   function resetToCurrentMonth() {
     ['f-year','f-month','f-course','f-level','f-age','f-gender','f-type','f-renewal','f-reason','f-teacher'].forEach(id=>{document.getElementById(id).value='';});
     setDefaultDates(); applyFilters();
   }
+
   function clearFilters() {
     ['f-year','f-month','f-course','f-level','f-age','f-gender','f-type','f-renewal','f-reason','f-teacher'].forEach(id=>{document.getElementById(id).value='';});
     document.getElementById('f-from').value=''; document.getElementById('f-to').value='';
@@ -639,7 +917,6 @@
     applyFilters();
   }
 
-  /* ── Section collapse ── */
   const sectionState={filters:true,scorecards:true};
   function toggleSection(id) {
     sectionState[id]=!sectionState[id]; const open=sectionState[id];
@@ -648,13 +925,12 @@
     document.getElementById(id+'-label').textContent=open?'Collapse':'Expand';
   }
 
-  /* ── Breakdown collapse ── */
   const bdState={fs:false,rn:false,tc:false};
-  function toggleBreakdown(prefix) {
-    bdState[prefix]=!bdState[prefix]; const open=bdState[prefix];
-    document.getElementById(prefix+'-bd-body').style.display=open?'block':'none';
-    document.getElementById(prefix+'-bd-icon').classList.toggle('open',open);
-    document.getElementById(prefix+'-bd-label').textContent=open?'Hide breakdown':'Show breakdown';
+  function toggleBreakdown(p) {
+    bdState[p]=!bdState[p]; const open=bdState[p];
+    document.getElementById(p+'-bd-body').style.display=open?'block':'none';
+    document.getElementById(p+'-bd-icon').classList.toggle('open',open);
+    document.getElementById(p+'-bd-label').textContent=open?'Hide breakdown':'Show breakdown';
   }
 
   setDefaultDates();
